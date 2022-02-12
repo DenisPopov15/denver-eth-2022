@@ -16,7 +16,3 @@ describe('API', () => {
 describe('Helpers', () => {
   require('./helpers/createAuth.spec')
 })
-
-// describe('Middlwares:', () => {
-//   require('./middleware/auth.spec')
-// })
