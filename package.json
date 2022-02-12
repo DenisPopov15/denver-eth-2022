@@ -1,13 +1,14 @@
 {
-  "name": "Command center of denver eth 2022 Hack",
+  "name": "command-center-of-denver-eth-2022-hack",
   "version": "0.1.0",
   "description": "set of commands to run connectors and etc",
   "repository": "git@github.com:DenisPopov15/denver-eth-2022.git",
   "author": "DeepSkills Hack Team <denys.p@affinidi.com>",
   "license": "MIT",
   "scripts": {
-    "sourceCredLoad": "cd ./connectors/sourcecred && npm run load",
-    "sourceCredStart": "cd ./connectors/sourcecred && npm run start",
-    "fullInstall": "./connectors/sourcecred && yarn install"
+    "sourceCredLoad": "cd ./connectors/sourcecred/instance && npm run load",
+    "sourceCredStart": "cd ./connectors/sourcecred/instance && npm run start",
+    "fullInstall": "cd ./connectors/sourcecred/instance && yarn install && cd ../../coordinApe && npm install && cd ../github && npm install",
+    "startSystem": "pm2 start processes.yaml && npm run sourceCredLoad && npm run sourceCredStart"
   }
 }

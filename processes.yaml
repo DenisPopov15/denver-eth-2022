@@ -1,0 +1,41 @@
+apps:
+  - name:   coordinape
+    cwd:    ./connectors/coordinApe
+    script: ./index.js
+    env:
+      PORT: 4000
+
+# =============================================================================
+
+  # - name:   discord
+  #   cwd:    ./connectors/discord
+  #   script: ./index.js
+  #   env:
+  #     PORT: 4001
+
+# =============================================================================
+
+  - name:   github
+    cwd:    ./connectors/github
+    script: ./index.js
+    env:
+      PORT: 4002
+
+# =============================================================================
+
+  # - name:   sourceCred
+  #   cwd:    ./connectors/sourceCred/server
+  #   script: ./index.js
+  #   env:
+  #     PORT: 4003
+
+# =============================================================================
+
+  - name:   issuer
+    cwd:    ./issuer
+    script: ./index.js
+    env:
+      PORT: 3000
+
+# =============================================================================
+
