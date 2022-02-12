@@ -1,9 +1,9 @@
 'use strict'
 
-const express  = require('express')
+const express = require('express')
 const pullData = require('./pullCoordinapeData')
-const router   = express.Router()
+const router = express.Router()
 
-router.route('/pullCoordinapeData').get(pullData)
+router.route('/pullCoordinapeData').post(pullData)
 
 module.exports = router
