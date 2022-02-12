@@ -1,6 +1,6 @@
-"use strict"
+'use strict'
 
-const CoordinApeService = require("../services/coordinApeService")
+const CoordinApeService = require('../services/coordinApeService')
 
 const pullCoordinapeData = async (req, res) => {
   const { signature, address, data, hash } = req.body
@@ -18,7 +18,7 @@ const pullCoordinapeData = async (req, res) => {
   }
   const corrdinapeProfileVCData = {
     skills: rawData?.profile?.skills,
-    rest: rawData
+    rest: rawData,
   }
 
   res.status(200).json({ corrdinapeProfileVCData })

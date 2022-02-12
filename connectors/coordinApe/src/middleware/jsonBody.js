@@ -1,13 +1,13 @@
-"use strict"
+'use strict'
 
-const typeis = require("type-is")
-const getRawBody = require("raw-body")
-const onFinished = require("on-finished")
+const typeis = require('type-is')
+const getRawBody = require('raw-body')
+const onFinished = require('on-finished')
 
-const DEFAULT_JSON_SIZE_LIMIT = "2mb"
+const DEFAULT_JSON_SIZE_LIMIT = '2mb'
 
 const isJson = (req) => {
-  return typeis(req, ["application/json"])
+  return typeis(req, ['application/json'])
 }
 
 const jsonBody = (limit = DEFAULT_JSON_SIZE_LIMIT) => {
@@ -20,7 +20,7 @@ const jsonBody = (limit = DEFAULT_JSON_SIZE_LIMIT) => {
     if (!typeis.hasBody(req)) {
       return next()
     }
-    getRawBody(req, { limit, encoding: "utf-8" }, (rawBodyError, buffer) => {
+    getRawBody(req, { limit, encoding: 'utf-8' }, (rawBodyError, buffer) => {
       if (rawBodyError) {
         const error = new Error(rawBodyError)
 

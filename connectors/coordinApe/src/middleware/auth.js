@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 module.exports = (app) => {
   const handler = async (req, res, next) => {

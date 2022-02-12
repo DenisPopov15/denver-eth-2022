@@ -1,11 +1,11 @@
-"use strict"
+'use strict'
 
-require("dotenv").config()
+require('dotenv').config()
 
-const get = require("lodash.get")
-const express = require("express")
-const middleware = require("./middleware")
-const routes = require("./api/index")
+const get = require('lodash.get')
+const express = require('express')
+const middleware = require('./middleware')
+const routes = require('./api/index')
 
 const DEFAULT_EXIT_TIMEOUT = 1000 // milliseconds
 const { PORT } = process.env
@@ -32,37 +32,37 @@ class App {
   }
 
   get port() {
-    return get(this.config, "server.port")
+    return get(this.config, 'server.port')
   }
 
   get bodySizeLimit() {
-    return get(this.config, "server.bodySizeLimit", "2mb")
+    return get(this.config, 'server.bodySizeLimit', '2mb')
   }
 
   get exitTimeout() {
-    return get(this.config, "exitTimeout", DEFAULT_EXIT_TIMEOUT)
+    return get(this.config, 'exitTimeout', DEFAULT_EXIT_TIMEOUT)
   }
 
   async createLogger() {
-    console.info("> createLogger")
+    console.info('> createLogger')
 
     this._logger = console
   }
 
   async createServer() {
-    this._logger.info("> createServer")
+    this._logger.info('> createServer')
 
     this.http = this.server = express()
-    this.http.set("app", this)
+    this.http.set('app', this)
   }
 
   createApi() {
-    this._logger.info("> createApi")
-    this.http.use("/api", routes)
+    this._logger.info('> createApi')
+    this.http.use('/api', routes)
   }
 
   createServerMiddleware() {
-    this._logger.info("> createServerMiddleware")
+    this._logger.info('> createServerMiddleware')
 
     this.http.use(middleware.helmet())
     this.http.use(middleware.cors())

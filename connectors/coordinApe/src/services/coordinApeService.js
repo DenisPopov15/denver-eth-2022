@@ -1,6 +1,6 @@
-"use strict"
-const fetch = require("node-fetch")
-const API_URL = "https://api.coordinape.com/api/v2"
+'use strict'
+const fetch = require('node-fetch')
+const API_URL = 'https://api.coordinape.com/api/v2'
 class CoordinApeService {
   constructor({ signature, address, data }) {
     this._signature = signature
@@ -11,17 +11,17 @@ class CoordinApeService {
   async getToken() {
     const { token } = await fetch(`${API_URL}/login`, {
       headers: {
-        "content-type": "application/json",
+        'content-type': 'application/json',
       },
       body: JSON.stringify({
         signature: this._signature,
-        hash: "",
+        hash: '',
         data: this._data,
         address: this._address,
       }),
-      method: "POST",
-      mode: "cors",
-      credentials: "omit",
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'omit',
     }).then((resp) => resp.json())
     this._token = token
   }
@@ -30,7 +30,7 @@ class CoordinApeService {
       headers: {
         authorization: `Bearer ${this._token}`,
       },
-      method: "GET",
+      method: 'GET',
     }).then((resp) => resp.json())
     return data
   }

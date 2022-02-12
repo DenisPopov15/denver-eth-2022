@@ -1,6 +1,6 @@
-"use strict"
+'use strict'
 
-const jwt = require("jsonwebtoken")
+const jwt = require('jsonwebtoken')
 const DEFAULT_EXP_IN_SECONDS = 60
 let { SERVICE_PRIVATE_KEY } = process.env
 
@@ -9,13 +9,13 @@ const createAuth = () => {
   const expiresAt = now + DEFAULT_EXP_IN_SECONDS
 
   const payload = {
-    iss: "github-connector",
-    aud: "deep-skills-issuer",
+    iss: 'github-connector',
+    aud: 'deep-skills-issuer',
     exp: expiresAt,
   }
 
-  SERVICE_PRIVATE_KEY = SERVICE_PRIVATE_KEY.replace(/\\n/g, "\n")
-  const token = jwt.sign(payload, SERVICE_PRIVATE_KEY, { algorithm: "RS256" })
+  SERVICE_PRIVATE_KEY = SERVICE_PRIVATE_KEY.replace(/\\n/g, '\n')
+  const token = jwt.sign(payload, SERVICE_PRIVATE_KEY, { algorithm: 'RS256' })
 
   return token
 }

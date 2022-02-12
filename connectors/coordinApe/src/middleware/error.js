@@ -1,4 +1,4 @@
-"use strict"
+'use strict'
 
 module.exports = (appLogger) => {
   return (error, req, res, next) => {
