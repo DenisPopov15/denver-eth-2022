@@ -31,7 +31,6 @@ class CoordinApeService {
         authorization: `Bearer ${this._token}`,
       },
       method: "GET",
-      mode: "cors",
     }).then((resp) => resp.json())
     return data
   }
