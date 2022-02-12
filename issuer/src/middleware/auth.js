@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 let { TRUSTED_PUBLIC_KEY } = process.env
 TRUSTED_PUBLIC_KEY = TRUSTED_PUBLIC_KEY.replace(/\\n/g, '\n')
 
-const trustedTokenIssuers = ['coordinape-connector', 'github-connector', 'discord', 'sourceCred']
+const trustedTokenIssuers = ['coordinape-connector', 'github-connector', 'discord-connector', 'sourceCred-connector']
 const serviceName         = 'deep-skills-issuer'
 
 module.exports = app => {

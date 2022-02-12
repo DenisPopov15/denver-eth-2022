@@ -10,8 +10,8 @@ const data      = ''
 describe('Coordinape', async() => {
   it('pullData', async() => {
     const response = await request(global.server)
-      .get('/api/pullCoordinapeData')
-      .query({ address, signature, data })
+      .post('/api/pullCoordinapeData')
+      .send({ address, signature, data })
 
     expect(response.body.corrdinapeProfileVCData).to.be.not.undefined
     expect(response.status).to.be.equal(200)

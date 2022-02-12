@@ -8,7 +8,8 @@
   "scripts": {
     "sourceCredLoad": "cd ./connectors/sourcecred/instance && npm run load",
     "sourceCredStart": "cd ./connectors/sourcecred/instance && npm run start",
-    "fullInstall": "cd ./connectors/sourcecred/instance && yarn install && cd ../../coordinApe && npm install && cd ../github && npm install",
-    "startSystem": "pm2 start processes.yaml && npm run sourceCredLoad && npm run sourceCredStart"
+    "fullInstall": "cd ./connectors/sourcecred/instance && yarn install && cd ../../coordinApe && npm install && cd ../github && npm install && cd ../sourcecred/server && npm install",
+    "startSystem": "pm2 start processes.yaml && npm run sourceCredLoad && npm run sourceCredStart",
+    "test": "cd ./connectors/sourcecred/server && npm run test && cd ../../coordinApe && npm run test && cd ../github && npm run test && cd ../../issuer && npm run test"
   }
 }

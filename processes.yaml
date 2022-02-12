@@ -23,11 +23,11 @@ apps:
 
 # =============================================================================
 
-  # - name:   sourceCred
-  #   cwd:    ./connectors/sourceCred/server
-  #   script: ./index.js
-  #   env:
-  #     PORT: 4003
+  - name:   sourceCred
+    cwd:    ./connectors/sourceCred/server
+    script: ./index.js
+    env:
+      PORT: 4003
 
 # =============================================================================
 
