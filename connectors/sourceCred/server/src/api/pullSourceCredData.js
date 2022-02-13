@@ -3,16 +3,18 @@
 const SourceCredService = require('../services/sourceCredService')
 
 const pullSourceCredData = async(req, res) => {
-  const { code, did } = req.query
+  let { identifier } = req.query
+  identifier = identifier || 'Dmytro-Filipenko'
 
   const sourceCredService = new SourceCredService()
   const rawData = await sourceCredService.pullData()
 
-  const sourceCredVCData = {
-    someData: rawData.something
-  }
+  const participant = sourceCredService.findParticipant(rawData.participants, identifier)
 
-  res.status(200).json({ sourceCredVCData })
+  delete participant.credPerInterval
+  delete participant.grainEarnedPerInterval
+
+  res.status(200).json({ sourceCredVCData: participant })
 }
 
 module.exports = pullSourceCredData
