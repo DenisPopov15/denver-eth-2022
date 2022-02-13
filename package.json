@@ -6,12 +6,10 @@
   "author": "DeepSkills Hack Team <denys.p@affinidi.com>",
   "license": "MIT",
   "scripts": {
-    "sourceCredLoad": "cd ./connectors/sourcecred/instance && npm run load",
-    "sourceCredStart": "cd ./connectors/sourcecred/instance && npm run start",
-    "fullInstall": "cd ./connectors/sourcecred/instance && yarn install && cd ../../coordinApe && npm install && cd ../github && npm install && cd ../sourcecred/server && npm install",
-    "startSystem": "pm2 start processes.yaml && npm run sourceCredLoad && npm run sourceCredStart",
-    "test": "cd ./connectors/sourcecred/server && npm run test && cd ../../coordinApe && npm run test && cd ../github && npm run test && cd ../../issuer && npm run test",
-    "issuerTest": "cd ./issuer && npm run test",
-    "generateSeed": "cd ./issuer && npm run generateSeed"
+    "fullInstall": "sh ./scripts/full-install.sh",
+    "startSystem": "sh ./scripts/system-start.sh",
+    "test": "sh ./scripts/full-test.sh",
+    "issuerTest": "npm --prefix ./issuer run test",
+    "generateSeed": "npm run generateSeed --prefix ./issuer"
   }
 }
