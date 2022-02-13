@@ -5,6 +5,7 @@ class SourceCredService {
   }
 
   async pullData() {
+    // http://localhost:6006/output/credGrainView
     return {}
   }
 }
