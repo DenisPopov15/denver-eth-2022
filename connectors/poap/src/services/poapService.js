@@ -3,10 +3,7 @@ const ethers = require('ethers')
 const abi = require('../abi/poap')
 const { ANKR_JSONRPC_API_ENDPOINT } = process.env
 const fetch = require('node-fetch')
-// const balance = await contract.balanceOf(address)
 const POAP_CONTRACT_ADDRESS = '0x22c1f6050e56d2876009903609a2cc3fef83b415'
-// const poap = await contract.tokenOfOwnerByIndex(address, 0)
-// const tokenURI = await contract.tokenURI(poap.toString())
 
 class PoapService {
   constructor() {
