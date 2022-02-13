@@ -5,11 +5,17 @@ const jwt = require('jsonwebtoken')
 let { TRUSTED_PUBLIC_KEY } = process.env
 TRUSTED_PUBLIC_KEY = TRUSTED_PUBLIC_KEY.replace(/\\n/g, '\n')
 
-const trustedTokenIssuers = ['coordinape-connector', 'github-connector', 'discord-connector', 'sourceCred-connector']
-const serviceName         = 'deep-skills-issuer'
+const trustedTokenIssuers = [
+  'coordinape-connector',
+  'github-connector',
+  'discord-connector',
+  'sourceCred-connector',
+  'poap-connector',
+]
+const serviceName = 'deep-skills-issuer'
 
-module.exports = app => {
-  const handler = async(req, res, next) => {
+module.exports = (app) => {
+  const handler = async (req, res, next) => {
     try {
       const token = req.headers['auth']
 
@@ -27,7 +33,6 @@ module.exports = app => {
         invalidTokenError.httpStatusCode = 401
         next(invalidTokenError)
       }
-
     } catch (error) {
       error.httpStatusCode = 401
       next(error)
