@@ -20,6 +20,7 @@ class PoapService {
   getVerifiedAddress(digest, signature) {
     return ethers.utils.verifyMessage(digest, signature)
   }
+  
   async fetchTokenInformation(tokenURL) {
     const token = await fetch(tokenURL).then((res) => res.json())
 
@@ -29,6 +30,7 @@ class PoapService {
       image_url: token?.image_url,
     }
   }
+
   async getTokensUrlOwnedBy(address) {
     const balance = await this._contract.balanceOf(address)
     const tokens = []
