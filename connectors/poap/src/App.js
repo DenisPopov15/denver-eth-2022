@@ -63,11 +63,10 @@ class App {
 
   createServerMiddleware() {
     this._logger.info('> createServerMiddleware')
-
+    this.http.use(middleware.jsonBody(this.bodySizeLimit))
     this.http.use(middleware.helmet())
     this.http.use(middleware.cors())
     // this.http.use(middleware.auth(this))
-    this.http.use(middleware.jsonBody(this.bodySizeLimit))
   }
 
   async initialize() {

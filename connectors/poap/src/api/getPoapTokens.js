@@ -1,18 +1,23 @@
 'use strict'
 
+const PoapService = require('../services/poapService')
+
+const poapService = new PoapService()
 
 const getPoapTokens = async (req, res) => {
-  
-  
-  res.status(200).json({ tokenURI })
   try {
-    
-    if (verifiedAddress !== address) {
-      throw new Error('Invalid signature')
+    const { address, signature, digest } = req?.body
+    const addressFromSignature = poapService.getVerifiedAddress(
+      digest,
+      signature
+    )
+    if (addressFromSignature !== address) {
+      throw new Error('Invalid address')
     }
-    res.status(200).json({ address })
+    const tokensUrl = await poapService.getTokensUrlOwnedBy(address)
+    res.status(200).json(tokensUrl)
   } catch (error) {
-    throw new Error(error)
+    res.status(400).json({ error: error.message })
   }
 }
 
