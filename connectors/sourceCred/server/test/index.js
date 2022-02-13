@@ -14,5 +14,5 @@ describe('API', () => {
 })
 
 describe('Helpers', () => {
-  require('./helpers/createAuth.spec')
+  require('./helpers/index.spec')
 })
