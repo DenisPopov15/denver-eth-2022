@@ -1,13 +1,29 @@
 'use strict'
 
-const supportedDataTypes = ['coordinape', 'github', 'discord', 'sourceCred'] // shoulf be more general/reusable defined structered data instead
+const { knownDataTypes } = require('../helpers/index')
 
 class IssuerService {
-  constructor() {
+  constructor(didInstance) {
+    this._did = didInstance
+  }
+
+  get did() {
+    return this._did
   }
 
   async issue({ type, data }) {
-    return {}
+    if (!knownDataTypes.includes(type)) {
+      throw Error(`${type} data type not supported, supported are ${knownDataTypes}`)
+    }
+
+    const deepSkillsDocument = data
+    deepSkillsDocument.issuerDid = this.did._id
+    // TODO just hash should be signed and not whole document
+    const jws = await this.did.createJWS(deepSkillsDocument)
+    const signature = jws.signatures[0].signature
+    deepSkillsDocument.signature = signature // Should whole proof section
+
+    return deepSkillsDocument
   }
 }
 
