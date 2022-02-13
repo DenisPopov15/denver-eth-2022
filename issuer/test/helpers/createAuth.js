@@ -13,6 +13,7 @@ const createAuth = () => {
     aud: 'deep-skills-issuer',
     exp: expiresAt,
   }
+  
   TEST_SERVICE_PRIVATE_KEY = TEST_SERVICE_PRIVATE_KEY.replace(/\\n/g, '\n')
   const token = jwt.sign(payload, TEST_SERVICE_PRIVATE_KEY, { algorithm: 'RS256' })
 
