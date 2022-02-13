@@ -7,7 +7,7 @@ describe('SourceCred', async() => {
   it('pullSourceCredData', async() => {
     const response = await request(global.server)
       .get('/api/pullSourceCredData')
-      // .query({ code, did })
+      .query({ identifier: 'Denis-Popov' })
 
     expect(response.body.sourceCredVCData).to.be.not.undefined
     expect(response.status).to.be.equal(200)
