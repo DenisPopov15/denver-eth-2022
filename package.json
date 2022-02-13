@@ -11,5 +11,8 @@
     "test": "sh ./scripts/full-test.sh",
     "issuerTest": "npm --prefix ./issuer run test",
     "generateSeed": "npm run generateSeed --prefix ./issuer"
+  },
+  "dependencies": {
+    "npm": "^7.24.2"
   }
 }
