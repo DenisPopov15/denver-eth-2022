@@ -16,7 +16,7 @@ class GithubService {
     })
     const octokit = await app.getUserOctokit({ code })
 
-    return new GithubAdapter(octokit)
+    return new GithubService(octokit)
   }
 
   async getUserData() {
