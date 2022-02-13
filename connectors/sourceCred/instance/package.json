@@ -10,6 +10,7 @@
     "sourcecred": "^0.10.1"
   },
   "scripts": {
+    
     "clean": "rimraf cache site",
     "clean-all": "yarn clean && rimraf output",
     "load": "dotenv sourcecred load",
