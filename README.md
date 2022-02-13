@@ -25,3 +25,14 @@ Currently supported connectors:
  - Go to connectors (+ issuer) folder and create `.env` file from `.env.example` there you will need mostly just add SERVICE_PRIVATE_KEY for each connector (which should/could be the same for each connector) and then set for the issuer `.env` paired to that TRUSTED_PUBLIC_KEY
  - Install dependencies for each services - just run `npm run fullInstall` from root project folder
  - Run the system `npm run startSystem` (will work only if pm2 installed)
+
+## Connectors
+
+### Poap
+To properly work with Poap you need to setup your ankr instance with the following:
+`ANKR_JSONRPC_API_ENDPOINT`:
+1. you need to register in the [Ankr](https://app.ankr.com/auth/login) 
+2. select xDai network
+3. Authorization with token when you create your xDai server
+
+Also, [Poap smart contract](https://explorer.anyblock.tools/ethereum/poa/xdai/address/0x22c1f6050e56d2876009903609a2cc3fef83b415/) you can find ABIfor Poap contract.
