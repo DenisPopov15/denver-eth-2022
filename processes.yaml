@@ -1,7 +1,7 @@
 apps:
 
   - name:   coordinape
-    cwd:    ./connectors/coordinape
+    cwd:    ./connectors/coordinApe
     script: ./index.js
     env:
       PORT: 4000
