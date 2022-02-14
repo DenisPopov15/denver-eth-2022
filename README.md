@@ -1,15 +1,29 @@
-# denver-eth-2022
-Place for the Denver ETH 2022 HACK
+# Decentralized Professional Identity Protocol
+This application enables portability and verifiability of professional reputation aggregated from a number of sources (SourceCred, CoordinApe, Colony, POAP, Github, Discord, Twitter). The protocol gives full control over credentials to the user and avoids any points of centralized sotrage or verification of data.
+
+This project demonstrates **bring your own data** concept:
+- All data is issued by indepented 3rd parties, such as SourceCred instance
+- Any application can request and read data from user's data stream
+- Users are ultimately in control regarding who can see their reputation and credentials
+- Any application or protocol is free to add their own connector for data issuance
+
+We leverage various decentralized technologies, such as (Ethereum)[https://ethereum.org/], (Decentralized Identifiers)[https://www.w3.org/TR/did-core/], (Ceramic Network)[https://ceramic.network/], (IPFS)[https://ipfs.io/], (Lit Protocol)[https://litprotocol.com/], (POAP)[https://app.poap.xyz/].
+
+
+
+This project was built during ETHDenver 2022 BUIDLathon. 
 
 ## Overview
 
 Project Contains:
 
-- Number connectors (which pulling data from connector sepcific placa/data hub <usually take some user auth as input> and pulled data)
-- Issuer, its recieve data from trusted data connector and issue (sign) strctured [Ceramic](https://ceramic.network/) Data according to the specific schema and store that data at the [Ceramic Stream](https://developers.ceramic.network/streamtypes/overview/)
+- Multiple connectors (pulling data from connector sepcific data hub)
+- Issuer module: recieves data from trusted data connector and issue (sign) strctured [Ceramic](https://ceramic.network/) Data according to the specific schema and store that data at the [Ceramic Stream](https://developers.ceramic.network/streamtypes/overview/)
+- Frontend App 1
+- Frontend App 2
 
 
-Currently supported connectors:
+Protocol supports flexible way of adding new data connectors. Currently supported connectors:
 
 - [Githib](https://github.com/)
 - [Coordinape](https://coordinape.com/)
