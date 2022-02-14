@@ -57,8 +57,9 @@ const colonySchemaID = await manager.createSchema('colony', {
     reputation: {
       type: "object",
       properties: {
-        colonyname: { type: "string" },
-        reputation: { type: "string" }
+        colonyname: { type: "string" }, // String, name of the colony
+        colonyaddress: { type: "string" }, // xDai contract address of colony
+        reputation: { type: "string" } // reputation score, 0-100%
       }
     }
   }
