@@ -1,39 +1,58 @@
 'use strict'
 
-// const { OAuthApp, Octokit } = require('octokit')
-let { DISCORD_APP_CLIENT_ID, DISCORD_APP_CLIENT_SECRET } = process.env
+const fetch = require('node-fetch')
+const redirectUri = require('../helpers/discordRedirectUrl')
+const { DISCORD_APP_CLIENT_ID, DISCORD_APP_CLIENT_SECRET } = process.env
 
 class DiscordService {
-  constructor(client) {
-    this.client = client
+  constructor(authorization) {
+    this._headers = { authorization }
   }
 
-  // static async initialize(code) {
-  //   const app = new OAuthApp({
-  //     clientType:   'oauth-app',
-  //     clientId:     GITHUB_APP_CLIENT_ID,
-  //     clientSecret: GITHUB_APP_CLIENT_SECRET,
-  //   })
-  //   const octokit = await app.getUserOctokit({ code })
+  static async initialize(code) {
+    const response = await fetch('https://discord.com/api/oauth2/token', {
+      method: 'POST',
+      body: new URLSearchParams({
+        client_id: DISCORD_APP_CLIENT_ID,
+        client_secret: DISCORD_APP_CLIENT_SECRET,
+        code,
+        grant_type: 'authorization_code',
+        redirect_uri: redirectUri,
+        scope: 'identify guilds',
+      }),
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    })
 
-  //   return new DiscordService(octokit)
-  // }
+    if (response.status !== 200) {
+      throw new Error(JSON.stringify(response))
+    }
 
-  // async getUserData() {
-  //   const response = await this.octokit.rest.users.getAuthenticated()
-  //   if (response.status !== 200) {
-  //     throw new Error(JSON.stringify(response))
-  //   }
-  //   return response.data
-  // }
+    const oauth = await response.json()
+    const authorization = `${oauth.token_type} ${oauth.access_token}`
 
-  // async getUserRepos() {
-  //   const response = await this.octokit.rest.repos.listForAuthenticatedUser()
-  //   if (response.status !== 200) {
-  //     throw new Error(JSON.stringify(response))
-  //   }
-  //   return response.data
-  // }
+    return new DiscordService(authorization)
+  }
+
+  async getUserData() {
+    return this.executeGet('https://discord.com/api/users/@me')
+  }
+
+  async getUserServers() {
+    return this.executeGet('https://discord.com/api/users/@me/guilds')
+  }
+
+  async executeGet(url) {
+    const response = await fetch(url, { headers: this._headers })
+
+    if (response.status !== 200) {
+      throw new Error(JSON.stringify(response))
+    }
+
+    const data = await response.json()
+    return data
+  }
 }
 
 module.exports = DiscordService
