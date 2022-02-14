@@ -7,7 +7,7 @@ This project demonstrates **bring your own data** concept:
 - Users are ultimately in control regarding who can see their reputation and credentials
 - Any application or protocol is free to add their own connector for data issuance
 
-We leverage various decentralized technologies, such as (Ethereum)[https://ethereum.org/], (Decentralized Identifiers)[https://www.w3.org/TR/did-core/], (Ceramic Network)[https://ceramic.network/], (IPFS)[https://ipfs.io/], (Lit Protocol)[https://litprotocol.com/], (POAP)[https://app.poap.xyz/].
+We leverage various decentralized technologies, such as [Ethereum](https://ethereum.org/), [Decentralized Identifiers](https://www.w3.org/TR/did-core/), [Ceramic Network](https://ceramic.network/), [IPFS](https://ipfs.io/), [Lit Protocol](https://litprotocol.com/), [POAP](https://app.poap.xyz/).
 
 
 
