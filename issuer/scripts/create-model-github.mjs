@@ -29,34 +29,23 @@ ceramic.did = did
 const manager = new ModelManager(ceramic)
 
 // Create the schemas
-const apeProfileSchemaID = await manager.createSchema('ape', {
+const githubSchemaID = await manager.createSchema('github', {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'ape',
+  title: 'github',
   type: 'object',
   properties: {
-    date: {
+    username: {
       type: 'string',
-      format: 'date-time',
-      title: 'date', // Issuance date
-      maxLength: 30,
+      title: 'username', // Github username
     },
-    circle: {
-      type: 'string',
-      title: 'circle' // Name of CoordinApe Circle
-    },
-    skills: {
-      type: 'array',
-      title: 'skills', // Array of skills
+    repos: {
+      type: 'array', // Array of Repositories
       items: {
-        type: 'string'
+        type: 'string',
       }
     },
-    givesReceived: {
-      type: 'number',
-      title: 'givesRecieved' // Total number of Gives received last epoch
-    },
-    notes: {
-      type: 'array', // Array of all notes received by user during last epoch
+    languages: {
+      type: 'array', // Array of Languages used (desceding popularity order)
       items: {
         type: 'string'
       }
@@ -72,39 +61,23 @@ const apeProfileSchemaID = await manager.createSchema('ape', {
     signature: {
       type: 'string',
       title: 'signature'
-    },
-    collaborators: {
-      type: 'array',
-      items: {
-        $ref: '#/definitions/collaborator'
-      }
-    },
-  },
-  definitions: {
-    collaborator: {
-      type: "object",
-      properties: {
-        username: { type: "string" },
-        avatar: { type: "string" },
-        address: { type: "string" }
-      }
     }
-  }
+  },
 })
-const apeProfilesSchemaID = await manager.createSchema('apeprofiles', {
+const githubsSchemaID = await manager.createSchema('githubs', {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'apeprofilesList',
+  title: 'githubsList',
   type: 'object',
   properties: {
-    apeprofiles: {
+    githubs: {
       type: 'array',
-      title: 'apeprofiles',
+      title: 'githubs',
       items: {
         type: 'object',
-        title: 'apeprofileItem',
+        title: 'githubItem',
         properties: {
           id: {
-            $comment: `cip88:ref:${manager.getSchemaURL(apeProfileSchemaID)}`,
+            $comment: `cip88:ref:${manager.getSchemaURL(githubSchemaID)}`,
             type: 'string',
             pattern: '^ceramic://.+(\\?version=.+)?',
             maxLength: 150,
@@ -121,16 +94,16 @@ const apeProfilesSchemaID = await manager.createSchema('apeprofiles', {
 })
 
 // Create the definition using the created schema ID
-await manager.createDefinition('apeprofiles', {
-  name: 'apeprofiles',
-  description: 'Coordinape profile credentials',
-  schema: manager.getSchemaURL(apeProfilesSchemaID),
+await manager.createDefinition('githubs', {
+  name: 'githubs',
+  description: 'github credentials',
+  schema: manager.getSchemaURL(githubsSchemaID),
 })
 
 await manager.createTile(
-  'placeholderApeProfile',
-  { taskname: 'This is a placeholder for the Coordinape profile contents...' },
-  { schema: manager.getSchemaURL(apeProfileSchemaID) },
+  'placeholderGithub',
+  { taskname: 'This is a placeholder for the github contents...' },
+  { schema: manager.getSchemaURL(githubSchemaID) },
 )
 
 // Write model to JSON file

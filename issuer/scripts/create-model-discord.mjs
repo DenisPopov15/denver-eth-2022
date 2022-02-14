@@ -29,36 +29,15 @@ ceramic.did = did
 const manager = new ModelManager(ceramic)
 
 // Create the schemas
-const apeProfileSchemaID = await manager.createSchema('ape', {
+const discordSchemaID = await manager.createSchema('discord', {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'ape',
+  title: 'discord',
   type: 'object',
   properties: {
-    date: {
-      type: 'string',
-      format: 'date-time',
-      title: 'date', // Issuance date
-      maxLength: 30,
-    },
-    circle: {
-      type: 'string',
-      title: 'circle' // Name of CoordinApe Circle
-    },
-    skills: {
-      type: 'array',
-      title: 'skills', // Array of skills
-      items: {
-        type: 'string'
-      }
-    },
-    givesReceived: {
-      type: 'number',
-      title: 'givesRecieved' // Total number of Gives received last epoch
-    },
-    notes: {
-      type: 'array', // Array of all notes received by user during last epoch
-      items: {
-        type: 'string'
+    servers: {
+      type: 'array', // Array of all servers
+      items: { 
+        $ref: '#/definitions/collaborator'
       }
     },
     issuerDid: {
@@ -72,39 +51,33 @@ const apeProfileSchemaID = await manager.createSchema('ape', {
     signature: {
       type: 'string',
       title: 'signature'
-    },
-    collaborators: {
-      type: 'array',
-      items: {
-        $ref: '#/definitions/collaborator'
-      }
-    },
+    }
   },
   definitions: {
-    collaborator: {
+    server: {
       type: "object",
       properties: {
-        username: { type: "string" },
-        avatar: { type: "string" },
-        address: { type: "string" }
+        servername: { type: "string" },
+        serverid: { type: "string" },
+        servericon: { type: "string" }
       }
     }
   }
 })
-const apeProfilesSchemaID = await manager.createSchema('apeprofiles', {
+const discordsSchemaID = await manager.createSchema('discords', {
   $schema: 'http://json-schema.org/draft-07/schema#',
-  title: 'apeprofilesList',
+  title: 'discordsList',
   type: 'object',
   properties: {
-    apeprofiles: {
+    discords: {
       type: 'array',
-      title: 'apeprofiles',
+      title: 'discords',
       items: {
         type: 'object',
-        title: 'apeprofileItem',
+        title: 'discordItem',
         properties: {
           id: {
-            $comment: `cip88:ref:${manager.getSchemaURL(apeProfileSchemaID)}`,
+            $comment: `cip88:ref:${manager.getSchemaURL(discordSchemaID)}`,
             type: 'string',
             pattern: '^ceramic://.+(\\?version=.+)?',
             maxLength: 150,
@@ -121,16 +94,16 @@ const apeProfilesSchemaID = await manager.createSchema('apeprofiles', {
 })
 
 // Create the definition using the created schema ID
-await manager.createDefinition('apeprofiles', {
-  name: 'apeprofiles',
-  description: 'Coordinape profile credentials',
-  schema: manager.getSchemaURL(apeProfilesSchemaID),
+await manager.createDefinition('discords', {
+  name: 'discords',
+  description: 'discord credentials',
+  schema: manager.getSchemaURL(discordsSchemaID),
 })
 
 await manager.createTile(
-  'placeholderApeProfile',
-  { taskname: 'This is a placeholder for the Coordinape profile contents...' },
-  { schema: manager.getSchemaURL(apeProfileSchemaID) },
+  'placeholderDiscord',
+  { taskname: 'This is a placeholder for the discord contents...' },
+  { schema: manager.getSchemaURL(discordSchemaID) },
 )
 
 // Write model to JSON file
