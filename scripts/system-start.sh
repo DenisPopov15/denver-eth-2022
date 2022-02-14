@@ -4,9 +4,7 @@ if ! [ -x "$(command -v pm2)" ]; then
   echo 'Installing globally: pm2' >&2
   npm install pm2 -g
 fi
-pm2 save
-pm2 start processes.yaml --watch --no-daemon
 
-# npm --prefix ./connectors/sourcecred/instance run load
-# npm --prefix ./connectors/sourcecred/instance run start
-
+pm2 start processes.yaml
+npm --prefix ./connectors/sourcecred/instance run load
+npm --prefix ./connectors/sourcecred/instance run start
