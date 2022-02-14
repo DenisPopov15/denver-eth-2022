@@ -11,6 +11,7 @@ class CoordinApeService {
   setToken(token) {
     this._token = token
   }
+
   async getToken() {
     const { token } = await fetch(`${API_URL}/login`, {
       headers: {
