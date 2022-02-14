@@ -10,9 +10,10 @@ const pullCoordinapeData = async (req, res) => {
     data,
     hash,
   })
-  await coordinApeService.getToken()
-
+  const token = await coordinApeService.getToken()
+  coordinApeService.setToken(token)
   const rawData = await coordinApeService.pullData()
+  
   if (rawData?.message) {
     return res.status(400).json(rawData)
   }

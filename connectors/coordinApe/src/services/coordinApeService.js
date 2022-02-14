@@ -8,6 +8,9 @@ class CoordinApeService {
     this._data = data
     this._token = undefined
   }
+  setToken(token) {
+    this._token = token
+  }
   async getToken() {
     const { token } = await fetch(`${API_URL}/login`, {
       headers: {
@@ -23,7 +26,7 @@ class CoordinApeService {
       mode: 'cors',
       credentials: 'omit',
     }).then((resp) => resp.json())
-    this._token = token
+    return token
   }
   async pullData() {
     let data = await fetch(`${API_URL}/manifest`, {

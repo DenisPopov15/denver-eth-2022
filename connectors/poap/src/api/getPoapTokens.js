@@ -14,7 +14,7 @@ const getPoapTokens = async (req, res) => {
     if (addressFromSignature !== address) {
       throw new Error('Invalid address')
     }
-    const tokensUrl = await poapService.getTokensUrlOwnedBy(address)
+    const tokensUrl = await poapService.getTokensInfoOwnedBy(address)
     res.status(200).json(tokensUrl)
   } catch (error) {
     res.status(400).json({ error: error.message })
