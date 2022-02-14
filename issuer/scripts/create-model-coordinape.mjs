@@ -5,7 +5,6 @@ import { DID } from 'dids'
 import { Ed25519Provider } from 'key-did-provider-ed25519'
 import { getResolver } from 'key-did-resolver'
 import { fromString } from 'uint8arrays'
-``
 import { SEED, API_URL } from '../config/index.mjs'
 
 if (!SEED) {
@@ -42,54 +41,54 @@ const apeProfileSchemaID = await manager.createSchema('ape', {
     },
     circle: {
       type: 'string',
-      title: 'circle' // Name of CoordinApe Circle
+      title: 'circle', // Name of CoordinApe Circle
     },
     skills: {
       type: 'array',
       title: 'skills', // Array of skills
       items: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     },
     givesReceived: {
       type: 'number',
-      title: 'givesRecieved' // Total number of Gives received last epoch
+      title: 'givesRecieved', // Total number of Gives received last epoch
     },
     notes: {
       type: 'array', // Array of all notes received by user during last epoch
       items: {
-        type: 'string'
-      }
+        type: 'string',
+      },
     },
     issuerDid: {
       type: 'string',
-      title: 'issuerDid'
+      title: 'issuerDid',
     },
     holderDid: {
       type: 'string',
-      title: 'holderDid'
+      title: 'holderDid',
     },
     signature: {
       type: 'string',
-      title: 'signature'
+      title: 'signature',
     },
     collaborators: {
       type: 'array',
       items: {
-        $ref: '#/definitions/collaborator'
-      }
+        $ref: '#/definitions/collaborator',
+      },
     },
   },
   definitions: {
     collaborator: {
-      type: "object",
+      type: 'object',
       properties: {
-        username: { type: "string" },
-        avatar: { type: "string" },
-        address: { type: "string" }
-      }
-    }
-  }
+        username: { type: 'string' },
+        avatar: { type: 'string' },
+        address: { type: 'string' },
+      },
+    },
+  },
 })
 const apeProfilesSchemaID = await manager.createSchema('apeprofiles', {
   $schema: 'http://json-schema.org/draft-07/schema#',
@@ -130,13 +129,16 @@ await manager.createDefinition('apeprofiles', {
 await manager.createTile(
   'placeholderApeProfile',
   { taskname: 'This is a placeholder for the Coordinape profile contents...' },
-  { schema: manager.getSchemaURL(apeProfileSchemaID) },
+  { schema: manager.getSchemaURL(apeProfileSchemaID) }
 )
 
 // Write model to JSON file
-console.log('JSON.stringify(manager.toJSON())!!!', JSON.stringify(manager.toJSON()))
+console.log(
+  'JSON.stringify(manager.toJSON())!!!',
+  JSON.stringify(manager.toJSON())
+)
 await writeFile(
   new URL('model.json', import.meta.url),
-  JSON.stringify(manager.toJSON()),
+  JSON.stringify(manager.toJSON())
 )
 console.log('Encoded model written to scripts/model.json file')

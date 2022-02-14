@@ -23,6 +23,7 @@
     "ethers": "^5.5.4",
     "express": "^4.15.2",
     "helmet": "^5.0.1",
+    "jsonschema": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash.get": "^4.4.2",
     "node-fetch": "^2.6.7",

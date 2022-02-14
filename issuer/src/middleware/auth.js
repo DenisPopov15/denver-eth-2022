@@ -37,7 +37,7 @@ module.exports = (app) => {
       error.httpStatusCode = 401
       next(error)
     }
-
+    
     next()
   }
 

@@ -21,14 +21,24 @@ class PoapService {
     return ethers.utils.verifyMessage(digest, signature)
   }
 
-  async fetchTokenInformation(tokenURL) {
-    const token = await fetch(tokenURL).then((res) => res.json())
-
+  async prepareTokensForIssue(token) {
+    const possibleEndDate = token?.attributes.find(
+      (attr) => attr.trait_type === 'endDate'
+    )?.value
+    const possibleStartDate = token?.attributes.find(
+      (attr) => attr.trait_type === 'startDate'
+    )?.value
+    const date = possibleEndDate || possibleStartDate
     return {
-      name: token?.name,
+      title: token?.name,
       description: token?.description,
-      image_url: token?.image_url,
+      image: token?.image_url,
+      date,
     }
+  }
+  
+  async fetchTokenInformation(tokenURL) {
+    return await fetch(tokenURL).then((res) => res.json())
   }
 
   async getTokensInfoOwnedBy(address) {
@@ -44,6 +54,7 @@ class PoapService {
           .tokenOfOwnerByIndex(address, i)
           .then((tokenId) => this._contract.tokenURI(tokenId.toString()))
           .then(this.fetchTokenInformation)
+          .then(this.prepareTokensForIssue)
           .catch(() => [])
       )
     }

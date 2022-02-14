@@ -19,7 +19,7 @@ class IssuerService {
     const deepSkillsDocument = data
     deepSkillsDocument.issuerDid = this.did._id
     // TODO just hash should be signed and not whole document
-    const jws = await this.did.createJWS(deepSkillsDocument)
+    const jws = await this._did.createJWS(deepSkillsDocument)
     const signature = jws.signatures[0].signature
     deepSkillsDocument.signature = signature // Should whole proof section
 

@@ -1,27 +1,45 @@
 'use strict'
 
 const CoordinApeService = require('../services/coordinApeService')
+const IssuerService = require('../services/issuerService')
+const schema = require('../helpers/schema')
+const { ISSUE_CREDENTIALS_TYPE } = process.env
+const issuerService = new IssuerService()
 
 const pullCoordinapeData = async (req, res) => {
-  const { signature, address, data, hash } = req.body
-  const coordinApeService = new CoordinApeService({
-    signature,
-    address,
-    data,
-    hash,
-  })
-  await coordinApeService.getToken()
+  try {
+    const { signature, address, data, hash } = req.body
 
-  const rawData = await coordinApeService.pullData()
-  if (rawData?.message) {
-    return res.status(400).json(rawData)
-  }
-  const corrdinapeProfileVCData = {
-    skills: rawData?.profile?.skills,
-    rest: rawData,
-  }
+    const coordinApeService = new CoordinApeService({
+      signature,
+      address,
+      data,
+      hash,
+    })
+    const token = await coordinApeService.getToken()
+    coordinApeService.setToken(token)
+    const pulledData = await coordinApeService.pullData()
+    let validationResults = await issuerService.validateDataAgainstSchema(
+      pulledData,
+      schema
+    )
+    if (validationResults.errors.length > 0) {
+      throw new Error('schema got changed')
+    }
+    let results = await issuerService.issueStructeredData(
+      pulledData,
+      ISSUE_CREDENTIALS_TYPE
+    )
 
-  res.status(200).json({ corrdinapeProfileVCData })
+    const cordinapeProfileVCData = {
+      skills: rawData?.profile?.skills,
+      rest: rawData,
+    }
+
+    res.status(200).json({ cordinapeProfileVCData, results })
+  } catch (e) {
+    res.status(400).json({ error: e.message })
+  }
 }
 
 module.exports = pullCoordinapeData
