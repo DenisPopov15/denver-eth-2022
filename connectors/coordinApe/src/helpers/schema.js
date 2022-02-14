@@ -1,28 +1,28 @@
 module.exports = {
-  id: 'coordinape',
   type: 'object',
   properties: {
     date: {
       type: 'string',
-      format: 'date-time',
-      title: 'date', // Issuance date
       maxLength: 30,
     },
     circle: {
       type: 'string',
-      title: 'circle', // Name of CoordinApe Circle
     },
     skills: {
       type: 'array',
-      title: 'skills', // Array of skills
+      items: {
+        type: 'string',
+      },
     },
     givesReceived: {
       type: 'number',
-      title: 'givesRecieved', // Total number of Gives received last epoch
+      title: 'givesRecieved',
     },
     notes: {
       type: 'array',
-      title: 'notes', // Array of all notes received by user during last epoch
+      items: {
+        type: 'string',
+      },
     },
     issuerDid: {
       type: 'string',
@@ -36,6 +36,24 @@ module.exports = {
       type: 'string',
       title: 'signature',
     },
+    collaborators: {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          username: { type: 'string' },
+          avatar: { type: 'string' },
+          address: { type: 'string' },
+        },
+      },
+    },
   },
-  required: ['givesReceived', 'notes', 'skills', 'circle', 'date'],
+  required: [
+    'givesReceived',
+    'notes',
+    'skills',
+    'circle',
+    'date',
+    'collaborators',
+  ],
 }

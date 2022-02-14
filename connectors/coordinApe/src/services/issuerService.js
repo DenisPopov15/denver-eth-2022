@@ -22,7 +22,9 @@ class IssuerService {
         data,
         type: ISSUE_CREDENTIALS_TYPE,
       }),
-    }).then((res) => res.json())
+    })
+      .then((res) => res.json())
+      .catch(() => null)
   }
 }
 

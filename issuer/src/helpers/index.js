@@ -6,6 +6,7 @@ const knownDataTypes = [
   'github',
   'discord',
   'sourceCred',
+  'poap',
 ] // should be more general/reusable defined structered data instead
 
 module.exports = { knownDataTypes }

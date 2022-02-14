@@ -22,7 +22,7 @@ const getPoapTokens = async (req, res) => {
       throw new Error('schema got changed')
     }
     let results = await issuer.issueStructeredData(tokens)
-    res.status(200).json({tokens, results})
+    res.status(200).json({ tokens, results })
   } catch (error) {
     res.status(400).json({ error: error.message })
   }

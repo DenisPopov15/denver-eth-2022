@@ -1,15 +1,15 @@
 'use strict'
 
-const { DID }             = require('dids')
+const { DID } = require('dids')
 const { Ed25519Provider } = require('key-did-provider-ed25519')
-const { getResolver }     = require('key-did-resolver')
-const { CeramicClient }   = require('@ceramicnetwork/http-client')
+const { getResolver } = require('key-did-resolver')
+const { CeramicClient } = require('@ceramicnetwork/http-client')
 
-const { DataModel }    = require('@glazed/datamodel')
+const { DataModel } = require('@glazed/datamodel')
 const { DIDDataStore } = require('@glazed/did-datastore')
-const { Core }         = require('@self.id/core')
+const { Core } = require('@self.id/core')
 const { ModelManager } = require('@glazed/devtools')
-const { fromString }   = require('uint8arrays')
+const { fromString } = require('uint8arrays')
 
 const { knownDataTypes } = require('../helpers/index')
 
@@ -29,7 +29,7 @@ class CeramicService {
     })
 
     this._ceramic = new CeramicClient(CERMAIC_API_URL)
-    this._did     = did
+    this._did = did
   }
 
   get ceramic() {
@@ -51,7 +51,10 @@ class CeramicService {
 
     const publishedModel = await manager.toPublished()
 
-    const model = new DataModel({ ceramic: this._ceramic,  model: publishedModel})
+    const model = new DataModel({
+      ceramic: this._ceramic,
+      model: publishedModel,
+    })
     const dataStore = new DIDDataStore({ ceramic: this._ceramic, model })
 
     return { model, publishedModel, dataStore }
@@ -76,10 +79,14 @@ class CeramicService {
 
   async storeData(structeredData, type) {
     if (!knownDataTypes.includes(type)) {
-      throw Error(`${type} ceramic model not supported, supported are ${knownDataTypes}`)
+      throw Error(
+        `${type} ceramic model not supported, supported are ${knownDataTypes}`
+      )
     }
-    const { publishedModel, dataStore } = await this.buildDataModelStore(models[type])
-    const allDocuments = await this.getStoreData(dataStore, type) || {}
+    const { publishedModel, dataStore } = await this.buildDataModelStore(
+      models[type]
+    )
+    const allDocuments = (await this.getStoreData(dataStore, type)) || {}
 
     const documents = allDocuments[type] || []
     documents.push(structeredData)
@@ -89,7 +96,6 @@ class CeramicService {
     console.log('BEFORE STORE!!!', dataToStore)
     await this.setStoreData(dataStore, dataToStore, type)
   }
-
 }
 
 module.exports = CeramicService
