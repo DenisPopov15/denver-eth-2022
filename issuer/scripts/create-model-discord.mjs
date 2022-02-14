@@ -59,7 +59,7 @@ const discordSchemaID = await manager.createSchema('discord', {
       properties: {
         servername: { type: "string" },
         serverid: { type: "string" },
-        servericon: { type: "string" }
+        servericon: { type: "string" } // To show in the UI: https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}.png
       }
     }
   }
