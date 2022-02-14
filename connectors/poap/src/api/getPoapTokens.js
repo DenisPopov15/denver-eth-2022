@@ -3,6 +3,7 @@
 const PoapService = require('../services/poapService')
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
+const { ISSUE_CREDENTIALS_TYPE } = process.env
 
 const poapService = new PoapService()
 const issuer = new IssuerService()
@@ -21,7 +22,10 @@ const getPoapTokens = async (req, res) => {
     if (result.errors.length > 0) {
       throw new Error('schema got changed')
     }
-    let results = await issuer.issueStructeredData(tokens)
+    let results = await issuer.issueStructeredData(
+      tokens,
+      ISSUE_CREDENTIALS_TYPE
+    )
     res.status(200).json({ tokens, results })
   } catch (error) {
     res.status(400).json({ error: error.message })

@@ -1,9 +1,11 @@
 'use strict'
 const fetch = require('node-fetch')
-const { ISSUER_SERVICE_API_URL, ISSUE_CREDENTIALS_TYPE } = process.env
+const { ISSUER_SERVICE_API_URL } = process.env
 const createAuth = require('../helpers/createAuth')
 const Validator = require('jsonschema').Validator
+
 const v = new Validator()
+
 class IssuerService {
   constructor() {}
 
@@ -11,7 +13,7 @@ class IssuerService {
     return v.validate(data, schema)
   }
 
-  async issueStructeredData(data) {
+  async issueStructeredData(data, type) {
     return fetch(`${ISSUER_SERVICE_API_URL}/issueStructeredData`, {
       method: 'POST',
       headers: {
@@ -20,7 +22,7 @@ class IssuerService {
       },
       body: JSON.stringify({
         data,
-        type: ISSUE_CREDENTIALS_TYPE,
+        type,
       }),
     })
       .then((res) => res.json())

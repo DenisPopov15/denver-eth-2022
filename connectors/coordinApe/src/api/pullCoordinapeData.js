@@ -3,7 +3,7 @@
 const CoordinApeService = require('../services/coordinApeService')
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
-
+const { ISSUE_CREDENTIALS_TYPE } = process.env
 const issuerService = new IssuerService()
 
 const pullCoordinapeData = async (req, res) => {
@@ -26,7 +26,10 @@ const pullCoordinapeData = async (req, res) => {
     if (validationResults.errors.length > 0) {
       throw new Error('schema got changed')
     }
-    let results = await issuerService.issueStructeredData(pulledData)
+    let results = await issuerService.issueStructeredData(
+      pulledData,
+      ISSUE_CREDENTIALS_TYPE
+    )
 
     const cordinapeProfileVCData = {
       skills: rawData?.profile?.skills,
