@@ -36,13 +36,11 @@ class DiscordService {
   }
 
   prepareDataForIssuing(rawServersList) {
-    return rawServersList.map((server) => {
-      return {
-        servername: server.name,
-        serverid: server.icon,
-        servericon: server.id,
-      }
-    })
+    return rawServersList.map((server) => ({
+      servername: server.name,
+      serverid: server.icon,
+      servericon: server.id,
+    }))
   }
 
   async getUserData() {
