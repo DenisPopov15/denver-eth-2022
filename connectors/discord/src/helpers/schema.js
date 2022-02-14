@@ -1,27 +1,15 @@
 module.exports = {
   type: 'object',
   properties: {
-    date: {
-      type: 'string',
-      maxLength: 30,
-    },
-    circle: {
-      type: 'string',
-    },
-    skills: {
-      type: 'array',
+    servers: {
+      type: 'array', // Array of all servers
       items: {
-        type: 'string',
-      },
-    },
-    givesReceived: {
-      type: 'number',
-      title: 'givesRecieved',
-    },
-    notes: {
-      type: 'array',
-      items: {
-        type: 'string',
+        type: 'object',
+        properties: {
+          servername: { type: 'string' },
+          serverid: { type: 'string' },
+          servericon: { type: 'string' },
+        },
       },
     },
     issuerDid: {
@@ -36,24 +24,6 @@ module.exports = {
       type: 'string',
       title: 'signature',
     },
-    collaborators: {
-      type: 'array',
-      items: {
-        type: 'object',
-        properties: {
-          username: { type: 'string' },
-          avatar: { type: 'string' },
-          address: { type: 'string' },
-        },
-      },
-    },
   },
-  required: [
-    'givesReceived',
-    'notes',
-    'skills',
-    'circle',
-    'date',
-    'collaborators',
-  ],
+  required: ['servers'],
 }

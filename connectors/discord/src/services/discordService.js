@@ -35,6 +35,16 @@ class DiscordService {
     return new DiscordService(authorization)
   }
 
+  prepareDataForIssuing(rawServersList) {
+    return rawServersList.map((server) => {
+      return {
+        servername: server.name,
+        serverid: server.icon,
+        servericon: server.id,
+      }
+    })
+  }
+
   async getUserData() {
     return this.executeGet('https://discord.com/api/users/@me')
   }
