@@ -13,7 +13,7 @@ const callback = async(req, res) => {
 
   const userVCData    = userData
   const serversVCData = userServers
-
+  
   res.status(200).json({ userVCData, serversVCData })
 }
 
