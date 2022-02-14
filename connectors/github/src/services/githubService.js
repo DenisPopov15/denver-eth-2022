@@ -10,13 +10,21 @@ class GithubService {
 
   static async initialize(code) {
     const app = new OAuthApp({
-      clientType:   'oauth-app',
-      clientId:     GITHUB_APP_CLIENT_ID,
+      clientType: 'oauth-app',
+      clientId: GITHUB_APP_CLIENT_ID,
       clientSecret: GITHUB_APP_CLIENT_SECRET,
     })
     const octokit = await app.getUserOctokit({ code })
 
     return new GithubService(octokit)
+  }
+
+  prepareDataForIssuing(rawUserData, rawReposData) {
+    return {
+      username: rawUserData.login,
+      repos: rawReposData.map((repo) => repo.full_name),
+      languages: [''],
+    }
   }
 
   async getUserData() {
