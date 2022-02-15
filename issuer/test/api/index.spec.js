@@ -3,6 +3,7 @@
 const { expect } = require('chai')
 const request    = require('supertest')
 const createAuth = require('../helpers/createAuth')
+const CeramicService = require('../../src/services/ceramicService')
 
 const holderDid = 'did:3:kjzl6cwe1jw149u7xahdzwu6nsuwnf8iygdv0b7sbfwr3hyospdcx5ila6pvwc0'
 
@@ -46,6 +47,13 @@ describe('Issuer', async() => {
 
     expect(response.body.structeredData).to.be.not.undefined
     expect(response.status).to.be.equal(200)
+
+    expect(response.body.structeredData.holderDid).to.be.not.equal(data.holderDid)
+    expect(response.body.structeredData.reputations).to.be.not.deep.equal(data.reputations)
+
+    const ceramicService = new CeramicService()
+    await ceramicService.initilize()
+    const decryptedData = await ceramicService.decryptDocument(response.body.structeredData)
   })
 
   it('issueStructeredData (apeprofiles)', async() => {
