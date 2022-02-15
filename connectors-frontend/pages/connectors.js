@@ -1,5 +1,10 @@
 import { coordinapeConnector } from "../services/connectors/coordinape"
+import { poapConnector } from "../services/connectors/poap"
+import { sourcecredConnector } from "../services/connectors/sourcecred"
+import { discordConnector } from "../services/connectors/discord"
 
+const discordAPIUrl = `${process.env.NEXT_PUBLIC_DISCORD_CONNECTOR_API_ENDPOINT}/discordRedirect`
+const githubAPIUrl = `${process.env.NEXT_PUBLIC_GITHUB_CONNECTOR_API_ENDPOINT}/githubRedirect`
 export default function Connectors() {
   return (
     <div className="container">
@@ -8,16 +13,25 @@ export default function Connectors() {
           <button onClick={coordinapeConnector}>coordinApe</button>
         </li>
         <li>
-          <button>discord</button>
+          <button onClick={poapConnector}>poap</button>
         </li>
         <li>
-          <button>github</button>
+          <button onClick={sourcecredConnector}>sourceCred</button>
         </li>
         <li>
-          <button>poap</button>
+          <a href={discordAPIUrl}>discord</a>
+          {/* <button
+            onClick={() =>
+              discordConnector({
+                did: "did:web:discord.com:123456789",
+              })
+            }
+          >
+            discord
+          </button> */}
         </li>
         <li>
-          <button>sourceCred</button>
+          <a href={githubAPIUrl}>github</a>
         </li>
       </ul>
     </div>

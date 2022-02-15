@@ -4,10 +4,11 @@ const SourceCredService = require('../services/sourceCredService')
 const { ISSUE_CREDENTIALS_TYPE } = process.env
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
+const withTimeout = require('../helpers/withTimeout')
 
 const issuer = new IssuerService()
 
-const pullSourceCredData = async (req, res) => {
+const pullSourceCredData = withTimeout(async (req, res) => {
   try {
     let { identifiers } = req.query
     if (!identifiers?.length) {
@@ -40,6 +41,6 @@ const pullSourceCredData = async (req, res) => {
   } catch (e) {
     res.status(400).json({ error: e.message })
   }
-}
+})
 
 module.exports = pullSourceCredData

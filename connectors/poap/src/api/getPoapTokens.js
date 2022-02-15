@@ -3,11 +3,13 @@
 const PoapService = require('../services/poapService')
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
+const withTimeout = require('../helpers/withTimeout')
 const { ISSUE_CREDENTIALS_TYPE } = process.env
 
 const poapService = new PoapService()
 const issuer = new IssuerService()
-const getPoapTokens = async (req, res) => {
+
+const getPoapTokens = withTimeout(async (req, res) => {
   try {
     const { address, signature, digest } = req?.body
     const addressFromSignature = poapService.getVerifiedAddress(
@@ -30,6 +32,6 @@ const getPoapTokens = async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: error.message })
   }
-}
+})
 
 module.exports = getPoapTokens

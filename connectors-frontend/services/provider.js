@@ -8,3 +8,4 @@ export const getProvider = () => {
 export const requestAccounts = async (provider) => {
   return await provider.send("eth_requestAccounts", [])
 }
+

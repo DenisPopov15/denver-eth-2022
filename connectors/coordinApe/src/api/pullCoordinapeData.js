@@ -5,8 +5,9 @@ const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
 const { ISSUE_CREDENTIALS_TYPE } = process.env
 const issuerService = new IssuerService()
-
-const pullCoordinapeData = async (req, res) => {
+const withTimeout = require('../helpers/withTimeout')
+const pullCoordinapeData = withTimeout(async (req, res) => {
+  console.log('pullCoordinapeData')
   try {
     const { signature, address, data, hash } = req.body
 
@@ -30,7 +31,7 @@ const pullCoordinapeData = async (req, res) => {
       pulledData,
       ISSUE_CREDENTIALS_TYPE
     )
-    console.log(results)
+    
     const cordinapeProfileVCData = {
       skills: results?.profile?.skills,
       rest: results,
@@ -40,6 +41,6 @@ const pullCoordinapeData = async (req, res) => {
   } catch (e) {
     res.status(400).json({ error: e.message })
   }
-}
+})
 
 module.exports = pullCoordinapeData
