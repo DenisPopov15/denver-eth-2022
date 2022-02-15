@@ -12,6 +12,7 @@ const { ModelManager } = require('@glazed/devtools')
 const { fromString } = require('uint8arrays')
 
 const { knownDataTypes } = require('../helpers/index')
+const IssuerService = require('./issuerService')
 
 const models = require('../models/index')
 
@@ -19,6 +20,23 @@ const { SEED, CERMAIC_API_URL } = process.env
 if (!SEED) {
   throw new Error('Missing SEED environment variable')
 }
+
+const accessControlConditions = [
+  {
+    contractAddress: '',
+    standardContractType: '',
+    chain,
+    method: 'eth_getBalance',
+    parameters: [
+      ':userAddress',
+      'latest'
+    ],
+    returnValueTest: {
+      comparator: '>=',
+      value: '0'
+    }
+  }
+]
 
 class CeramicService {
   constructor() {
@@ -77,11 +95,26 @@ class CeramicService {
     return documents
   }
 
-  async storeData(structeredData, type) {
+  async encryptDocument() {
+    const { encrypted, symmetricKey } = await global.litProtocolService.encrypt(structeredData)
+    const authSig = await IssuerService.createLITAuthSig()
+    const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
+
+    // encrypted.encryptedKeyHex
+    // encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
+
+    return encrypted
+  }
+
+  async storeData(structeredData, type, encrypt = false) {
     if (!knownDataTypes.includes(type)) {
       throw Error(
         `${type} ceramic model not supported, supported are ${knownDataTypes}`
       )
+    }
+
+    if (encrypt) {
+      structeredData = await this.encryptDocument()
     }
 
     const { publishedModel, dataStore } = await this.buildDataModelStore(

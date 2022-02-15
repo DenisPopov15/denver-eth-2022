@@ -2,24 +2,24 @@
 
 const { expect } = require('chai')
 const LitProtocolService = require('../../src/services/litProtocolService')
-
-const authSig = {
-  sig: '0x4f10d9749e5ee3493ab19bf308c3319cdb22c027bca3d6739e2a791eecbe802430a1f0da57375193dbc7d3b3adb07a53250210130d4dd64fb70971b6c2b486461b',
-  derivedVia: 'web3.eth.personal.sign',
-  signedMessage:
-    'I am creating an account to use Lit Protocol at 2022-02-14T23:43:27.759',
-  address: '0x3c4fafdedcc25c5f2653dbae3391517b33cc6778',
-}
+const IssuerService = require('../../src/services/issuerService')
 
 describe('LitProtocolService', async() => {
   let litProtocolService
+  let authSig
 
   before(async() => {
     litProtocolService = await LitProtocolService.initlize()
+    authSig = await IssuerService.createLITAuthSig()
   })
 
   it('.encrypt and then .decrypt', async() => {
-    const message = { value: 'secret test' }
+    const message = {
+      stringElem: 'secret test',
+      objectElem: { objecktKey1: 'objectValue1', objecktKey2: 'objectValue2' },
+      arrayElem: ['1', '2', '3'],
+      arrayOfObects: [{ objectField1: ['1', '2'], objectField2: 'asd', objectField3: { property: 'asd' } }]
+    }
     const { encrypted, symmetricKey } = await litProtocolService.encrypt(message)
     expect(encrypted).to.be.not.undefined
     expect(symmetricKey).to.be.not.undefined
@@ -34,8 +34,6 @@ describe('LitProtocolService', async() => {
     const { encrypted, symmetricKey } = await litProtocolService.encrypt(message)
 
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig)
-    console.log('symmetricKey!!', symmetricKey)
-    console.log('encryptedKeyHex!!', encryptedKeyHex)
     expect(encryptedKeyHex).to.be.not.undefined
 
     const pulledSymmetricKey = await litProtocolService.getKey(encryptedKeyHex, authSig)
