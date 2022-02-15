@@ -7,6 +7,8 @@ const express    = require('express')
 const middleware = require('./middleware')
 const routes     = require('./api/index')
 
+const LitProtocolService = require('./services/litProtocolService')
+
 const DEFAULT_EXIT_TIMEOUT = 1000 // milliseconds
 const { PORT } = process.env
 
@@ -29,6 +31,10 @@ class App {
 
   get logger() {
     return this._logger
+  }
+
+  get litProtocolService() {
+    return this._litProtocolService
   }
 
   get port() {
@@ -69,12 +75,20 @@ class App {
     this.http.use(middleware.jsonBody(this.bodySizeLimit))
   }
 
+  async initializeLitProtocol() {
+    const litProtocolService = await LitProtocolService.initlize()
+    this._litProtocolService = litProtocolService
+    // TODO: Update to use only from app.litProtocolService
+    global.litProtocolService = litProtocolService
+  }
+
   async initialize() {
     await this.createLogger()
 
     this.createServer()
     this.createServerMiddleware()
     this.createApi()
+    await this.initializeLitProtocol()
   }
 
   async start() {
