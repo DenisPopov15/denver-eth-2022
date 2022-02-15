@@ -1,9 +1,11 @@
+import { coordinapeConnector } from "../services/connectors/coordinape"
+
 export default function Connectors() {
   return (
     <div className="container">
       <ul>
         <li>
-          <button>coordinApe</button>
+          <button onClick={coordinapeConnector}>coordinApe</button>
         </li>
         <li>
           <button>discord</button>
