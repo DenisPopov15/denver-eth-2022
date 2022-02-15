@@ -26,7 +26,7 @@ describe('Issuer', async() => {
     expect(response.status).to.be.equal(200)
   })
 
-  it.only('issueStructeredData (colonies)', async() => {
+  it('issueStructeredData (colonies)', async() => {
     const type = 'colonies'
     const data = {
       holderDid,
@@ -109,7 +109,7 @@ describe('Issuer', async() => {
     expect(response.status).to.be.equal(200)
   })
 
-  it.only('issueStructeredData (discords)', async() => {
+  it('issueStructeredData (discords)', async() => {
     const type = 'discords'
     const data = {
       holderDid,
