@@ -36,8 +36,14 @@ const discordSchemaID = await manager.createSchema('discord', {
     servers: {
       type: 'array', // Array of all servers
       items: {
-        $ref: '#/definitions/collaborator'
-      }
+        type: 'object',
+        title: 'server',
+        properties: {
+          servername: { type: "string" },
+          serverid: { type: "string" },
+          servericon: { type: "string" } // To show in the UI: https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}.png
+        },
+      },
     },
     issuerDid: {
       type: 'string',
@@ -50,18 +56,20 @@ const discordSchemaID = await manager.createSchema('discord', {
     signature: {
       type: 'string',
       title: 'signature'
-    }
+    },
+    isEncrypted: {
+      type: 'boolean',
+      title: 'encrypted'
+    },
+    encryptedKeyHex: {
+      type: 'string',
+      title: 'encryptedKey'
+    },
+    accessControlConditions: {
+      type: 'string',
+      title: 'controlConditions'
+    },
   },
-  definitions: {
-    server: {
-      type: "object",
-      properties: {
-        servername: { type: "string" },
-        serverid: { type: "string" },
-        servericon: { type: "string" } // To show in the UI: https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}.png
-      }
-    }
-  }
 })
 const discordsSchemaID = await manager.createSchema('discords', {
   $schema: 'http://json-schema.org/draft-07/schema#',

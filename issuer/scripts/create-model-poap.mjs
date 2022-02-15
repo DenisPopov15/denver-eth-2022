@@ -63,7 +63,19 @@ const poapSchemaID = await manager.createSchema('poap', {
     signature: {
       type: 'string',
       title: 'signature'
-    }
+    },
+    isEncrypted: {
+      type: 'boolean',
+      title: 'encrypted'
+    },
+    encryptedKeyHex: {
+      type: 'string',
+      title: 'encryptedKey'
+    },
+    accessControlConditions: {
+      type: 'string',
+      title: 'controlConditions'
+    },
   },
 })
 const poapsSchemaID = await manager.createSchema('poaps', {

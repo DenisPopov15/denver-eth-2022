@@ -58,7 +58,19 @@ const scSchemaID = await manager.createSchema('sc', {
     signature: {
       type: 'string',
       title: 'signature'
-    }
+    },
+    isEncrypted: {
+      type: 'boolean',
+      title: 'encrypted'
+    },
+    encryptedKeyHex: {
+      type: 'string',
+      title: 'encryptedKey'
+    },
+    accessControlConditions: {
+      type: 'string',
+      title: 'controlConditions'
+    },
   },
 })
 const scsSchemaID = await manager.createSchema('poaps', {

@@ -72,20 +72,28 @@ const apeProfileSchemaID = await manager.createSchema('ape', {
       type: 'string',
       title: 'signature',
     },
+    isEncrypted: {
+      type: 'boolean',
+      title: 'encrypted'
+    },
+    encryptedKeyHex: {
+      type: 'string',
+      title: 'encryptedKey'
+    },
+    accessControlConditions: {
+      type: 'string',
+      title: 'controlConditions'
+    },
     collaborators: {
       type: 'array',
       items: {
-        $ref: '#/definitions/collaborator',
-      },
-    },
-  },
-  definitions: {
-    collaborator: {
-      type: 'object',
-      properties: {
-        username: { type: 'string' },
-        avatar: { type: 'string' },
-        address: { type: 'string' },
+        type: 'object',
+        title: 'collaborator'
+        properties: {
+          username: { type: 'string' },
+          avatar: { type: 'string' },
+          address: { type: 'string' },
+        },
       },
     },
   },
