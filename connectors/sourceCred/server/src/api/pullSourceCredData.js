@@ -30,7 +30,7 @@ const pullSourceCredData = async (req, res) => {
     if (validationResults.errors.length > 0) {
       throw new Error('schema got changed')
     }
-    console.log(preparedDataForIssue, ISSUE_CREDENTIALS_TYPE)
+    
     const issueResult = await issuer.issueStructeredData(
       preparedDataForIssue,
       ISSUE_CREDENTIALS_TYPE
