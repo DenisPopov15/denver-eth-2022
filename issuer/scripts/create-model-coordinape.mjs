@@ -88,7 +88,7 @@ const apeProfileSchemaID = await manager.createSchema('ape', {
       type: 'array',
       items: {
         type: 'object',
-        title: 'collaborator'
+        title: 'collaborator',
         properties: {
           username: { type: 'string' },
           avatar: { type: 'string' },
