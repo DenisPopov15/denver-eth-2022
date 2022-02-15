@@ -1,12 +1,13 @@
 'use strict'
 
 const knownDataTypes = [
+  'colonies',
   'deepskills',
-  'coordinape',
-  'github',
-  'discord',
-  'sourceCred',
-  'poap',
+  'coordinapes',
+  'githubs',
+  'discords',
+  'sourceCreds',
+  'poaps',
 ] // should be more general/reusable defined structered data instead
 
 module.exports = { knownDataTypes }

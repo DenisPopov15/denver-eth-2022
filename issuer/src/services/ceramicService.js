@@ -100,8 +100,9 @@ class CeramicService {
     const authSig = await IssuerService.createLITAuthSig()
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
 
-    // encrypted.encryptedKeyHex
-    // encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
+    encrypted.isEncrypted = true
+    encrypted.encryptedKeyHex = encryptedKeyHex
+    encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
 
     return encrypted
   }
@@ -127,7 +128,7 @@ class CeramicService {
 
     const dataToStore = {}
     dataToStore[type] = documents
-    console.log('BEFORE STORE!!!', dataToStore)
+    console.dir(dataToStore, { depth: 10 })
     await this.setStoreData(dataStore, dataToStore, type)
   }
 }

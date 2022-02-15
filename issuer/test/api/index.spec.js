@@ -14,7 +14,29 @@ describe('Issuer', async() => {
     const data = {
       holderDid,
       taskname:    'Turn corn flour into dough',
-      description: 'Did it well'
+      description: 'Did it well',
+    }
+
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: false })
+
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
+
+  it.only('issueStructeredData (colonies)', async() => {
+    const type = 'colonies'
+    const data = {
+      holderDid,
+      reputations: [
+        {
+          colonyname: 'DeepSkills',
+          colonyaddress: 'xDaiContract',
+          reputation: '99%'
+        }
+      ]
     }
 
     const response = await request(global.server)
