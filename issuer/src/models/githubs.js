@@ -1,4 +1,4 @@
-{
+const githubModel = {
   "schemas": {
     "kjzl6cwe1jw1483s6ojtmicdzvmvpy9f5x6eaccrf13cx3rjhgwgb4f0d0cmqs4": {
       "alias": "github",
@@ -90,3 +90,5 @@
     }
   }
 }
+
+module.exports = githubModel

@@ -82,7 +82,7 @@ class LitProtocolService {
   }
 
   _encryptString(string, encryptionKeyBuffer) {
-    const stringBuffer = Buffer.from(string)
+    const stringBuffer = Buffer.from(String(string))
     const iv = crypto.randomBytes(IV_LENGTH)
 
     const cipher = createCipheriv(ENCRYPTION_ALGORITHM, encryptionKeyBuffer, iv)

@@ -3,10 +3,10 @@
 const knownDataTypes = [
   'colonies',
   'deepskills',
-  'coordinapes',
+  'apeprofiles',
   'githubs',
   'discords',
-  'sourceCreds',
+  'sourcecreds',
   'poaps',
 ] // should be more general/reusable defined structered data instead
 

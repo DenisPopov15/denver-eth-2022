@@ -47,4 +47,103 @@ describe('Issuer', async() => {
     expect(response.body.structeredData).to.be.not.undefined
     expect(response.status).to.be.equal(200)
   })
+
+  it('issueStructeredData (apeprofiles)', async() => {
+    const type = 'apeprofiles'
+    const data = {
+      holderDid,
+      circle: 'DeepSkill Circle',
+      skills: ['Web3', 'Fronend', 'Fullstack'],
+      givesReceived: 4,
+      notes: ['Made a good progress with implementation coordindape'],
+      collaborators: [{
+        username: 'Denis',
+        avatar: 'https://test.avatar.jpg',
+        address: 'x0...'
+      }]
+    }
+
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: false })
+
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
+
+  it('issueStructeredData (poaps)', async() => {
+    const type = 'poaps'
+    const data = {
+      holderDid,
+      date: new Date().toISOString(),
+      title: 'Super NFT',
+      description: 'BEst token ever',
+      image: 'https://best-token-ever.com'
+    }
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: false })
+
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
+
+  it('issueStructeredData (sourcecreds)', async() => {
+    const type = 'sourcecreds'
+    const data = {
+      holderDid,
+      date: new Date().toISOString(),
+      instance: 'https://source-cred-deep-skills.com',
+      credScore: 100500,
+    }
+
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: true })
+
+    console.log('response.body!!', response.body)
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
+
+  it.only('issueStructeredData (discords)', async() => {
+    const type = 'discords'
+    const data = {
+      holderDid,
+      servers: [{
+        servername: 'DeepSkills',
+        serverid: 'someId',
+        servericon: 'https://cdn.discordapp.com/icons/{guild.id}/{guild.icon}.png'
+      }]
+    }
+
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: false })
+
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
+
+  it('issueStructeredData (githubs)', async() => {
+    const type = 'githubs'
+    const data = {
+      holderDid,
+      username: 'DenisPopov15',
+      repos: ['denver-eth-2022'],
+      languages: ['TS', 'JS', 'Ruby', 'Python', 'PHP']
+    }
+
+    const response = await request(global.server)
+      .post('/api/issueStructeredData')
+      .set('auth', auth)
+      .send({ type, data, encrypt: false })
+
+    expect(response.body.structeredData).to.be.not.undefined
+    expect(response.status).to.be.equal(200)
+  })
 })

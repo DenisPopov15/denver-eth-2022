@@ -1,4 +1,4 @@
-{
+const sourcecredModel = {
   "schemas": {
     "kjzl6cwe1jw1463x7bqrxqqmynotgy11ob3hig8jc4c50s4e5z08hl05xfys7i1": {
       "alias": "sc",
@@ -90,3 +90,5 @@
     }
   }
 }
+
+module.exports = sourcecredModel

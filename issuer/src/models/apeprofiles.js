@@ -1,4 +1,4 @@
-{
+const apeModel = {
   "schemas": {
     "kjzl6cwe1jw147ytcn427907o1ax9h80ewek2oia1q8ou9hbr0ujeazhdsksgv7": {
       "alias": "ape",
@@ -90,3 +90,5 @@
     }
   }
 }
+
+module.exports = apeModel

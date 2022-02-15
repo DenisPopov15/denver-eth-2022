@@ -1,4 +1,4 @@
-{
+const discordModel = {
   "schemas": {
     "kjzl6cwe1jw146qcbrzd9rosj0kqj2rfsjryen4xoqd88qom0z5dlc85clhq5px": {
       "alias": "discord",
@@ -90,3 +90,4 @@
     }
   }
 }
+module.exports = discordModel
