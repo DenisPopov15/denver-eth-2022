@@ -5,7 +5,6 @@ import { DID } from 'dids'
 import { Ed25519Provider } from 'key-did-provider-ed25519'
 import { getResolver } from 'key-did-resolver'
 import { fromString } from 'uint8arrays'
-``
 import { SEED, API_URL } from '../config/index.mjs'
 
 if (!SEED) {
@@ -36,7 +35,7 @@ const discordSchemaID = await manager.createSchema('discord', {
   properties: {
     servers: {
       type: 'array', // Array of all servers
-      items: { 
+      items: {
         $ref: '#/definitions/collaborator'
       }
     },
@@ -109,7 +108,7 @@ await manager.createTile(
 // Write model to JSON file
 console.log('JSON.stringify(manager.toJSON())!!!', JSON.stringify(manager.toJSON()))
 await writeFile(
-  new URL('model.json', import.meta.url),
+  new URL('model-discord.json', import.meta.url),
   JSON.stringify(manager.toJSON()),
 )
-console.log('Encoded model written to scripts/model.json file')
+console.log('Encoded model written to scripts/model-discord.json file')

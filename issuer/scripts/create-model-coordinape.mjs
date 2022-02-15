@@ -138,7 +138,7 @@ console.log(
   JSON.stringify(manager.toJSON())
 )
 await writeFile(
-  new URL('model.json', import.meta.url),
+  new URL('model-ape.json', import.meta.url),
   JSON.stringify(manager.toJSON())
 )
-console.log('Encoded model written to scripts/model.json file')
+console.log('Encoded model written to scripts/model-ape.json file')

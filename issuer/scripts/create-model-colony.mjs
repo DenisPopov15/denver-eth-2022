@@ -5,7 +5,6 @@ import { DID } from 'dids'
 import { Ed25519Provider } from 'key-did-provider-ed25519'
 import { getResolver } from 'key-did-resolver'
 import { fromString } from 'uint8arrays'
-``
 import { SEED, API_URL } from '../config/index.mjs'
 
 if (!SEED) {
@@ -37,7 +36,13 @@ const colonySchemaID = await manager.createSchema('colony', {
     reputations: {
       type: 'array', // Array of all user's colonies and their reputation
       items: {
-        $ref: '#/definitions/reputation'
+        type: 'object',
+        title: 'reputation',
+        properties: {
+          colonyname: { type: "string" }, // String, name of the colony
+          colonyaddress: { type: "string" }, // xDai contract address of colony
+          reputation: { type: "string" } // reputation score, 0-100%
+        }
       }
     },
     issuerDid: {
@@ -51,18 +56,20 @@ const colonySchemaID = await manager.createSchema('colony', {
     signature: {
       type: 'string',
       title: 'signature'
-    }
+    },
+    isEncrypted: {
+      type: 'boolean',
+      title: 'encrypted'
+    },
+    encryptedKeyHex: {
+      type: 'string',
+      title: 'encryptedKey'
+    },
+    accessControlConditions: {
+      type: 'string',
+      title: 'controlConditions'
+    },
   },
-  definitions: {
-    reputation: {
-      type: "object",
-      properties: {
-        colonyname: { type: "string" }, // String, name of the colony
-        colonyaddress: { type: "string" }, // xDai contract address of colony
-        reputation: { type: "string" } // reputation score, 0-100%
-      }
-    }
-  }
 })
 const coloniesSchemaID = await manager.createSchema('colonies', {
   $schema: 'http://json-schema.org/draft-07/schema#',
@@ -109,7 +116,7 @@ await manager.createTile(
 // Write model to JSON file
 console.log('JSON.stringify(manager.toJSON())!!!', JSON.stringify(manager.toJSON()))
 await writeFile(
-  new URL('model.json', import.meta.url),
+  new URL('model-colony.json', import.meta.url),
   JSON.stringify(manager.toJSON()),
 )
-console.log('Encoded model written to scripts/model.json file')
+console.log('Encoded model written to scripts/model-colony.json file')
