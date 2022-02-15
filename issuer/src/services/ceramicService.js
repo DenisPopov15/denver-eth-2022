@@ -16,7 +16,7 @@ const IssuerService = require('./issuerService')
 
 const models = require('../models/index')
 
-const { SEED, CERMAIC_API_URL } = process.env
+const { SEED, CERMAIC_API_URL, CHAIN } = process.env
 if (!SEED) {
   throw new Error('Missing SEED environment variable')
 }
@@ -25,7 +25,7 @@ const accessControlConditions = [
   {
     contractAddress: '',
     standardContractType: '',
-    chain,
+    chain: CHAIN,
     method: 'eth_getBalance',
     parameters: [
       ':userAddress',
@@ -95,7 +95,7 @@ class CeramicService {
     return documents
   }
 
-  async encryptDocument() {
+  async encryptDocument(structeredData) {
     const { encrypted, symmetricKey } = await global.litProtocolService.encrypt(structeredData)
     const authSig = await IssuerService.createLITAuthSig()
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
@@ -114,7 +114,7 @@ class CeramicService {
     }
 
     if (encrypt) {
-      structeredData = await this.encryptDocument()
+      structeredData = await this.encryptDocument(structeredData)
     }
 
     const { publishedModel, dataStore } = await this.buildDataModelStore(

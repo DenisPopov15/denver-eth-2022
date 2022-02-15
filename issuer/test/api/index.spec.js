@@ -20,7 +20,7 @@ describe('Issuer', async() => {
     const response = await request(global.server)
       .post('/api/issueStructeredData')
       .set('auth', auth)
-      .send({ type, data })
+      .send({ type, data, encrypt: true })
 
     expect(response.body.structeredData).to.be.not.undefined
     expect(response.status).to.be.equal(200)
