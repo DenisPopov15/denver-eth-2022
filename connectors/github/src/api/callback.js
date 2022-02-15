@@ -14,17 +14,19 @@ const callback = async (req, res) => {
     const githubService = await GithubService.initialize(code)
     const userData = await githubService.getUserData()
     const userRepos = await githubService.getUserRepos()
-
+    const topTenMostUsedLanguages = await githubService.getLanguages(userRepos)
     const preparedDataForIssue = githubService.prepareDataForIssuing(
       userData,
-      userRepos
+      userRepos,
+      topTenMostUsedLanguages
     )
+    console.log(preparedDataForIssue)
 
     const validationResults = await issuer.validateDataAgainstSchema(
       preparedDataForIssue,
       schema
     )
-    
+
     if (validationResults.errors.length > 0) {
       throw new Error('schema got changed')
     }

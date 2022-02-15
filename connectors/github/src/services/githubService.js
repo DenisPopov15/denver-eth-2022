@@ -19,11 +19,11 @@ class GithubService {
     return new GithubService(octokit)
   }
 
-  prepareDataForIssuing(rawUserData, rawReposData) {
+  prepareDataForIssuing(rawUserData, rawReposData, topTenMostUsedLanguages) {
     return {
       username: rawUserData.login,
       repos: rawReposData.map((repo) => repo.full_name),
-      languages: [''],
+      languages: topTenMostUsedLanguages,
     }
   }
 
@@ -34,13 +34,51 @@ class GithubService {
     }
     return response.data
   }
+  async getLanguages(repos) {
+    const languagesReq = await Promise.all(
+      repos.map((repo) =>
+        this.octokit.rest.repos.listLanguages({
+          owner: repo?.owner?.login,
+          repo: repo.name,
+        })
+      )
+    )
+    const languages = languagesReq.map((lang) => lang.data)
+    const languageUsage = languages.reduce((acc, curr) => {
+      const keys = Object.keys(curr)
+      for (let key of keys) {
+        acc[key] = (acc[key] || 0) + curr[key]
+      }
+      return acc
+    }, {})
+    const topTenMostUsedLanguages = Object.entries(languageUsage)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10)
+      .map(([language, _]) => language)
+    return topTenMostUsedLanguages
+  }
 
   async getUserRepos() {
-    const response = await this.octokit.rest.repos.listForAuthenticatedUser()
-    if (response.status !== 200) {
-      throw new Error(JSON.stringify(response))
+    const iterator = this.octokit.paginate.iterator(
+      this.octokit.rest.repos.listForAuthenticatedUser,
+      {
+        per_page: 100,
+      }
+    )
+    let publicRepos = []
+    // iterate through each response
+    for await (const { data: repos } of iterator) {
+      const notForkNotPrivate = repos?.filter(
+        (repo) => !repo.private && !repo.fork
+      )
+
+      publicRepos = [...publicRepos, ...notForkNotPrivate]
     }
-    return response.data
+    // if (response.status !== 200) {
+    //   throw new Error(JSON.stringify(response))
+    // }
+
+    return publicRepos
   }
 }
 
