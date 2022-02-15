@@ -1,4 +1,5 @@
 import { getProvider, requestAccounts } from "../provider"
+import { coordinapeApi } from "../../api/coordinape"
 export const coordinapeConnector = async () => {
   const provider = await getProvider()
   const accounts = await requestAccounts(provider)
@@ -8,5 +9,11 @@ export const coordinapeConnector = async () => {
 
   const dataSign = `Login to Coordinape ${now}`
   const signature = await signer.signMessage(dataSign)
-  console.log(accounts, address)
+  const result = await coordinapeApi({
+    signature,
+    address,
+    signature,
+    data: dataSign,
+  })
+  console.log(result)
 }

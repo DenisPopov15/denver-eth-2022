@@ -30,10 +30,10 @@ const pullCoordinapeData = async (req, res) => {
       pulledData,
       ISSUE_CREDENTIALS_TYPE
     )
-
+    console.log(results)
     const cordinapeProfileVCData = {
-      skills: rawData?.profile?.skills,
-      rest: rawData,
+      skills: results?.profile?.skills,
+      rest: results,
     }
 
     res.status(200).json({ cordinapeProfileVCData, results })

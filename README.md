@@ -40,6 +40,9 @@ Protocol supports flexible way of adding new data connectors. Currently supporte
  - Install dependencies for each services - just run `npm run fullInstall` from root project folder
  - Run the system `npm run startSystem` (will work only if pm2 installed)
 
+## Frontend 
+You will need to create `.env.local` file in the `connectors-frontend` folder and set the following variables:
+
 ## Connectors
 
 ### Poap
