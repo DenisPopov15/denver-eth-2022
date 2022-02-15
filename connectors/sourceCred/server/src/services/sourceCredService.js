@@ -16,8 +16,8 @@ class SourceCredService {
   }
 
   prepareDataForIssuer(participants, identifiers) {
-    const participantEntity = this.findParticipant(participants, identifiers)
-    const credScore = participantEntity.reduce(
+    const participantEntities = this.findParticipant(participants, identifiers)
+    const credScore = participantEntities.reduce(
       (acc, curr) => acc + curr.cred,
       0
     )
