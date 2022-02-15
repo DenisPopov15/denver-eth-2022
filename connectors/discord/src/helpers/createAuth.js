@@ -9,7 +9,7 @@ const createAuth = () => {
   const expiresAt = now + DEFAULT_EXP_IN_SECONDS
 
   const payload = {
-    iss: 'github-connector',
+    iss: 'discord-connector',
     aud: 'deep-skills-issuer',
     exp: expiresAt,
   }

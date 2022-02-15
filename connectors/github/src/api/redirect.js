@@ -1,16 +1,18 @@
 'use strict'
 
-let { GITHUB_APP_CLIENT_ID } = process.env
+let { GITHUB_APP_CLIENT_ID, HOST } = process.env
 
-const redirect = async(req, res) => {
-  const { host, did } = req.query
+const redirect = async (req, res) => {
+  const { did } = req.query
 
   const clientId = GITHUB_APP_CLIENT_ID
   const scope = 'read:user'
   const encodedScope = encodeURIComponent(scope)
 
   const authorizationUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${encodedScope}`
-  const redirectUri = `https://${host}/api/githubCallback?did=${encodeURIComponent(did)}`
+  const redirectUri = `${HOST}/api/githubCallback?did=${encodeURIComponent(
+    did
+  )}`
 
   const encodedRedirectUri = encodeURIComponent(redirectUri)
   const finalAuthorizationUrl = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}`
