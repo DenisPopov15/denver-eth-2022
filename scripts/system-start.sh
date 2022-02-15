@@ -6,6 +6,6 @@ if ! [ -x "$(command -v pm2)" ]; then
 fi
 
 
+pm2 start processes.yaml
 npm --prefix ./connectors/sourcecred/instance run load
-npm --prefix ./connectors/sourcecred/instance run start &
-pm2 start processes.yaml --no-daemon --watch
+npm --prefix ./connectors/sourcecred/instance run start
