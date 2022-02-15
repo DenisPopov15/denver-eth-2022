@@ -18,7 +18,6 @@ module.exports = (app) => {
   const handler = async (req, res, next) => {
     try {
       const token = req.headers['auth']
-
       if (!token) {
         const error = new Error('Auth missed')
         error.httpStatusCode = 401

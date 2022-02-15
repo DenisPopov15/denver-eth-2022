@@ -2,7 +2,7 @@
 
 const GithubService = require('../services/githubService')
 const IssuerService = require('../services/issuerService')
-const { ISSUE_CREDENTIALS_TYPE } = process.env
+const { ISSUE_CREDENTIALS_TYPE, FRONTEND_REDIRECT_URL } = process.env
 const schema = require('../helpers/schema')
 
 const issuer = new IssuerService()
@@ -20,7 +20,7 @@ const callback = async (req, res) => {
       userRepos,
       topTenMostUsedLanguages
     )
-    
+
     const validationResults = await issuer.validateDataAgainstSchema(
       preparedDataForIssue,
       schema
@@ -57,10 +57,9 @@ const callback = async (req, res) => {
       watchersCount: currRepo.watchers_count,
       holderDid: did,
     }))
-
-    res.status(200).json({ userVCData, reposVCData, issueResult })
+    res.status(302).redirect(FRONTEND_REDIRECT_URL)
   } catch (e) {
-    res.status(400).json({ error: e.message })
+    res.status(302).redirect(FRONTEND_REDIRECT_URL)
   }
 }
 

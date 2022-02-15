@@ -2,7 +2,7 @@
 
 const DiscordService = require('../services/discordService')
 const IssuerService = require('../services/issuerService')
-const { ISSUE_CREDENTIALS_TYPE } = process.env
+const { ISSUE_CREDENTIALS_TYPE, FRONTEND_REDIRECT_URL } = process.env
 const schema = require('../helpers/schema')
 
 const issuer = new IssuerService()
@@ -36,9 +36,10 @@ const callback = async (req, res) => {
     const userVCData = userData
     const serversVCData = userServers
 
-    res.status(200).json({ userVCData, serversVCData, issueResult })
+    
+    res.status(302).redirect(FRONTEND_REDIRECT_URL)
   } catch (e) {
-    res.status(400).json({ error: e.message })
+    res.status(302).redirect(FRONTEND_REDIRECT_URL)
   }
 }
 
