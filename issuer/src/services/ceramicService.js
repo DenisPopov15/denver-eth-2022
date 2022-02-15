@@ -83,6 +83,7 @@ class CeramicService {
         `${type} ceramic model not supported, supported are ${knownDataTypes}`
       )
     }
+
     const { publishedModel, dataStore } = await this.buildDataModelStore(
       models[type]
     )

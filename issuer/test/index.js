@@ -13,3 +13,7 @@ describe('API', () => {
   require('./api/index.spec')
 })
 
+describe.skip('Services', () => {
+  require('./services/index.spec')
+})
+
