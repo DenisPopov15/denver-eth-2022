@@ -1,20 +1,45 @@
 'use strict'
 
 const SourceCredService = require('../services/sourceCredService')
+const { ISSUE_CREDENTIALS_TYPE } = process.env
+const IssuerService = require('../services/issuerService')
+const schema = require('../helpers/schema')
 
-const pullSourceCredData = async(req, res) => {
-  let { identifier } = req.query
-  identifier = identifier || 'Dmytro-Filipenko'
+const issuer = new IssuerService()
 
-  const sourceCredService = new SourceCredService()
-  const rawData = await sourceCredService.pullData()
+const pullSourceCredData = async (req, res) => {
+  try {
+    let { identifiers } = req.query
+    if (!identifiers?.length) {
+      throw new Error('identifiers is empty')
+    }
+    identifiers = identifiers.split(',')
+    const sourceCredService = new SourceCredService()
+    const rawData = await sourceCredService.pullData()
 
-  const participant = sourceCredService.findParticipant(rawData.participants, identifier)
+    const preparedDataForIssue = sourceCredService.prepareDataForIssuer(
+      rawData.participants(),
+      identifiers
+    )
 
-  delete participant.credPerInterval
-  delete participant.grainEarnedPerInterval
+    const validationResults = await issuer.validateDataAgainstSchema(
+      preparedDataForIssue,
+      schema
+    )
 
-  res.status(200).json({ sourceCredVCData: participant })
+    if (validationResults.errors.length > 0) {
+      throw new Error('schema got changed')
+    }
+    console.log(preparedDataForIssue, ISSUE_CREDENTIALS_TYPE)
+    const issueResult = await issuer.issueStructeredData(
+      preparedDataForIssue,
+      ISSUE_CREDENTIALS_TYPE
+    )
+
+    res.status(200).json(issueResult)
+  } catch (e) {
+    res.status(400).json({ error: e.message })
+  }
 }
 
 module.exports = pullSourceCredData

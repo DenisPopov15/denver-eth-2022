@@ -26,7 +26,10 @@ class IssuerService {
       }),
     })
       .then((res) => res.json())
-      .catch(() => null)
+      .catch((e) => {
+        console.log(e)
+        return null
+      })
   }
 }
 

@@ -1,29 +1,36 @@
 'use strict'
 
-const fetch      = require('node-fetch')
-const uncompress = require('../helpers/uncompress')
 const { SOURCE_CRED_INSTANCE_DOMAIN } = process.env
-const localDomain = 'http://localhost:6006'
-const domain = SOURCE_CRED_INSTANCE_DOMAIN || localDomain
-
-const instanceDataUrl = `${domain}/output/credGrainView`
+const sc = require('sourcecred').sourcecred
 
 class SourceCredService {
   constructor() {
-    this._instanceGraphDataUrl = `${domain}/output/credGrainView`
+    this._instance = sc.instance.readInstance.getNetworkReadInstance(
+      SOURCE_CRED_INSTANCE_DOMAIN
+    )
   }
 
   async pullData() {
-    const response = await fetch(this._instanceGraphDataUrl)
-    const body = await response.buffer()
-
-    const data = uncompress(body)
-
-    return data
+    const response = await this._instance.readCredGrainView()
+    return response
   }
 
-  findParticipant(participants, identifier) {
-    const participant = participants.find(p => { return p.identity.name === identifier })
+  prepareDataForIssuer(participants, identifiers) {
+    const participantEntity = this.findParticipant(participants, identifiers)
+    const credScore = participantEntity.reduce(
+      (acc, curr) => acc + curr.cred,
+      0
+    )
+    return {
+      credScore,
+      instance: SOURCE_CRED_INSTANCE_DOMAIN,
+    }
+  }
+
+  findParticipant(participants, identifiers) {
+    const participant = participants.filter((p) =>
+      identifiers.includes(p.identity.name)
+    )
 
     return participant
   }
