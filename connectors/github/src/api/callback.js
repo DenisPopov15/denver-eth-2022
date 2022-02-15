@@ -20,8 +20,7 @@ const callback = async (req, res) => {
       userRepos,
       topTenMostUsedLanguages
     )
-    console.log(preparedDataForIssue)
-
+    
     const validationResults = await issuer.validateDataAgainstSchema(
       preparedDataForIssue,
       schema

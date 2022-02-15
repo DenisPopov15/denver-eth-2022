@@ -34,6 +34,7 @@ class GithubService {
     }
     return response.data
   }
+  
   async getLanguages(repos) {
     const languagesReq = await Promise.all(
       repos.map((repo) =>
@@ -66,7 +67,6 @@ class GithubService {
       }
     )
     let publicRepos = []
-    // iterate through each response
     for await (const { data: repos } of iterator) {
       const notForkNotPrivate = repos?.filter(
         (repo) => !repo.private && !repo.fork
@@ -74,9 +74,6 @@ class GithubService {
 
       publicRepos = [...publicRepos, ...notForkNotPrivate]
     }
-    // if (response.status !== 200) {
-    //   throw new Error(JSON.stringify(response))
-    // }
 
     return publicRepos
   }
