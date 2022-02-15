@@ -1,6 +1,10 @@
 'use strict'
 
 const { knownDataTypes } = require('../helpers/index')
+const { ethers } = require('ethers')
+const bip39 = require('bip39')
+
+const { SEED } = process.env
 
 class IssuerService {
   constructor(didInstance) {
@@ -24,6 +28,23 @@ class IssuerService {
     deepSkillsDocument.signature = signature // Should whole proof section
 
     return deepSkillsDocument
+  }
+
+  static async createLITAuthSig() {
+    const mnemonic = bip39.entropyToMnemonic(SEED)
+    const wallet = ethers.Wallet.fromMnemonic(mnemonic)
+    const signedMessage = `I am creating an account to use Lit Protocol at ${new Date().toISOString()}`
+    const sig = await wallet.signMessage(signedMessage)
+    const address = await wallet.getAddress()
+
+    const authSig = {
+      sig,
+      derivedVia: 'web3.eth.personal.sign',
+      signedMessage,
+      address,
+    }
+
+    return authSig
   }
 }
 
