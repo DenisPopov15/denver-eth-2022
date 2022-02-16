@@ -6,6 +6,7 @@ const schema = require('../helpers/schema')
 const { ISSUE_CREDENTIALS_TYPE } = process.env
 const issuerService = new IssuerService()
 const withTimeout = require('../helpers/withTimeout')
+
 const pullCoordinapeData = withTimeout(async (req, res) => {
   console.log('pullCoordinapeData')
   try {
@@ -31,7 +32,7 @@ const pullCoordinapeData = withTimeout(async (req, res) => {
       pulledData,
       ISSUE_CREDENTIALS_TYPE
     )
-    
+
     const cordinapeProfileVCData = {
       skills: results?.profile?.skills,
       rest: results,
