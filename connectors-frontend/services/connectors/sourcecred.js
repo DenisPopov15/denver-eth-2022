@@ -1,4 +1,4 @@
-import { sourcecredApi } from "../../api/sourcecred"
+import { sourcecredApi } from "../../_api/sourcecred"
 export const sourcecredConnector = async (
   identifiers = "dmfilipenko,Dmytro-Filipenko"
 ) => {

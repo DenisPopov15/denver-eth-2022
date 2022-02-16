@@ -1,4 +1,4 @@
-import { githubApi } from "../../api/github"
+import { githubApi } from "../../_api/github"
 export const githubConnector = async ({
   host = "http://localhost:4001/api",
   did,

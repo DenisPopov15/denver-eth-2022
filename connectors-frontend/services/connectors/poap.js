@@ -1,5 +1,5 @@
 import { getProvider, requestAccounts } from "../provider"
-import { poapApi } from "../../api/poap"
+import { poapApi } from "../../_api/poap"
 export const poapConnector = async () => {
   const provider = await getProvider()
   await requestAccounts(provider)
