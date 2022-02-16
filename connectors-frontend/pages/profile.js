@@ -14,8 +14,14 @@ import { discordAPIUrl } from "../_api/discord"
 import { githubAPIUrl } from "../_api/github"
 import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
+import { LitProtocolService } from "../services/litProtocolService"
+import { DeepSkillsService } from "../services/DeepSkillsService"
+import CeramicClient from "@ceramicnetwork/http-client"
+const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com'
+
 export default function Connectors() {
   const [isConnected, setIsConnected] = useState(false)
+  // const [ceramic, setCeramic] = useState()
   useEffect(() => {
     checkConnectionMetamask(setIsConnected)
     isMetamaskConnected().then(setIsConnected)
@@ -24,6 +30,16 @@ export default function Connectors() {
     try {
       await connectMetamask()
       setIsConnected(true)
+
+      const litProtocolService = await LitProtocolService.initlize()
+      window.litProtocolService = litProtocolService
+
+      const ceramic = new CeramicClient(CERAMIC_URL)
+      console.log('ceramic!!!', ceramic)
+      const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
+      console.log('deepSkillsService!!!', deepSkillsService)
+      const documents = await deepSkillsService.pullMySkills()
+      console.log('documents!!', documents)
     } catch {}
   }
   return (
