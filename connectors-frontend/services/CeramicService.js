@@ -2,7 +2,7 @@ import { DataModel } from '@glazed/datamodel'
 import { DIDDataStore } from '@glazed/did-datastore'
 import { Core } from '@self.id/core'
 import { ModelManager } from '@glazed/devtools'
-const CERAMIC_URL = process.env.CERAMIC_URL
+const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com'
 
 export class CeramicService {
   constructor (ceramic) {

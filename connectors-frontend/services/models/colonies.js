@@ -1,4 +1,4 @@
-export default colonyModel = {
+export default {
   "schemas": {
     "kjzl6cwe1jw14baspq4gtz2qdxhcxydwwr6zsq46fxeyag5qkqwpkr4hjjouu7k": {
       "alias": "colony",

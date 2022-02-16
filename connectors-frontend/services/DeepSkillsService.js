@@ -13,7 +13,7 @@ const knownDataTypes = [
 
 export class DeepSkillsService {
   constructor (ceramic, ethereum) {
-    this._did = ceramic.did._id
+    // this._did = ceramic.did._id
     const provider = new ethers.providers.Web3Provider(ethereum)
 
     this._ceramicService = new CeramicService(ceramic)

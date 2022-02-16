@@ -1,4 +1,4 @@
-export default githubModel = {
+export default {
   "schemas": {
     "kjzl6cwe1jw1483s6ojtmicdzvmvpy9f5x6eaccrf13cx3rjhgwgb4f0d0cmqs4": {
       "alias": "github",

@@ -1,4 +1,4 @@
-export default poapModel = {
+export default {
   "schemas": {
     "kjzl6cwe1jw14aqsbwrdy94nt9j7y28vlca5k5enkevvn4bpp2vuw2qaddap43n": {
       "alias": "poap",

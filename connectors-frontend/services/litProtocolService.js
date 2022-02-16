@@ -52,7 +52,7 @@ const defaultAccessControlConditions = [
   }
 ]
 
-class LitProtocolService {
+export class LitProtocolService {
   constructor(litNodeClient) {
     this._litNodeClient = litNodeClient
   }
@@ -170,5 +170,3 @@ class LitProtocolService {
   }
 
 }
-
-module.exports = LitProtocolService
