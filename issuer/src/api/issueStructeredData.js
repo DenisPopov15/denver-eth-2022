@@ -12,14 +12,9 @@ const issueStructeredData = async (req, res) => {
     await ceramicService.initilize()
 
     const issuerService = new IssuerService(ceramicService.did)
+    const signedData = await issuerService.issue({ type, data })
 
-    const structeredData = await issuerService.issue({ type, data })
-
-    await ceramicService.storeData(structeredData, type, encrypt)
-
-    const structeredData = await issuerService.issue({ type, data })
-
-    await ceramicService.storeData(structeredData, type)
+    const structeredData = await ceramicService.storeData(signedData, type, encrypt)
 
     res.status(200).json({ structeredData })
   } catch (e) {

@@ -73,7 +73,7 @@ const scSchemaID = await manager.createSchema('sc', {
     },
   },
 })
-const scsSchemaID = await manager.createSchema('poaps', {
+const scsSchemaID = await manager.createSchema('sourcecreds', {
   $schema: 'http://json-schema.org/draft-07/schema#',
   title: 'scsList',
   type: 'object',
@@ -103,8 +103,8 @@ const scsSchemaID = await manager.createSchema('poaps', {
 })
 
 // Create the definition using the created schema ID
-await manager.createDefinition('scs', {
-  name: 'scs',
+await manager.createDefinition('sourcecreds', {
+  name: 'sourcecreds',
   description: 'SrouceCred credentials',
   schema: manager.getSchemaURL(scsSchemaID),
 })

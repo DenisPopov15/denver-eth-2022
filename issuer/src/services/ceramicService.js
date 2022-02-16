@@ -100,10 +100,30 @@ class CeramicService {
     const authSig = await IssuerService.createLITAuthSig()
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
 
-    // encrypted.encryptedKeyHex
-    // encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
+    encrypted.isEncrypted = true
+    encrypted.encryptedKeyHex = encryptedKeyHex
+    encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
 
     return encrypted
+  }
+
+  async decryptDocument(structeredData) {
+    let { isEncrypted, encryptedKeyHex, accessControlConditions } = structeredData
+    accessControlConditions = JSON.parse(accessControlConditions)
+
+    if (!isEncrypted) {
+      return structeredData
+    }
+
+    delete structeredData.isEncrypted
+    delete structeredData.encryptedKeyHex
+    delete structeredData.accessControlConditions
+
+    const authSig = await IssuerService.createLITAuthSig()
+    const symmetricKeyHex = await global.litProtocolService.getKey(encryptedKeyHex, authSig, accessControlConditions)
+    const decryptedDocument = await global.litProtocolService.decrypt(structeredData, symmetricKeyHex)
+
+    return decryptedDocument
   }
 
   async storeData(structeredData, type, encrypt = false) {
@@ -127,8 +147,10 @@ class CeramicService {
 
     const dataToStore = {}
     dataToStore[type] = documents
-    console.log('BEFORE STORE!!!', dataToStore)
+    console.dir(dataToStore, { depth: 10 })
     await this.setStoreData(dataStore, dataToStore, type)
+
+    return structeredData
   }
 }
 

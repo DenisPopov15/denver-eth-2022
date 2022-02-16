@@ -6,7 +6,14 @@
   "scripts": {
     "start": "node index.js",
     "generateSeed": "node ./scripts/generateSeed",
-    "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text _mocha --exit --timeout 25000"
+    "test": "NODE_ENV=test nyc --reporter=lcov --reporter=text _mocha --exit --timeout 25000",
+    "create-model": "node --experimental-json-modules ./scripts/create-model.mjs",
+    "create-model-colony": "node --experimental-json-modules ./scripts/create-model-colony.mjs",
+    "create-model-coordinape": "node --experimental-json-modules ./scripts/create-model-coordinape.mjs",
+    "create-model-discord": "node --experimental-json-modules ./scripts/create-model-discord.mjs",
+    "create-model-github": "node --experimental-json-modules ./scripts/create-model-github.mjs",
+    "create-model-poap": "node --experimental-json-modules ./scripts/create-model-poap.mjs",
+    "create-model-sourcecred": "node --experimental-json-modules ./scripts/create-model-sourcecred.mjs"
   },
   "repository": {
     "type": "git",
