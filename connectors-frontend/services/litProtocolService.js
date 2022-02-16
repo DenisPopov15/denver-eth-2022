@@ -150,7 +150,7 @@ class LitProtocolService {
   }
 
   async signAuthMessage() {
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: CHAIN })
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain })
 
     return authSig
   }
