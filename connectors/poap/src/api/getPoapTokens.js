@@ -19,7 +19,7 @@ const getPoapTokens = withTimeout(async (req, res) => {
     if (addressFromSignature !== address) {
       throw new Error('Invalid address')
     }
-    const tokens = await poapService.getTokensInfoOwnedBy(address)
+    const tokens = (await poapService.getTokensInfoOwnedBy(address))?.[0]
     let result = await issuer.validateDataAgainstSchema(tokens, schema)
     if (result.errors.length > 0) {
       throw new Error('schema got changed')
