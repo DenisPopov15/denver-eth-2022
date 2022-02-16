@@ -13,6 +13,9 @@ const theme = extendTheme({
       },
     },
   },
+  colors: {
+    primary: '#67A2FF'
+  }
 })
 
 function MyApp({ Component, pageProps }) {
