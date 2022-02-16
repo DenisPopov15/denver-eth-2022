@@ -31,6 +31,7 @@ class CoordinApeService {
   }
 
   async prepareDataForIssuing(data) {
+    console.log(data)
     const givesAndNotedReceived = data?.circle?.token_gifts
       .map((curr) => {
         return data?.profile?.address === curr.recipient_address
@@ -41,11 +42,11 @@ class CoordinApeService {
           : null
       })
       .filter(Boolean)
-    const givesReceived = givesAndNotedReceived.reduce(
+    const givesReceived = givesAndNotedReceived?.reduce(
       (acc, curr) => acc + curr.tokens,
       0
     )
-    const notes = givesAndNotedReceived.map((curr) => curr.note)
+    const notes = givesAndNotedReceived?.map((curr) => curr.note)
     const collaborators = data?.circle?.users.map((user) => ({
       address: user.address,
       username: user.name,
