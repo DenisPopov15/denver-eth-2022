@@ -10,16 +10,29 @@ import { Wallet } from "../components/Buttons/Wallet"
 import { Navigation } from "../components/Header/Navigation"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
-
-const discordAPIUrl = `${process.env.NEXT_PUBLIC_DISCORD_CONNECTOR_API_ENDPOINT}/discordRedirect`
-const githubAPIUrl = `${process.env.NEXT_PUBLIC_GITHUB_CONNECTOR_API_ENDPOINT}/githubRedirect`
-
+import { discordAPIUrl } from "../api/discord"
+import { githubAPIUrl } from "../api/github"
+import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
+import { useEffect, useState } from "react"
 export default function Connectors() {
+  const [isConnected, setIsConnected] = useState(false)
+  useEffect(() => {
+    checkConnectionMetamask(setIsConnected)
+    isMetamaskConnected().then(setIsConnected)
+  }, [])
+  const connectMetamaskHandler = async () => {
+    try {
+      await connectMetamask()
+      setIsConnected(true)
+    } catch {}
+  }
   return (
     <Layout>
       <Header>
         <Navigation>
-          <Wallet>Connect wallet</Wallet>
+          {isConnected ? null : (
+            <Wallet onClick={connectMetamaskHandler}>Connect wallet</Wallet>
+          )}
         </Navigation>
       </Header>
       <Container>
