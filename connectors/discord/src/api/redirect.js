@@ -3,8 +3,8 @@
 const redirectUri = require('../helpers/discordRedirectUrl')
 const { DISCORD_APP_CLIENT_ID } = process.env
 
-const redirect = async(req, res) => {
-  const { did } = req.query
+const redirect = async (req, res) => {
+  const { did, return_url } = req.query
 
   const clientId = DISCORD_APP_CLIENT_ID
   const scope = 'identify guilds'
