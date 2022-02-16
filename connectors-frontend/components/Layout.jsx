@@ -1,9 +1,11 @@
-import { Center } from "@chakra-ui/react"
+import { Container, Stack } from "@chakra-ui/react"
 
 export const Layout = ({ children }) => {
   return (
-    <Center maxW={1200} flexDirection={"column"}>
-      {children}
-    </Center>
+    <Container maxW="7xl">
+      <Stack align={"center"} spacing="8" direction="column">
+        {children}
+      </Stack>
+    </Container>
   )
 }

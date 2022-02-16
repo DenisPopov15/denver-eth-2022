@@ -4,7 +4,7 @@ import {} from "@chakra-ui/react"
 export const Section = ({ title, children }) => {
   return (
     <Container>
-      <Heading>{title}</Heading>
+      <Heading size="md" fontWeight="bold" mb="8">{title}</Heading>
       {children}
     </Container>
   )
