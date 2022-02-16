@@ -1,5 +1,5 @@
 import { getProvider, requestAccounts } from "../provider"
-import { coordinapeApi } from "../../_api/coordinape"
+import { coordinapeApi } from "../../connectors/coordinapee"
 export const coordinapeConnector = async () => {
   const provider = await getProvider()
   await requestAccounts(provider)
