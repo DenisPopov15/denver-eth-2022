@@ -3,7 +3,7 @@
 const CoordinApeService = require('../services/coordinApeService')
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
-const { ISSUE_CREDENTIALS_TYPE } = process.env
+const ISSUE_CREDENTIALS_TYPE = 'apeprofiles'
 const issuerService = new IssuerService()
 const withTimeout = require('../helpers/withTimeout')
 

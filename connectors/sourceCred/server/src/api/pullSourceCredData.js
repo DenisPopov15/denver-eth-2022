@@ -1,7 +1,7 @@
 'use strict'
 
 const SourceCredService = require('../services/sourceCredService')
-const { ISSUE_CREDENTIALS_TYPE } = process.env
+const ISSUE_CREDENTIALS_TYPE = 'sourcecreds'
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
 const withTimeout = require('../helpers/withTimeout')
