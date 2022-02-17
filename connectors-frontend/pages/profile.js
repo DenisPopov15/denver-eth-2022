@@ -10,8 +10,7 @@ import { Wallet } from "../components/Buttons/Wallet"
 import { Navigation } from "../components/Header/Navigation"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
-import { discordAPIUrl } from "../_api/discord"
-import { githubAPIUrl } from "../_api/github"
+
 import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
@@ -19,7 +18,10 @@ import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com'
 
-export default function Connectors() {
+export default function Connectors({
+  discordUrl,
+  githubUrl
+}) {
   const [isConnected, setIsConnected] = useState(false)
   // const [ceramic, setCeramic] = useState()
   useEffect(() => {
@@ -88,4 +90,17 @@ export default function Connectors() {
       </Container>
     </Layout>
   )
+}
+
+
+export async function getServerSideProps() {
+  // Fetch data from external API
+  const [discordUrl, githubUrl] = await Promise.all([
+    fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json()),
+    fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
+  ])
+  // const data = await res.json()
+
+  // Pass data to the page via props
+  return { props: { githubUrl, discordUrl } }
 }

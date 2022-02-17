@@ -3,6 +3,7 @@
 let { GITHUB_APP_CLIENT_ID, HOST } = process.env
 
 const redirect = async (req, res) => {
+  console.log('redirect')
   const { did } = req.query
 
   const clientId = GITHUB_APP_CLIENT_ID
@@ -17,8 +18,7 @@ const redirect = async (req, res) => {
   const encodedRedirectUri = encodeURIComponent(redirectUri)
   const finalAuthorizationUrl = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}`
 
-  res.status(302)
-  res.redirect(finalAuthorizationUrl)
+  res.status(200).json({finalAuthorizationUrl})
 }
 
 module.exports = redirect
