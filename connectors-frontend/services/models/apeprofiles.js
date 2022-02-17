@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
   "schemas": {
     "kjzl6cwe1jw147ytcn427907o1ax9h80ewek2oia1q8ou9hbr0ujeazhdsksgv7": {

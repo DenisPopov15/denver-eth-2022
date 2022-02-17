@@ -9,7 +9,7 @@ import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 
-export default function Home() {
+export default function Home({ ceramicUrl }) {
   const [isConnected, setIsConnected] = useState(false)
   // const [ceramic, setCeramic] = useState()
   useEffect(() => {
@@ -50,4 +50,13 @@ export default function Home() {
       </div>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  return {
+    props:
+    {
+      ceramicUrl: process.env.CERAMIC_URL
+    }
+  }
 }
