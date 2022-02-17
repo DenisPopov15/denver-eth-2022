@@ -30,6 +30,7 @@ const callback = async (req, res) => {
       throw new Error('schema got changed')
     }
 
+    preparedDataForIssue.holderDid = did
     const issueResult = await issuer.issueStructeredData(
       preparedDataForIssue,
       ISSUE_CREDENTIALS_TYPE
