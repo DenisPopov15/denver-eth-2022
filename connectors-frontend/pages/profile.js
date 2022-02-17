@@ -10,13 +10,13 @@ import { Wallet } from "../components/Buttons/Wallet"
 import { Navigation } from "../components/Header/Navigation"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
-
+import { SkillBox } from "../components/SkillBox"
+import { ProjectBox } from "../components/ProjectBox"
 import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
-const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com'
 
 export default function Connectors({
   discordUrl,
@@ -47,56 +47,65 @@ export default function Connectors({
     }
   }
   return (
-    <Layout>
-      <Header>
-        <Navigation>
-          {isConnected ? null : (
-            <Wallet onClick={connectMetamaskHandler}>Connect wallet</Wallet>
-          )}
-        </Navigation>
-      </Header>
-      <Container>
-        <SimpleGrid columns={2} rows={1}>
-          <Container>
-            <Section title={"Skills"}>Some skills</Section>
-            <Section title={"Projects"}>Some skills</Section>
-            <ul>
-              <li>
-                <button onClick={coordinapeConnector}>coordinApe</button>
-              </li>
-              <li>
-                <button onClick={poapConnector}>poap</button>
-              </li>
-              <li>
-                <button onClick={sourcecredConnector}>sourceCred</button>
-              </li>
-              <li>
-                <a href={discordUrl}>discord</a>
-              </li>
-              <li>
-                <a href={githubUrl}>github</a>
-              </li>
-            </ul>
-          </Container>
-          <Sidebar>
-            <Section title={"Skills"}>Some skills</Section>
-          </Sidebar>
-        </SimpleGrid>
-      </Container>
-    </Layout>
+    <>
+      <Header hideConnectButton={true} />
+      <Layout>
+
+        <Container>
+          <SimpleGrid columns={2} rows={1}>
+            <Container>
+              <Section title={"Skills"}>
+                <SkillBox skill='React' credentials='3' />
+                <SkillBox skill='TypeScript' credentials='2' />
+                <SkillBox skill='Solidity' credentials='1' />
+              </Section>
+              <Section title={"Projects"}>
+                <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' />
+                <ProjectBox organizationName='test' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' />
+              </Section>
+              <ul>
+                <li>
+                  <button onClick={coordinapeConnector}>coordinApe</button>
+                </li>
+                <li>
+                  <button onClick={poapConnector}>poap</button>
+                </li>
+                <li>
+                  <button onClick={sourcecredConnector}>sourceCred</button>
+                </li>
+                <li>
+                  <a href={discordUrl}>discord</a>
+                </li>
+                <li>
+                  <a href={githubUrl}>github</a>
+                </li>
+              </ul>
+            </Container>
+            <Sidebar>
+              <Section title={"Skills"}>Some skills</Section>
+            </Sidebar>
+          </SimpleGrid>
+        </Container>
+      </Layout>
+    </>
   )
 }
 
 
 export async function getServerSideProps() {
-  const discord = await fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json())
-  const github = await fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
+  let discord = null, github = null
+  try {
+    discord = await fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json())
+    github = await fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
+  } catch {
+  }
+
 
   return {
     props:
     {
-      githubUrl: github.url,
-      discordUrl: discord.url,
+      githubUrl: github?.url || null,
+      discordUrl: discord?.url || null,
       ceramicUrl: process.env.CERAMIC_URL
     }
   }

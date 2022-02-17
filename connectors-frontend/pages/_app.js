@@ -1,22 +1,9 @@
 import { extendTheme, ChakraProvider } from "@chakra-ui/react"
+import { theme } from "../styles/theme"
+import '@fontsource/montserrat/400.css'
+import '@fontsource/montserrat/600.css'
+import '@fontsource/montserrat/800.css'
 
-const theme = extendTheme({
-  styles: {
-    global: {
-      'html, body': {
-        boxSize: 'border-box',
-        color: 'gray.600',
-        lineHeight: 'tall',
-      },
-      a: {
-        color: 'teal.500',
-      },
-    },
-  },
-  colors: {
-    primary: '#67A2FF'
-  }
-})
 
 function MyApp({ Component, pageProps }) {
   return (

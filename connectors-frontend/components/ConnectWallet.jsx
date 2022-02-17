@@ -1,19 +1,20 @@
 import { Box } from '@chakra-ui/react'
 
-export const ConnectWallet = () => {
+export const ConnectWallet = ({ onClick, isMetamaskConnected }) => {
   return (
     <Box
       alignItems="center"
       as="button"
       borderRadius="md"
-      bg="primary"
-      color="white"
+      bg={isMetamaskConnected ? 'gray.200' : 'primary'}
+      color={isMetamaskConnected ? 'gray.800' : 'white'}
       fontSize="14"
       fontWeight="600"
       px={4}
       h={12}
+      onClick={!isMetamaskConnected ? onClick : () => {}}
     >
-      Connect your Wallet
+      {isMetamaskConnected ? 'Wallet connected' : 'Connect your Wallet'}
     </Box>
   )
 }

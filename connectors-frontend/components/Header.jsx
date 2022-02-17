@@ -17,7 +17,7 @@ const menuItemProps = {
   _focus: { bg: 'gray.18' },
 }
 
-export const Header = ({ links }) => {
+export const Header = ({ hideConnectButton, isMetamaskConnected, onClick }) => {
   return (
     <Box
       display="flex"
@@ -94,7 +94,12 @@ export const Header = ({ links }) => {
           </Link>
         </Box>
       </Box>
-      <ConnectWallet />
+      {!hideConnectButton && (
+        <ConnectWallet
+          onClick={onClick}
+          isMetamaskConnected={isMetamaskConnected}
+        />
+      )}
     </Box>
   )
 }
