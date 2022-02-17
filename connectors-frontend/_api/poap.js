@@ -1,5 +1,5 @@
 export const poapApi = async ({ signature, address, digest }) => {
-  return fetch(`/api/poaps`, {
+  return fetch(`/api/poap`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
