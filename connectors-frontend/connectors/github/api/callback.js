@@ -2,7 +2,7 @@
 
 const GithubService = require('../services/githubService')
 const IssuerService = require('../services/issuerService')
-const { ISSUE_CREDENTIALS_TYPE = 'github', FRONTEND_REDIRECT_URL } = process.env
+const { ISSUE_CREDENTIALS_TYPE = 'githubs', FRONTEND_REDIRECT_URL } = process.env
 const schema = require('../helpers/schema')
 
 const issuer = new IssuerService()

@@ -15,6 +15,7 @@ const { knownDataTypes } = require('../helpers/index')
 const IssuerService = require('./issuerService')
 
 const models = require('../models/index')
+const LitProtocolService = require('./litProtocolService')
 
 const { SEED, CERMAIC_URL, CHAIN } = process.env
 if (!SEED) {
@@ -96,7 +97,9 @@ class CeramicService {
   }
 
   async encryptDocument(structeredData) {
-    const { encrypted, symmetricKey } = await global.litProtocolService.encrypt(structeredData)
+    // JUST FOR THE DEPLOYED DEMO PURPOSE (for production solution - Issuer its separate service, so LitProtocolService initate on server start)
+    const litProtocolService = await LitProtocolService.initlize()
+    const { encrypted, symmetricKey } = await litProtocolService.encrypt(structeredData)
     const authSig = await IssuerService.createLITAuthSig()
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
 
