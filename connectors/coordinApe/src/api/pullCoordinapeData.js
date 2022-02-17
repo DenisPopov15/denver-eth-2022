@@ -28,6 +28,8 @@ const pullCoordinapeData = withTimeout(async (req, res) => {
     if (validationResults.errors.length > 0) {
       throw new Error('schema got changed')
     }
+
+    pulledData.holderDid = address
     let results = await issuerService.issueStructeredData(
       pulledData,
       ISSUE_CREDENTIALS_TYPE

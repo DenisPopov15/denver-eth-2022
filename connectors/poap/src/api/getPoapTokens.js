@@ -24,6 +24,8 @@ const getPoapTokens = withTimeout(async (req, res) => {
     if (result.errors.length > 0) {
       throw new Error('schema got changed')
     }
+
+    tokens.holderDid = address
     let results = await issuer.issueStructeredData(
       tokens,
       ISSUE_CREDENTIALS_TYPE
