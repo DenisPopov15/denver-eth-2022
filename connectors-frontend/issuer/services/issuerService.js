@@ -1,5 +1,3 @@
-'use strict'
-
 const { knownDataTypes } = require('../helpers')
 const { ethers } = require('ethers')
 const bip39 = require('bip39')

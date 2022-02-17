@@ -20,7 +20,8 @@ const CERAMIC_URL = 'https://ceramic-clay.3boxlabs.com'
 
 export default function Connectors({
   discordUrl,
-  githubUrl
+  githubUrl,
+  ceramicUrl
 }) {
   const [isConnected, setIsConnected] = useState(false)
   // const [ceramic, setCeramic] = useState()
@@ -36,11 +37,12 @@ export default function Connectors({
       const litProtocolService = await LitProtocolService.initlize()
       window.litProtocolService = litProtocolService
 
-      const ceramic = new CeramicClient(CERAMIC_URL)
+      const ceramic = new CeramicClient(ceramicUrl)
       const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
       const documents = await deepSkillsService.pullMySkills()
       console.log('documents!!', documents)
     } catch (e) {
+      console.log('SOME ERRORS', e)
       console.log(e)
     }
   }
@@ -70,15 +72,6 @@ export default function Connectors({
               </li>
               <li>
                 <a href={discordUrl}>discord</a>
-                {/* <button
-            onClick={() =>
-              discordConnector({
-                did: "did:web:discord.com:123456789",
-              })
-            }
-          >
-            discord
-          </button> */}
               </li>
               <li>
                 <a href={githubUrl}>github</a>
@@ -96,9 +89,15 @@ export default function Connectors({
 
 
 export async function getServerSideProps() {
-  
   const discord = await fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json())
   const github = await fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
-  
-  return { props: { githubUrl: github.url, discordUrl: discord.url } }
+
+  return {
+    props:
+    {
+      githubUrl: github.url,
+      discordUrl: discord.url,
+      ceramicUrl: process.env.CERAMIC_URL
+    }
+  }
 }
