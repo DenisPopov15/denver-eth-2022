@@ -95,12 +95,12 @@ export default function Connectors({
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const [discordUrl, githubUrl] = await Promise.all([
+  const [discord, github] = await Promise.all([
     fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json()),
     fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
   ])
   // const data = await res.json()
 
   // Pass data to the page via props
-  return { props: { githubUrl, discordUrl } }
+  return { props: { githubUrl: github.url, discordUrl:discord.url } }
 }

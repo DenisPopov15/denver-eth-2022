@@ -18,7 +18,7 @@ const redirect = async (req, res) => {
   const encodedRedirectUri = encodeURIComponent(redirectUri)
   const finalAuthorizationUrl = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}`
 
-  res.status(200).json({finalAuthorizationUrl})
+  res.status(200).json({url})
 }
 
 module.exports = redirect
