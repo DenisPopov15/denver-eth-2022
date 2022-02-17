@@ -10,7 +10,7 @@ const redirect = async (req, res) => {
   const encodedScope = encodeURIComponent(scope)
 
   const authorizationUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&scope=${encodedScope}`
-  const redirectUri = `${HOST}/api/githubCallback?did=${encodeURIComponent(
+  const redirectUri = `${HOST}/api/github/callback?did=${encodeURIComponent(
     did
   )}`
 
