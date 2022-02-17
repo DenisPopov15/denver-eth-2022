@@ -1,6 +1,6 @@
 'use strict'
 const fetch = require('node-fetch')
-const { ISSUER_SERVICE_API_URL } = process.env
+const { HOST } = process.env
 const createAuth = require('../helpers/createAuth')
 const Validator = require('jsonschema').Validator
 
@@ -14,7 +14,7 @@ class IssuerService {
   }
 
   async issueStructeredData(data, type) {
-    return fetch(`${ISSUER_SERVICE_API_URL}/issueStructeredData`, {
+    return fetch(`${HOST}/api/issuer`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
