@@ -16,7 +16,7 @@ const redirect = async (req, res) => {
   )}`
 
   const encodedRedirectUri = encodeURIComponent(redirectUri)
-  const finalAuthorizationUrl = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}`
+  const url = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}`
 
   res.status(200).json({url})
 }
