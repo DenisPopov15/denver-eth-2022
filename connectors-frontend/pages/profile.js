@@ -67,7 +67,7 @@ export default function Connectors({
                 <button onClick={sourcecredConnector}>sourceCred</button>
               </li>
               <li>
-                <a href={discordAPIUrl}>discord</a>
+                <a href={discordUrl}>discord</a>
                 {/* <button
             onClick={() =>
               discordConnector({
@@ -79,7 +79,7 @@ export default function Connectors({
           </button> */}
               </li>
               <li>
-                <a href={githubAPIUrl}>github</a>
+                <a href={githubUrl}>github</a>
               </li>
             </ul>
           </Container>
@@ -95,12 +95,12 @@ export default function Connectors({
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const [discordUrl, githubUrl] = await Promise.all([
+  const [discord, github] = await Promise.all([
     fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json()),
     fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
   ])
   // const data = await res.json()
 
   // Pass data to the page via props
-  return { props: { githubUrl, discordUrl } }
+  return { props: { githubUrl: github.url, discordUrl:discord.url } }
 }
