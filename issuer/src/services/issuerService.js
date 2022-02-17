@@ -26,6 +26,7 @@ class IssuerService {
     const jws = await this._did.createJWS(deepSkillsDocument)
     const signature = jws.signatures[0].signature
     deepSkillsDocument.signature = signature // Should whole proof section
+    deepSkillsDocument.type = type
 
     return deepSkillsDocument
   }
