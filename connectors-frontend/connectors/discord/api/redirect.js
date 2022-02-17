@@ -1,5 +1,3 @@
-'use strict'
-
 const redirectUri = require('../helpers/discordRedirectUrl')
 const { DISCORD_APP_CLIENT_ID } = process.env
 
@@ -17,7 +15,7 @@ const redirect = async (req, res) => {
   const encodedRedirectUri = encodeURIComponent(redirectUri)
   const url = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}&prompt=consent`
 
-  res.status(200).json({url})
+  res.status(200).json({ url })
 }
 
 module.exports = redirect

@@ -40,7 +40,9 @@ export default function Connectors({
       const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
       const documents = await deepSkillsService.pullMySkills()
       console.log('documents!!', documents)
-    } catch {}
+    } catch (e) {
+      console.log(e)
+    }
   }
   return (
     <Layout>
@@ -94,13 +96,9 @@ export default function Connectors({
 
 
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const [discord, github] = await Promise.all([
-    fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json()),
-    fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
-  ])
-  // const data = await res.json()
-
-  // Pass data to the page via props
-  return { props: { githubUrl: github.url, discordUrl:discord.url } }
+  
+  const discord = await fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json())
+  const github = await fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
+  
+  return { props: { githubUrl: github.url, discordUrl: discord.url } }
 }
