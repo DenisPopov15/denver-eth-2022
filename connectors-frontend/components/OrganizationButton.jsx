@@ -1,5 +1,4 @@
-import { Avatar, Box, Text, Tooltip } from '@chakra-ui/react'
-//import { InfoIcon } from '@chakra-ui/icons'
+import { InfoIcon, Avatar, Box, Text, Tooltip } from '@chakra-ui/react'
 
 export const OrganizationButton = ({
   label,

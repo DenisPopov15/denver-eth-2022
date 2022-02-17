@@ -49,7 +49,7 @@ export const SkillBox = ({ skill, credentials }) => (
           _first={{ ml: '400' }}
           _last={{ mr: '0' }}
         >
-          'See details
+          See details
         </Link>
       </Box>
     </Box>
