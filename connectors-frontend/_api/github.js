@@ -1,4 +1,4 @@
-export const discordApi = async (identifiers) => {
+export const githubApi = async (identifiers) => {
   return fetch(`/api/github/redirect?did=${identifiers}`, {
     method: "GET",
   })
