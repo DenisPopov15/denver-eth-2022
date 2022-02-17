@@ -67,7 +67,7 @@ export default function Connectors({
                 <button onClick={sourcecredConnector}>sourceCred</button>
               </li>
               <li>
-                <a href={discordAPIUrl}>discord</a>
+                <a href={discordUrl}>discord</a>
                 {/* <button
             onClick={() =>
               discordConnector({
@@ -79,7 +79,7 @@ export default function Connectors({
           </button> */}
               </li>
               <li>
-                <a href={githubAPIUrl}>github</a>
+                <a href={githubUrl}>github</a>
               </li>
             </ul>
           </Container>
