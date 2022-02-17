@@ -3,11 +3,36 @@ import { Header } from "../components/Header"
 import { HugeTitle } from "../components/HugeTitle"
 import { ConnectWallet } from "../components/ConnectWallet"
 import { Box, Text, Image } from '@chakra-ui/react'
+import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
+import { useEffect, useState } from "react"
+import { LitProtocolService } from "../services/litProtocolService"
+import { DeepSkillsService } from "../services/DeepSkillsService"
+import CeramicClient from "@ceramicnetwork/http-client"
 
 export default function Home() {
+  const [isConnected, setIsConnected] = useState(false)
+  // const [ceramic, setCeramic] = useState()
+  useEffect(() => {
+    checkConnectionMetamask(setIsConnected)
+    isMetamaskConnected().then(setIsConnected)
+  }, [])
+  const connectMetamaskHandler = async () => {
+    try {
+      await connectMetamask()
+      setIsConnected(true)
+
+      const litProtocolService = await LitProtocolService.initlize()
+      window.litProtocolService = litProtocolService
+
+      const ceramic = new CeramicClient(ceramicUrl)
+      const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
+      const documents = await deepSkillsService.pullMySkills()
+      console.log('documents!!', documents)
+    } catch (e) { }
+  }
   return (
     <>
-      <Header />
+      <Header isMetamaskConnected={isConnected} onClick={connectMetamaskHandler} />
       <div className={styles.landing}>
         <div className={styles.hero}>
           <HugeTitle>Text</HugeTitle>
@@ -15,7 +40,7 @@ export default function Home() {
           <Text fontSize='xl' color='#1D1E20'>
             Claim, explore and share your professional identity based on merit, skills and real working and learning experience. </Text>
           <br />
-          <ConnectWallet />
+          <ConnectWallet isMetamaskConnected={isConnected} onClick={connectMetamaskHandler} />
         </div>
         <div className={styles.hero}>
           <Box boxSize='lg'>
