@@ -1,6 +1,6 @@
 import { ethers } from 'ethers'
 import { CeramicService } from './CeramicService'
-import models from './models/index'
+import models from './models'
 // import { DeepSkillsContractService } from './DeepSkillsContractService'
 
 const knownDataTypes = [
@@ -12,7 +12,7 @@ const knownDataTypes = [
 ]
 
 export class DeepSkillsService {
-  constructor (ceramic, ethereum) {
+  constructor(ceramic, ethereum) {
     // this._did = ceramic.did._id
     const provider = new ethers.providers.Web3Provider(ethereum)
 
@@ -21,7 +21,7 @@ export class DeepSkillsService {
     this._signer = provider.getSigner()
   }
 
-  async pullIssuerDid () {
+  async pullIssuerDid() {
     // const issuerDids = []
     // const lastIssuerIndex = await this._deepSkillsContractService.pullLastIssuerIndex()
 
@@ -40,7 +40,8 @@ export class DeepSkillsService {
   }
 
   async _decryptDocument(structeredData) {
-    let { isEncrypted, encryptedKeyHex, accessControlConditions } = structeredData
+    let { isEncrypted, encryptedKeyHex, accessControlConditions } =
+      structeredData
     accessControlConditions = JSON.parse(accessControlConditions)
 
     if (!isEncrypted) {
@@ -53,8 +54,15 @@ export class DeepSkillsService {
 
     const authSig = await window.litProtocolService.signAuthMessage()
 
-    const symmetricKeyHex = await window.litProtocolService.getKey(encryptedKeyHex, authSig, accessControlConditions)
-    const decryptedDocument = await window.litProtocolService.decrypt(structeredData, symmetricKeyHex)
+    const symmetricKeyHex = await window.litProtocolService.getKey(
+      encryptedKeyHex,
+      authSig,
+      accessControlConditions
+    )
+    const decryptedDocument = await window.litProtocolService.decrypt(
+      structeredData,
+      symmetricKeyHex
+    )
 
     return decryptedDocument
   }
@@ -67,7 +75,9 @@ export class DeepSkillsService {
     const promises = []
 
     for (const knownDataType of knownDataTypes) {
-      promises.push(this._ceramicService.buildDataModelStore(models[knownDataType]))
+      promises.push(
+        this._ceramicService.buildDataModelStore(models[knownDataType])
+      )
     }
     const modelResults = await Promise.all(promises)
 
@@ -75,7 +85,13 @@ export class DeepSkillsService {
     for (const [index, modelResult] of modelResults.entries()) {
       const alias = knownDataTypes[index]
       const { publishedModel } = modelResult
-      dataPromises.push(this._ceramicService.pullStoreDataByDID(publishedModel, issuerDid, alias))
+      dataPromises.push(
+        this._ceramicService.pullStoreDataByDID(
+          publishedModel,
+          issuerDid,
+          alias
+        )
+      )
     }
 
     const results = await Promise.all(dataPromises)
@@ -85,7 +101,9 @@ export class DeepSkillsService {
     }
 
     console.log('issuedDocuments!!', issuedDocuments)
-    const filteredDocuments = issuedDocuments.filter(_doc => { return _doc.holderDid === holderDid })
+    const filteredDocuments = issuedDocuments.filter((_doc) => {
+      return _doc.holderDid === holderDid
+    })
 
     const revealedDocuments = []
     for (let filteredDocument of filteredDocuments) {
@@ -95,5 +113,4 @@ export class DeepSkillsService {
 
     return revealedDocuments
   }
-
 }

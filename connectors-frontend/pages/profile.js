@@ -35,9 +35,7 @@ export default function Connectors() {
       window.litProtocolService = litProtocolService
 
       const ceramic = new CeramicClient(CERAMIC_URL)
-      console.log('ceramic!!!', ceramic)
       const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
-      console.log('deepSkillsService!!!', deepSkillsService)
       const documents = await deepSkillsService.pullMySkills()
       console.log('documents!!', documents)
     } catch {}

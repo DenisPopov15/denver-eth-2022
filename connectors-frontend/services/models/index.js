@@ -1,12 +1,10 @@
-import colonies from '@glazed/datamodel'
-import apeprofiles from './apeprofiles'
-import discords from './discords'
-import githubs from './githubs'
-import poaps from './poaps'
-import sourcecreds from './sourcecreds'
+import apeprofiles from "./apeprofiles"
+import discords from "./discords"
+import githubs from "./githubs"
+import poaps from "./poaps"
+import sourcecreds from "./sourcecreds"
 
-export {
-  colonies,
+export default {
   apeprofiles,
   discords,
   githubs,

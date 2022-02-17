@@ -1,7 +1,5 @@
-const coordinateAPIUrl = process.env.NEXT_PUBLIC_COORDINAPE_CONNECTOR_API_ENDPOINT
 export const coordinapeApi = async ({ signature, address, data, hash }) => {
-  console.log({ signature, address, data, hash })
-  return fetch(`${coordinateAPIUrl}/pullCoordinapeData`, {
+  return fetch(`/api/coordinape`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

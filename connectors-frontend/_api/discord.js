@@ -1,7 +1,6 @@
-export const discordAPIUrl = `${process.env.NEXT_PUBLIC_DISCORD_CONNECTOR_API_ENDPOINT}/discordRedirect`
 
 export const discordApi = async (identifiers) => {
-  return fetch(`${discordAPIUrl}?did=${identifiers}`, {
+  return fetch(`/api/discord/redirect?did=${identifiers}`, {
     method: "GET",
     mode: "no-cors",
     redirect: "follow",
