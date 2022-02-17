@@ -4,7 +4,7 @@ const PoapService = require('../services/poapService')
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
 const withTimeout = require('../helpers/withTimeout')
-const { ISSUE_CREDENTIALS_TYPE } = process.env
+const ISSUE_CREDENTIALS_TYPE = 'poaps'
 
 const poapService = new PoapService()
 const issuer = new IssuerService()
