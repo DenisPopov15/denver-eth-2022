@@ -50,7 +50,7 @@ export default function Connectors({
 
           <Section title={"Skills"}>
             <Heading size="md" fontWeight="bold" mb="8">Skills</Heading>
-            <Box>
+            <Box ml="-10px">
               <SkillBox skill='React' credentials='3' />
               <SkillBox skill='TypeScript' credentials='2' />
               <SkillBox skill='Solidity' credentials='1' />
@@ -73,7 +73,7 @@ export default function Connectors({
               <button onClick={() => poapConnector(true)}>poap</button>
             </li>
             <li>
-              <button onClick={sourcecredConnector}>sourceCred</button>
+              <button onClick={() => sourcecredConnector(false)}>sourceCred</button>
             </li>
             <li>
               <button onClick={() => discordConnector({

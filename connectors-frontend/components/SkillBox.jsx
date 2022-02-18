@@ -35,6 +35,7 @@ export const SkillBox = ({ skill, credentials }) => (
         fontSize="16px"
         color="white"
         isTruncated
+        my="10px"
       >
         {credentials} credentials
       </Box>

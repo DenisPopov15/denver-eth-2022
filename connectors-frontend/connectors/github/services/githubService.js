@@ -5,10 +5,6 @@ const ethers = require('ethers')
 
 let { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } = process.env
 
-
-
-
-
 class GithubService {
   constructor(octokit) {
     this.octokit = octokit

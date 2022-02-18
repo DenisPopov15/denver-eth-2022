@@ -10,9 +10,6 @@ import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 
-
-
-
 export default function Home({ ceramicUrl }) {
   const [isConnected, setIsConnected] = useState(false)
   // const [ceramic, setCeramic] = useState()
