@@ -7,7 +7,7 @@ module.exports = {
         type: 'object',
         properties: {
           servername: { type: 'string' },
-          serverid: { type: 'string' },
+          serverid: { type: ["string", "null"] },
           servericon: { type: 'string' },
         },
       },

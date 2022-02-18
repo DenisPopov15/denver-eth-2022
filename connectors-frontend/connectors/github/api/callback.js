@@ -8,8 +8,9 @@ const schema = require('../helpers/schema')
 const issuer = new IssuerService()
 
 const callback = async (req, res) => {
+  const { code, address, return_url = FRONTEND_REDIRECT_URL, encrypt = false } = req.query
   try {
-    const { code, address, return_url, encrypt = false } = req.query
+    
 
     const githubService = await GithubService.initialize(code)
     const userData = await githubService.getUserData()
@@ -59,9 +60,9 @@ const callback = async (req, res) => {
       watchersCount: currRepo.watchers_count,
       holderDid: did,
     }))
-    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url)
   } catch (e) {
-    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url)
   }
 }
 

@@ -8,9 +8,8 @@ const schema = require('../helpers/schema')
 const issuer = new IssuerService()
 
 const callback = async (req, res) => {
+  const { code, state: address, encrypt = false, return_url = FRONTEND_REDIRECT_URL } = req.query
   try {
-    const { code, state: address, encrypt = false, return_url } = req.query
-
     const discordService = await DiscordService.initialize(code)
     const userData = await discordService.getUserData()
     const userServers = await discordService.getUserServers()
@@ -31,6 +30,7 @@ const callback = async (req, res) => {
       ISSUE_CREDENTIALS_TYPE,
       encrypt
     )
+    console.log(issueResult)
 
     userData.did = address
 
@@ -38,9 +38,10 @@ const callback = async (req, res) => {
     const serversVCData = userServers
 
 
-    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url)
   } catch (e) {
-    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
+    console.log(e)
+    res.status(302).redirect(return_url)
   }
 }
 

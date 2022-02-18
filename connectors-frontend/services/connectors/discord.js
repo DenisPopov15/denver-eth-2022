@@ -1,7 +1,7 @@
 import { getProvider, requestAccounts } from '../provider'
 
 
-export const discordApi = async (identifiers, encrypt) => {
+export const discordApi = async ({ identifiers, encrypt }) => {
   const provider = await getProvider()
   await requestAccounts(provider)
   const signer = provider.getSigner()
@@ -26,5 +26,5 @@ export const discordApi = async (identifiers, encrypt) => {
 }
 
 export const discordConnector = async ({ identifiers, encrypt }) => {
-  return await discordApi(identifiers, encrypt).then(({url}) => url)
+  return await discordApi({ identifiers, encrypt }).then(({ url }) => url)
 }

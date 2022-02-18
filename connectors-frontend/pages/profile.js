@@ -2,6 +2,7 @@ import { coordinapeConnector } from "../services/connectors/coordinape"
 import { poapConnector } from "../services/connectors/poap"
 import { sourcecredConnector } from "../services/connectors/sourcecred"
 import { discordConnector } from "../services/connectors/discord"
+import { githubConnector } from "../services/connectors/github"
 
 import { Layout } from "../components/Layout"
 import { Container, SimpleGrid } from "@chakra-ui/react"
@@ -82,7 +83,12 @@ export default function Connectors({
                   })}>discord</button>
                 </li>
                 <li>
-                  <a href={githubUrl}>github</a>
+                  <button onClick={() => githubConnector({
+                    identifiers: 'dmfilipenko, Dmytro-Filipenko',
+                    encrypt: true
+                  }).then((url) => {
+                    window.location = url
+                  })}>github</button>
                 </li>
               </ul>
             </Container>

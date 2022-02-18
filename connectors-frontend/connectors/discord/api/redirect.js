@@ -22,7 +22,7 @@ const redirect = async (req, res) => {
 
   const authorizationUrl = `https://discord.com/api/oauth2/authorize?response_type=${responseType}&client_id=${clientId}&scope=${encodedScope}&state=${state}`
 
-  const encodedRedirectUri = encodeURIComponent(`${redirectUri}?encrypt=${encrypt}&return_url=${return_url}`)
+  const encodedRedirectUri = encodeURIComponent(redirectUri)
   const url = `${authorizationUrl}&redirect_uri=${encodedRedirectUri}&prompt=consent`
 
   res.status(200).json({ url })
