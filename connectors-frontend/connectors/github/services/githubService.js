@@ -1,11 +1,21 @@
 'use strict'
 
 const { OAuthApp, Octokit } = require('octokit')
+const ethers = require('ethers')
+
 let { GITHUB_APP_CLIENT_ID, GITHUB_APP_CLIENT_SECRET } = process.env
+
+
+
+
 
 class GithubService {
   constructor(octokit) {
     this.octokit = octokit
+  }
+
+  static getVerifiedAddress(digest, signature) {
+    return ethers.utils.verifyMessage(digest, signature)
   }
 
   static async initialize(code) {
@@ -34,7 +44,7 @@ class GithubService {
     }
     return response.data
   }
-  
+
   async getLanguages(repos) {
     const languagesReq = await Promise.all(
       repos.map((repo) =>

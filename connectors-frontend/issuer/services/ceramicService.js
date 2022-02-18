@@ -90,7 +90,7 @@ class CeramicService {
   }
 
   async pullStoreDataForDID(publishedModel, did, alias) {
-    const core = new Core({ ceramic: CERMAIC_URL, model: publishedModel })
+    const core = new Core({ ceramic: CERAMIC_URL, model: publishedModel })
     const documents = await core.get(alias, did)
 
     return documents

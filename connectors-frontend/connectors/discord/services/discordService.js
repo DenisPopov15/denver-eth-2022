@@ -2,6 +2,8 @@
 
 const fetch = require('node-fetch')
 const redirectUri = require('../helpers/discordRedirectUrl')
+const ethers = require('ethers')
+
 const { DISCORD_APP_CLIENT_ID, DISCORD_APP_CLIENT_SECRET } = process.env
 
 class DiscordService {
@@ -33,6 +35,10 @@ class DiscordService {
     const authorization = `${oauth.token_type} ${oauth.access_token}`
 
     return new DiscordService(authorization)
+  }
+
+  static getVerifiedAddress(digest, signature) {
+    return ethers.utils.verifyMessage(digest, signature)
   }
 
   prepareDataForIssuing(rawServersList) {

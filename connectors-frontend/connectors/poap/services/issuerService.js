@@ -5,13 +5,13 @@ const createAuth = require('../helpers/createAuth')
 const Validator = require('jsonschema').Validator
 const v = new Validator()
 class IssuerService {
-  constructor() {}
+  constructor() { }
 
   async validateDataAgainstSchema(data, schema) {
     return v.validate(data, schema)
   }
 
-  async issueStructeredData(data, type, ecnrypt) {
+  async issueStructeredData(data, type, encrypt) {
     return fetch(`${HOST}/api/issuer`, {
       method: 'POST',
       headers: {

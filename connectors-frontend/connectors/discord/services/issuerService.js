@@ -7,13 +7,13 @@ const Validator = require('jsonschema').Validator
 const v = new Validator()
 
 class IssuerService {
-  constructor() {}
+  constructor() { }
 
   async validateDataAgainstSchema(data, schema) {
     return v.validate(data, schema)
   }
 
-  async issueStructeredData(data, type, encrypt) {
+  async issueStructeredData(data, type, encrypt = false) {
     return fetch(`${HOST}/api/issuer`, {
       method: 'POST',
       headers: {

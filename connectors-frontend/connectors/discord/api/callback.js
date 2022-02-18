@@ -9,7 +9,7 @@ const issuer = new IssuerService()
 
 const callback = async (req, res) => {
   try {
-    const { code, state: did } = req.query
+    const { code, state: address, encrypt = false, return_url } = req.query
 
     const discordService = await DiscordService.initialize(code)
     const userData = await discordService.getUserData()
@@ -27,19 +27,20 @@ const callback = async (req, res) => {
     }
 
     const issueResult = await issuer.issueStructeredData(
-      { servers, holderDid: did },
-      ISSUE_CREDENTIALS_TYPE
+      { servers, holderDid: address },
+      ISSUE_CREDENTIALS_TYPE,
+      encrypt
     )
 
-    userData.did = did
+    userData.did = address
 
     const userVCData = userData
     const serversVCData = userServers
 
 
-    res.status(302).redirect(FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
   } catch (e) {
-    res.status(302).redirect(FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
   }
 }
 

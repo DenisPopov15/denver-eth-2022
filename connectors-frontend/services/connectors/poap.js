@@ -1,6 +1,20 @@
 import { getProvider, requestAccounts } from "../provider"
-import { poapApi } from "../../_api/poap"
-export const poapConnector = async () => {
+export const poapApi = async ({ signature, address, digest, encrypt }) => {
+  return fetch(`/api/poap`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      signature,
+      address,
+      digest,
+      encrypt
+    }),
+  })
+}
+
+export const poapConnector = async (encrypt = false) => {
   const provider = await getProvider()
   await requestAccounts(provider)
   const signer = provider.getSigner()
@@ -13,6 +27,7 @@ export const poapConnector = async () => {
     address,
     signature,
     digest,
+    encrypt
   })
   console.log(result)
 }

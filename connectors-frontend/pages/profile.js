@@ -6,8 +6,6 @@ import { discordConnector } from "../services/connectors/discord"
 import { Layout } from "../components/Layout"
 import { Container, SimpleGrid } from "@chakra-ui/react"
 import { Header } from "../components/Header"
-import { Wallet } from "../components/Buttons/Wallet"
-import { Navigation } from "../components/Header/Navigation"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox } from "../components/SkillBox"
@@ -24,6 +22,8 @@ export default function Connectors({
   ceramicUrl
 }) {
   const [isConnected, setIsConnected] = useState(false)
+  const [url, setUrl] = useState({ discord: null, github: null })
+
   // const [ceramic, setCeramic] = useState()
   useEffect(() => {
     checkConnectionMetamask(setIsConnected)
@@ -65,16 +65,21 @@ export default function Connectors({
               </Section>
               <ul>
                 <li>
-                  <button onClick={coordinapeConnector}>coordinApe</button>
+                  <button onClick={() => coordinapeConnector(true)}>coordinApe</button>
                 </li>
                 <li>
-                  <button onClick={poapConnector}>poap</button>
+                  <button onClick={() => poapConnector(true)}>poap</button>
                 </li>
                 <li>
                   <button onClick={sourcecredConnector}>sourceCred</button>
                 </li>
                 <li>
-                  <a href={discordUrl}>discord</a>
+                  <button onClick={() => discordConnector({
+                    identifiers: 'dmfilipenko, Dmytro-Filipenko',
+                    encrypt: true
+                  }).then((url) => {
+                    window.location = url
+                  })}>discord</button>
                 </li>
                 <li>
                   <a href={githubUrl}>github</a>
@@ -93,19 +98,12 @@ export default function Connectors({
 
 
 export async function getServerSideProps() {
-  let discord = null, github = null
-  try {
-    discord = await fetch(`${process.env.HOST}/api/discord/redirect`).then(res => res.json())
-    github = await fetch(`${process.env.HOST}/api/github/redirect`).then(res => res.json())
-  } catch {
-  }
+
 
 
   return {
     props:
     {
-      githubUrl: github?.url || null,
-      discordUrl: discord?.url || null,
       ceramicUrl: process.env.CERAMIC_URL
     }
   }

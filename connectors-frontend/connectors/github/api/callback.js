@@ -9,7 +9,7 @@ const issuer = new IssuerService()
 
 const callback = async (req, res) => {
   try {
-    const { code, did } = req.query
+    const { code, address, return_url, encrypt = false } = req.query
 
     const githubService = await GithubService.initialize(code)
     const userData = await githubService.getUserData()
@@ -30,10 +30,11 @@ const callback = async (req, res) => {
       throw new Error('schema got changed')
     }
 
-    preparedDataForIssue.holderDid = did
+    preparedDataForIssue.holderDid = address
     const issueResult = await issuer.issueStructeredData(
       preparedDataForIssue,
-      ISSUE_CREDENTIALS_TYPE
+      ISSUE_CREDENTIALS_TYPE,
+      encrypt
     )
 
     const userVCData = {
@@ -58,9 +59,9 @@ const callback = async (req, res) => {
       watchersCount: currRepo.watchers_count,
       holderDid: did,
     }))
-    res.status(302).redirect(FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
   } catch (e) {
-    res.status(302).redirect(FRONTEND_REDIRECT_URL)
+    res.status(302).redirect(return_url || FRONTEND_REDIRECT_URL)
   }
 }
 

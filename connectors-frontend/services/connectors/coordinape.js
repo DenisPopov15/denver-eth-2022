@@ -1,6 +1,6 @@
 import { getProvider, requestAccounts } from '../provider'
-import { coordinapeApi } from '../../_api/coordinape'
-export const coordinapeConnector = async () => {
+
+export const coordinapeConnector = async (encrypt) => {
   const provider = await getProvider()
   await requestAccounts(provider)
   const signer = provider.getSigner()
@@ -14,6 +14,23 @@ export const coordinapeConnector = async () => {
     address,
     signature,
     data: dataSign,
+    encrypt
   })
   console.log(result)
+}
+
+export const coordinapeApi = async ({ signature, address, data, hash, encrypt = true }) => {
+  return fetch(`/api/coordinape`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      signature,
+      address,
+      data,
+      hash,
+      encrypt,
+    }),
+  })
 }
