@@ -26,10 +26,15 @@ export default function Home({ ceramicUrl }) {
       const message = await takeMessageFromLocalStorageOrSign()
       localStorage.setItem('signedMessage', JSON.stringify(message))
       window.location = '/profile'
-    } catch (e) { 
+    } catch (e) {
       console.log(e)
     }
   }
+  useEffect(() => {
+    if (!isConnected) {
+      localStorage.removeItem('signedMessage')
+    }
+  }, [isConnected])
   return (
     <>
       <Header isMetamaskConnected={isConnected} onClick={connectMetamaskHandler} />

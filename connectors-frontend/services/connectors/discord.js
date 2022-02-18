@@ -5,10 +5,8 @@ export const discordApi = async ({ identifiers, encrypt }) => {
   const provider = await getProvider()
   await requestAccounts(provider)
   const signer = provider.getSigner()
-  let now = Math.floor(Date.now() / 1000)
   const address = await signer.getAddress()
-  // address, return_url, signature, digest, encrypt
-  const {signature, digest} = await takeMessageFromLocalStorageOrSign()
+  const { signature, digest } = await takeMessageFromLocalStorageOrSign()
   let params = new URLSearchParams({
     address,
     identifiers,

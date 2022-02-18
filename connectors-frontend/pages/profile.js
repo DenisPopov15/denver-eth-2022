@@ -20,7 +20,7 @@ import CeramicClient from "@ceramicnetwork/http-client"
 export default function Connectors({
   ceramicUrl,
 }) {
-  const [isConnected, setIsConnected] = useState(false)
+  const [isConnected, setIsConnected] = useState(null)
   const [url, setUrl] = useState({ discord: null, github: null })
   useEffect(() => {
     listenConnectionMetamask(setIsConnected)
@@ -34,6 +34,10 @@ export default function Connectors({
         const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
         return deepSkillsService.pullMySkills()
       }).then(d => console.log('d', d))
+    }
+    if (isConnected === false) {
+      localStorage.removeItem('signedMessage')
+      window.location = '/'
     }
   }, [isConnected, ceramicUrl])
 
