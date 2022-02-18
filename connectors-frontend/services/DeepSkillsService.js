@@ -103,11 +103,11 @@ export class DeepSkillsService {
       issuedDocuments = issuedDocuments.concat(result)
     }
 
-    console.log('issuedDocuments!!', issuedDocuments)
     const filteredDocuments = issuedDocuments.filter((_doc) => {
       return _doc.holderDid === holderDid
     })
 
+    console.log('My Documents!!', filteredDocuments)
     const revealedDocuments = []
     for (let filteredDocument of filteredDocuments) {
       const decryptedDocument = await this._decryptDocument(filteredDocument)
