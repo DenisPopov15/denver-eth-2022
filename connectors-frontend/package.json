@@ -21,6 +21,7 @@
     "@glazed/did-datastore": "^0.2.3",
     "@self.id/core": "^0.2.0",
     "bip39": "^3.0.4",
+    "cross-blob": "^3.0.1",
     "dids": "^2.4.3",
     "ethers": "^5.5.4",
     "framer-motion": "^6.2.6",
