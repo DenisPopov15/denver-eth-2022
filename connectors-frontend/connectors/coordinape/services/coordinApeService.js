@@ -31,7 +31,6 @@ class CoordinApeService {
   }
 
   async prepareDataForIssuing(data) {
-    console.log(data)
     const givesAndNotedReceived = data?.circle?.token_gifts
       .map((curr) => {
         return data?.profile?.address === curr.recipient_address
