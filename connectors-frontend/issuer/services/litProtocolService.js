@@ -1,7 +1,7 @@
 'use strict'
 
-const getRandomValues = () => {}
-global.window = { crypto: { getRandomValues } }
+// const getRandomValues = () => {}
+// global.window = { crypto: { getRandomValues } }
 
 const Blob = require('cross-blob')
 global.Blob = Blob
