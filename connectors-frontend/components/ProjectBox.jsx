@@ -17,15 +17,16 @@ export const ProjectBox = ({
   children,
 }) => (
   <Box
-    maxW="sm"
-    width="300px"
+    maxW="300px"
     marginRight="20px"
     bgGradient="linear(to-b, #2E196A, #4BAEF5)"
     _hover={{
       bgGradient: 'linear(to-b, #2E196A 20%, #4BAEF5)',
     }}
+    flexDirection="column"
     borderWidth="1px"
     borderRadius="lg"
+    display="inline-flex"
     overflow="hidden"
     onClick={onCardClick}
   >

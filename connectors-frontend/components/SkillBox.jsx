@@ -1,13 +1,16 @@
-import { Box, Link } from '@chakra-ui/react'
+import { Box, Link } from "@chakra-ui/react"
 
 export const SkillBox = ({ skill, credentials }) => (
   <Box
     maxW="sm"
-    width="300px"
-    marginRight="20px"
+    display="inline-flex"
+    width="30%"
+    minW="250px"
+    m="10px"
+    p="10px"
     bgGradient="linear(to-b, #86156F, #4D43D1)"
     _hover={{
-      bgGradient: 'linear(to-b, #86156F 20%, #4D43D1)',
+      bgGradient: "linear(to-b, #86156F 20%, #4D43D1)",
     }}
     borderWidth="1px"
     borderRadius="lg"
@@ -20,14 +23,12 @@ export const SkillBox = ({ skill, credentials }) => (
           fontWeight="600"
           letterSpacing="wide"
           fontSize="18px"
-          ml="0"
         >
           {skill}
         </Box>
       </Box>
 
       <Box
-        mt="1"
         fontWeight="800"
         as="h4"
         lineHeight="tight"
@@ -46,8 +47,7 @@ export const SkillBox = ({ skill, credentials }) => (
           fontWeight="600"
           cursor="pointer"
           mx="0px"
-          _first={{ ml: '400' }}
-          _last={{ mr: '0' }}
+          _last={{ mr: "0" }}
         >
           See details
         </Link>
