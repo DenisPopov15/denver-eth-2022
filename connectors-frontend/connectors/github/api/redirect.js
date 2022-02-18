@@ -1,7 +1,8 @@
 let { GITHUB_APP_CLIENT_ID, HOST } = process.env
 
 const redirect = async (req, res) => {
-  const { did } = req.query
+  const { did, signature, digest, encrypt } = req.query
+  // TODO: Add auth/signature verification
 
   const clientId = GITHUB_APP_CLIENT_ID
   const scope = 'read:user'

@@ -10,7 +10,7 @@ const issuer = new IssuerService()
 
 const pullSourceCredData = withTimeout(async (req, res) => {
   try {
-    let { identifiers } = req.query
+    let { identifiers, encrypt } = req.query
     if (!identifiers?.length) {
       throw new Error('identifiers is empty')
     }
@@ -34,7 +34,8 @@ const pullSourceCredData = withTimeout(async (req, res) => {
 
     const issueResult = await issuer.issueStructeredData(
       preparedDataForIssue,
-      ISSUE_CREDENTIALS_TYPE
+      ISSUE_CREDENTIALS_TYPE,
+      encrypt
     )
 
     res.status(200).json(issueResult)

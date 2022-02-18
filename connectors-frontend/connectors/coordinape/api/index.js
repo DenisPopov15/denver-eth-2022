@@ -10,7 +10,7 @@ const withTimeout = require('../helpers/withTimeout')
 const pullCoordinapeData = withTimeout(async (req, res) => {
   console.log('pullCoordinapeData')
   try {
-    const { signature, address, data, hash } = req.body
+    const { signature, address, data, hash, encrypt } = req.body
 
     const coordinApeService = new CoordinApeService({
       signature,
@@ -30,7 +30,8 @@ const pullCoordinapeData = withTimeout(async (req, res) => {
     }
     let results = await issuerService.issueStructeredData(
       pulledData,
-      ISSUE_CREDENTIALS_TYPE
+      ISSUE_CREDENTIALS_TYPE,
+      encrypt
     )
 
     const cordinapeProfileVCData = {

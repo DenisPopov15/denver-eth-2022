@@ -2,7 +2,8 @@ const redirectUri = require('../helpers/discordRedirectUrl')
 const { DISCORD_APP_CLIENT_ID } = process.env
 
 const redirect = async (req, res) => {
-  const { did, return_url } = req.query
+  const { did, return_url, signature, digest, encrypt } = req.query
+  // TODO: Add auth/signature verification
 
   const clientId = DISCORD_APP_CLIENT_ID
   const scope = 'identify guilds'
