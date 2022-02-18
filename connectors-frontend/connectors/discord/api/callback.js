@@ -27,7 +27,7 @@ const callback = async (req, res) => {
     }
 
     const issueResult = await issuer.issueStructeredData(
-      { servers },
+      { servers, holderDid: did },
       ISSUE_CREDENTIALS_TYPE
     )
 
@@ -36,7 +36,7 @@ const callback = async (req, res) => {
     const userVCData = userData
     const serversVCData = userServers
 
-    
+
     res.status(302).redirect(FRONTEND_REDIRECT_URL)
   } catch (e) {
     res.status(302).redirect(FRONTEND_REDIRECT_URL)

@@ -1,4 +1,4 @@
-export const coordinapeApi = async ({ signature, address, data, hash }) => {
+export const coordinapeApi = async ({ signature, address, data, hash, encrypt = true }) => {
   return fetch(`/api/coordinape`, {
     method: "POST",
     headers: {
@@ -9,6 +9,7 @@ export const coordinapeApi = async ({ signature, address, data, hash }) => {
       address,
       data,
       hash,
+      encrypt,
     }),
   })
 }

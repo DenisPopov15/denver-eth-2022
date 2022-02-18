@@ -10,7 +10,7 @@ const issuer = new IssuerService()
 
 const pullSourceCredData = withTimeout(async (req, res) => {
   try {
-    let { identifiers, encrypt } = req.query
+    let { identifiers, did, encrypt } = req.query
     if (!identifiers?.length) {
       throw new Error('identifiers is empty')
     }
@@ -32,6 +32,7 @@ const pullSourceCredData = withTimeout(async (req, res) => {
       throw new Error('schema got changed')
     }
 
+    preparedDataForIssue.holderDid = did
     const issueResult = await issuer.issueStructeredData(
       preparedDataForIssue,
       ISSUE_CREDENTIALS_TYPE,

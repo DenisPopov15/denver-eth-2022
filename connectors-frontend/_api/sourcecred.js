@@ -1,6 +1,6 @@
-export const sourcecredApi = async (identifiers) => {
+export const sourcecredApi = async (identifiers, did, encrypt) => {
   return fetch(
-    `/api/sourcecred?identifiers=${identifiers}`,
+    `/api/sourcecred?identifiers=${identifiers}&did=${did}&encrypt=${encrypt}`,
     {
       method: "GET",
     }

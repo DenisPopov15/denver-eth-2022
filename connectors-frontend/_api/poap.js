@@ -1,4 +1,4 @@
-export const poapApi = async ({ signature, address, digest }) => {
+export const poapApi = async ({ signature, address, digest, encrypt }) => {
   return fetch(`/api/poap`, {
     method: "POST",
     headers: {
@@ -7,7 +7,8 @@ export const poapApi = async ({ signature, address, digest }) => {
     body: JSON.stringify({
       signature,
       address,
-      digest
+      digest,
+      encrypt
     }),
   })
 }

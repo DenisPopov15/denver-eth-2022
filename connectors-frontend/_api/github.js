@@ -1,5 +1,5 @@
-export const githubApi = async (identifiers) => {
-  return fetch(`/api/github/redirect?did=${identifiers}`, {
+export const githubApi = async (identifiers, encrypt) => {
+  return fetch(`/api/github/redirect?did=${identifiers}&encrypt=${encrypt}`, {
     method: "GET",
   })
 }
