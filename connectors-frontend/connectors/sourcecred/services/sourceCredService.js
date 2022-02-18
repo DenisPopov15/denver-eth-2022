@@ -1,17 +1,24 @@
 'use strict'
 
 const { SOURCE_CRED_INSTANCE_DOMAIN } = process.env
-const sc = require('sourcecred').sourcecred
+// const sc = require('sourcecred').sourcecred
+const fs          = require('fs')
+const path        = require('path')
+const uncompress  = require('../helpers/uncompress')
 
 class SourceCredService {
   constructor() {
-    this._instance = sc.instance.readInstance.getNetworkReadInstance(
-      SOURCE_CRED_INSTANCE_DOMAIN
-    )
+    // this._instance = sc.instance.readInstance.getNetworkReadInstance(
+    //   SOURCE_CRED_INSTANCE_DOMAIN
+    // )
   }
 
   async pullData() {
-    const response = await this._instance.readCredGrainView()
+    // const response = await this._instance.readCredGrainView()
+    // NOTE: Just to not deploy separatly sourcecred instance
+    const filePath = path.resolve(__dirname, './credGrainView')
+    const data   = fs.readFileSync(filePath)
+    const result = await uncompress(data)
     return response
   }
 

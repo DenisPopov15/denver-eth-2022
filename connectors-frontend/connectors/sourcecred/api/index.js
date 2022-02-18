@@ -5,6 +5,7 @@ const ISSUE_CREDENTIALS_TYPE = 'sourcecreds'
 const IssuerService = require('../services/issuerService')
 const schema = require('../helpers/schema')
 const withTimeout = require('../helpers/withTimeout')
+const ethers = require('ethers')
 
 const issuer = new IssuerService()
 
@@ -16,6 +17,12 @@ const pullSourceCredData = withTimeout(async (req, res) => {
       throw new Error('identifiers is empty')
     }
     identifiers = identifiers.split(',')
+
+    const addressFromSignature = ethers.utils.verifyMessage(digest, signature)
+    if (addressFromSignature !== did) {
+      throw new Error('Invalid address')
+    }
+
     const sourceCredService = new SourceCredService()
     const rawData = await sourceCredService.pullData()
 

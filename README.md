@@ -13,6 +13,8 @@ We leverage various decentralized technologies, such as [Ethereum](https://ether
 
 This project was built during ETHDenver 2022 BUIDLathon. 
 
+## Deployed demo version lives [here](https://denver-eth-2022-one.vercel.app/)
+
 ## Overview
 
 Project Contains:
@@ -20,7 +22,7 @@ Project Contains:
 - Multiple connectors (pulling data from connector sepcific data hub)
 - Issuer module: recieves data from trusted data connector and issue (sign) strctured [Ceramic](https://ceramic.network/) Data according to the specific schema and store that data at the [Ceramic Stream](https://developers.ceramic.network/streamtypes/overview/)
 - Frontend App 1
-- Frontend App 2
+- Frontend App 2 (at this itteration just '../profile' page of main application)
 
 
 Protocol supports flexible way of adding new data connectors. Currently supported connectors:
@@ -32,6 +34,16 @@ Protocol supports flexible way of adding new data connectors. Currently supporte
 - [Poap](https://poap.xyz/)
 
 
+## Structure
+For the simplicity of deployment - all was wrapped into the one severless front end [application](https://github.com/DenisPopov15/denver-eth-2022/tree/main/connectors-frontend)
+
+- Refference implementation of issuer as services/servers [issuer as a server](https://github.com/DenisPopov15/denver-eth-2022/tree/main/issuer)
+- Refference implementation of connectors as services/servers: [server connectors](https://github.com/DenisPopov15/denver-eth-2022/tree/main/connectors)
+- [Front end application](https://github.com/DenisPopov15/denver-eth-2022/tree/main/connectors-frontend)
+- Server less implementation as part of one app for [connectors](https://github.com/DenisPopov15/denver-eth-2022/tree/main/connectors-frontend/connectors)
+- Server less implementation as part of one app for [issuer](https://github.com/DenisPopov15/denver-eth-2022/tree/main/connectors-frontend/issuer)
+
+
 ## Setup
 
  - Not Required, but good to have whole system to run locally: Make sure you have setup [pm2](https://www.npmjs.com/package/pm2) on your machine
@@ -40,7 +52,7 @@ Protocol supports flexible way of adding new data connectors. Currently supporte
  - Install dependencies for each services - just run `npm run fullInstall` from root project folder
  - Run the system `npm run startSystem` (will work only if pm2 installed)
 
-## Frontend 
+## Frontend
 You will need to create `.env.local` file in the `connectors-frontend` folder and set the following variables:
 
 ## Connectors
