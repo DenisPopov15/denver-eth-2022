@@ -3,7 +3,7 @@ import { Header } from "../components/Header"
 import { HugeTitle } from "../components/HugeTitle"
 import { ConnectWallet } from "../components/ConnectWallet"
 import { Box, Text, Image } from '@chakra-ui/react'
-import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
+import { listenConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
@@ -13,7 +13,7 @@ export default function Home({ ceramicUrl }) {
   const [isConnected, setIsConnected] = useState(false)
   // const [ceramic, setCeramic] = useState()
   useEffect(() => {
-    checkConnectionMetamask(setIsConnected)
+    listenConnectionMetamask(setIsConnected)
     isMetamaskConnected().then(setIsConnected)
   }, [])
   const connectMetamaskHandler = async () => {

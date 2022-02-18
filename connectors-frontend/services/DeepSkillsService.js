@@ -113,7 +113,6 @@ export class DeepSkillsService {
       const decryptedDocument = await this._decryptDocument(filteredDocument)
       revealedDocuments.push(decryptedDocument)
     }
-
     return revealedDocuments
   }
 }

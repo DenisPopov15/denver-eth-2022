@@ -11,43 +11,32 @@ import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox } from "../components/SkillBox"
 import { ProjectBox } from "../components/ProjectBox"
-import { checkConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
+import { listenConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 
 export default function Connectors({
-  discordUrl,
-  githubUrl,
   ceramicUrl,
-  chain
 }) {
   const [isConnected, setIsConnected] = useState(false)
   const [url, setUrl] = useState({ discord: null, github: null })
-
-  // const [ceramic, setCeramic] = useState()
   useEffect(() => {
-    checkConnectionMetamask(setIsConnected)
+    listenConnectionMetamask(setIsConnected)
     isMetamaskConnected().then(setIsConnected)
   }, [])
-  const connectMetamaskHandler = async () => {
-    try {
-      await connectMetamask()
-      setIsConnected(true)
-
-      const litProtocolService = await LitProtocolService.initlize()
-      window.litProtocolService = litProtocolService
-
-      const ceramic = new CeramicClient(ceramicUrl)
-      const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
-      const documents = await deepSkillsService.pullMySkills()
-      console.log('documents!!', documents)
-    } catch (e) {
-      console.log('SOME ERRORS', e)
-      console.log(e)
+  useEffect(() => {
+    if (isConnected) {
+      LitProtocolService.initlize().then((litProtocolService) => {
+        window.litProtocolService = litProtocolService
+        const ceramic = new CeramicClient(ceramicUrl)
+        const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
+        return deepSkillsService.pullMySkills()
+      }).then(d => console.log('d', d))
     }
-  }
+  }, [isConnected, ceramicUrl])
+
   return (
     <>
       <Header hideConnectButton={true} />

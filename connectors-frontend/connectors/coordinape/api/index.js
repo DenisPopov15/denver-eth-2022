@@ -25,6 +25,8 @@ const pullCoordinapeData = withTimeout(async (req, res) => {
       pulledData,
       schema
     )
+    console.log(pulledData)
+    console.log(validationResults)
     if (validationResults.errors.length > 0) {
       throw new Error('schema got changed')
     }
