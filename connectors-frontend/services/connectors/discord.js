@@ -1,4 +1,4 @@
-import { getProvider, requestAccounts } from '../provider'
+import { getProvider, requestAccounts, takeMessageFromLocalStorageOrSign } from '../provider'
 
 
 export const discordApi = async ({ identifiers, encrypt }) => {
@@ -8,14 +8,13 @@ export const discordApi = async ({ identifiers, encrypt }) => {
   let now = Math.floor(Date.now() / 1000)
   const address = await signer.getAddress()
   // address, return_url, signature, digest, encrypt
-  const dataSign = `Login to Discord ${now}`
-  const signature = await signer.signMessage(dataSign)
+  const {signature, digest} = await takeMessageFromLocalStorageOrSign()
   let params = new URLSearchParams({
     address,
     identifiers,
     encrypt,
     signature,
-    digest: dataSign,
+    digest,
     return_url: window?.location?.href,
   })
   return fetch(`/api/discord/redirect?${params.toString()}`, {

@@ -20,3 +20,5 @@ export const listenConnectionMetamask = async (cb) => {
     cb(accounts.length > 0)
   })
 }
+
+

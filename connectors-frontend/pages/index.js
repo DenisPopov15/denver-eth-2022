@@ -4,10 +4,14 @@ import { HugeTitle } from "../components/HugeTitle"
 import { ConnectWallet } from "../components/ConnectWallet"
 import { Box, Text, Image } from '@chakra-ui/react'
 import { listenConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
+import { takeMessageFromLocalStorageOrSign } from "../services/provider"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
+
+
+
 
 export default function Home({ ceramicUrl }) {
   const [isConnected, setIsConnected] = useState(false)
@@ -19,16 +23,12 @@ export default function Home({ ceramicUrl }) {
   const connectMetamaskHandler = async () => {
     try {
       await connectMetamask()
-      setIsConnected(true)
-
-      const litProtocolService = await LitProtocolService.initlize()
-      window.litProtocolService = litProtocolService
-
-      const ceramic = new CeramicClient(ceramicUrl)
-      const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
-      const documents = await deepSkillsService.pullMySkills()
-      console.log('documents!!', documents)
-    } catch (e) { }
+      const message = await takeMessageFromLocalStorageOrSign()
+      localStorage.setItem('signedMessage', JSON.stringify(message))
+      window.location = '/profile'
+    } catch (e) { 
+      console.log(e)
+    }
   }
   return (
     <>
