@@ -17,7 +17,7 @@ const IssuerService = require('./issuerService')
 const models = require('../models/index')
 const LitProtocolService = require('./litProtocolService')
 
-const { SEED, CERMAIC_URL, CHAIN } = process.env
+const { SEED, CERAMIC_URL, CHAIN } = process.env
 if (!SEED) {
   throw new Error('Missing SEED environment variable')
 }
@@ -47,7 +47,7 @@ class CeramicService {
       resolver: getResolver(),
     })
 
-    this._ceramic = new CeramicClient(CERMAIC_URL)
+    this._ceramic = new CeramicClient(CERAMIC_URL)
     this._did = did
   }
 
