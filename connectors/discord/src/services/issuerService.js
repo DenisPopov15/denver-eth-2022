@@ -13,7 +13,7 @@ class IssuerService {
     return v.validate(data, schema)
   }
 
-  async issueStructeredData(data, type) {
+  async issueStructeredData(data, type, encrypt) {
     return fetch(`${ISSUER_SERVICE_API_URL}/issueStructeredData`, {
       method: 'POST',
       headers: {
@@ -23,6 +23,7 @@ class IssuerService {
       body: JSON.stringify({
         data,
         type,
+        encrypt,
       }),
     })
       .then((res) => res.json())

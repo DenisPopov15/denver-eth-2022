@@ -4,7 +4,8 @@ const redirectUri = require('../helpers/discordRedirectUrl')
 const { DISCORD_APP_CLIENT_ID } = process.env
 
 const redirect = async (req, res) => {
-  const { did, return_url } = req.query
+  const { did, digest, signature, encrypt } = req.query
+  // TODO: Check auth/signature, that its belong to it did/ethereum address
 
   const clientId = DISCORD_APP_CLIENT_ID
   const scope = 'identify guilds'

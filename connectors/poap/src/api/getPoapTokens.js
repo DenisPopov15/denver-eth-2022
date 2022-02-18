@@ -11,7 +11,7 @@ const issuer = new IssuerService()
 
 const getPoapTokens = withTimeout(async (req, res) => {
   try {
-    const { address, signature, digest } = req?.body
+    const { address, signature, digest, encrypt } = req?.body
     const addressFromSignature = poapService.getVerifiedAddress(
       digest,
       signature
@@ -28,7 +28,8 @@ const getPoapTokens = withTimeout(async (req, res) => {
     tokens.holderDid = address
     let results = await issuer.issueStructeredData(
       tokens,
-      ISSUE_CREDENTIALS_TYPE
+      ISSUE_CREDENTIALS_TYPE,
+      encrypt
     )
     res.status(200).json({ tokens, results })
   } catch (error) {

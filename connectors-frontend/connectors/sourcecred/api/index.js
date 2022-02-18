@@ -10,7 +10,8 @@ const issuer = new IssuerService()
 
 const pullSourceCredData = withTimeout(async (req, res) => {
   try {
-    let { identifiers, did, encrypt } = req.query
+    let { identifiers, did, digest, signature, encrypt } = req.query
+    // TODO: Check auth/signature, that its belong to it did/ethereum address
     if (!identifiers?.length) {
       throw new Error('identifiers is empty')
     }

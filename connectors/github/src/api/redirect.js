@@ -3,7 +3,8 @@
 let { GITHUB_APP_CLIENT_ID, HOST } = process.env
 
 const redirect = async (req, res) => {
-  const { did } = req.query
+  const { did, digest, signature, encrypt } = req.query
+  // TODO: Check auth/signature, that its belong to it did/ethereum address
 
   const clientId = GITHUB_APP_CLIENT_ID
   const scope = 'read:user'
