@@ -9,7 +9,8 @@ import LitJsSdk from 'lit-js-sdk'
 const ENCRYPTION_ALGORITHM = 'aes-256-cbc'
 const IV_LENGTH = 16
 
-const { CHAIN } = process.env
+// const { CHAIN } = process.env
+const CHAIN = 'rinkeby'
 const chain = CHAIN
 
 const createCipher = (suite, key, iv, isDecipher = false) => {

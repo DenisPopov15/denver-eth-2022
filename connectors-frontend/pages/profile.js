@@ -20,7 +20,8 @@ import CeramicClient from "@ceramicnetwork/http-client"
 export default function Connectors({
   discordUrl,
   githubUrl,
-  ceramicUrl
+  ceramicUrl,
+  chain
 }) {
   const [isConnected, setIsConnected] = useState(false)
   const [url, setUrl] = useState({ discord: null, github: null })
@@ -110,7 +111,8 @@ export async function getServerSideProps() {
   return {
     props:
     {
-      ceramicUrl: process.env.CERAMIC_URL
+      ceramicUrl: process.env.CERAMIC_URL,
+      chain: process.env.CHAIN
     }
   }
 }

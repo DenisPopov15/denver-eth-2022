@@ -96,6 +96,7 @@ class CeramicService {
   }
 
   async encryptDocument(structeredData) {
+    const { holderDid } = structeredData
     const { encrypted, symmetricKey } = await global.litProtocolService.encrypt(structeredData)
     const authSig = await IssuerService.createLITAuthSig()
     const encryptedKeyHex = await litProtocolService.saveKey(symmetricKey, authSig, accessControlConditions)
@@ -103,6 +104,7 @@ class CeramicService {
     encrypted.isEncrypted = true
     encrypted.encryptedKeyHex = encryptedKeyHex
     encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
+    encrypted.holderDid = holderDid
 
     return encrypted
   }

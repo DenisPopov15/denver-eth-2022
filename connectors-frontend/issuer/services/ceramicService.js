@@ -97,6 +97,7 @@ class CeramicService {
   }
 
   async encryptDocument(structeredData) {
+    const { holderDid } = structeredData
     // JUST FOR THE DEPLOYED DEMO PURPOSE (for production solution - Issuer its separate service, so LitProtocolService initate on server start)
     const litProtocolService = await LitProtocolService.initlize()
     const { encrypted, symmetricKey } = await litProtocolService.encrypt(structeredData)
@@ -105,6 +106,7 @@ class CeramicService {
 
     encrypted.isEncrypted = true
     encrypted.encryptedKeyHex = encryptedKeyHex
+    encrypted.holderDid = holderDid
     encrypted.accessControlConditions = JSON.stringify(accessControlConditions)
 
     return encrypted

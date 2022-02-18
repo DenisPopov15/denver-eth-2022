@@ -40,17 +40,19 @@ export class DeepSkillsService {
   }
 
   async _decryptDocument(structeredData) {
-    let { isEncrypted, encryptedKeyHex, accessControlConditions } =
+    let { isEncrypted, encryptedKeyHex, accessControlConditions, holderDid } =
       structeredData
-    accessControlConditions = JSON.parse(accessControlConditions)
 
     if (!isEncrypted) {
       return structeredData
     }
 
+    accessControlConditions = JSON.parse(accessControlConditions)
+
     delete structeredData.isEncrypted
     delete structeredData.encryptedKeyHex
     delete structeredData.accessControlConditions
+    delete structeredData.holderDid
 
     const authSig = await window.litProtocolService.signAuthMessage()
 
@@ -64,6 +66,7 @@ export class DeepSkillsService {
       symmetricKeyHex
     )
 
+    decryptedDocument.holderDid = holderDid
     return decryptedDocument
   }
 

@@ -56,7 +56,8 @@ export async function getServerSideProps() {
   return {
     props:
     {
-      ceramicUrl: process.env.CERAMIC_URL
+      ceramicUrl: process.env.CERAMIC_URL,
+      chain: process.env.CHAIN
     }
   }
 }
