@@ -66,7 +66,7 @@ export default function Connectors({
                   <button onClick={() => poapConnector(true)}>poap</button>
                 </li>
                 <li>
-                  <button onClick={sourcecredConnector}>sourceCred</button>
+                  <button onClick={() => sourcecredConnector(false)}>sourceCred</button>
                 </li>
                 <li>
                   <button onClick={() => discordConnector({
