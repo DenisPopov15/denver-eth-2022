@@ -1,5 +1,6 @@
 'use strict'
 
+// TODO REPLACE with proper randmozie which works at Node 14..
 const getRandomValues = () => {}
 global.window = { crypto: { getRandomValues } }
 
