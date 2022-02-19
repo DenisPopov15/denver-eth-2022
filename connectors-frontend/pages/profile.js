@@ -1,5 +1,5 @@
 
-import { Text, Box, Container, Grid, HStack, GridItem, Heading } from "@chakra-ui/react"
+import { Text, Box, Container, Grid, HStack, GridItem, Heading, Button } from "@chakra-ui/react"
 import { Header } from "../components/Header"
 import { OrgBox, OrgBoxLoading } from "../components/OrgBox"
 import { Section } from "../components/Section"
@@ -22,7 +22,7 @@ export default function Profiles({
   const [projects, setProjects] = useState(null)
   const [organisation, setOrganisation] = useState(null)
   const [showMore, setShowMore] = useState(false)
-  
+
   const showMoreOrganisation = () => setShowMore(prev => !prev)
 
   useEffect(() => {
@@ -78,7 +78,6 @@ export default function Profiles({
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
-      console.log(apeprofiles)
       setProjects(apeprofiles)
     }
   }, [graph])
@@ -95,7 +94,7 @@ export default function Profiles({
     }
   }, [graph])
 
-  
+
   return (
     <>
       <Header hideConnectButton={true} />
@@ -130,6 +129,18 @@ export default function Profiles({
                 )}
                 {skills?.ape?.length > 0 && <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
                 {skills?.github?.length > 0 && <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
+                {skills?.github?.length == 0 && (
+                  <Box>
+                    <Text>Need to connect github to see your skills</Text>
+                    <Button as="a" href="/connectors">Connect</Button>
+                  </Box>
+                )}
+                {skills?.ape?.length == 0 && (
+                  <Box ml="10px">
+                    <Text>Connect coordinape to see your skills</Text>
+                    <Button as="a" href="/connectors" color="black">Connect</Button>
+                  </Box>
+                )}
               </Box>
             </Section>
             <Section title="Projects">
@@ -137,7 +148,6 @@ export default function Profiles({
               <Box mt="-10px" ml="-10px" alignItems={"flex-start"}>
                 {!projects ? <ProjectBoxLoading /> : projects?.map((ape, idx) => {
                   const parsedDate = ape.date ? new Date(ape.date) : new Date()
-
                   return (
                     <ProjectBox
                       key={idx}
@@ -149,6 +159,12 @@ export default function Profiles({
                     />
                   )
                 })}
+                {projects?.length == 0 && (
+                  <Box ml="10px">
+                    <Text>Connect coordinape to see your projects</Text>
+                    <Button as="a" href="/connectors" color="black">Connect</Button>
+                  </Box>
+                )}
               </Box>
             </Section>
           </GridItem>
@@ -162,6 +178,12 @@ export default function Profiles({
                   <OrgBoxLoading />
                 </>
               )}
+              {organisation?.sourcecred?.length == 0 && (
+                <Box my="20px">
+                  <Text>Connect sourcecred to see your organisations</Text>
+                  <Button as="a" href="/connectors" color="black">Connect</Button>
+                </Box>
+              )}
               {!organisation?.sourcecred ? <OrgBoxLoading /> : organisation?.sourcecred?.map((sourcecred, idx) => (
                 <OrgBox
                   key={idx}
@@ -169,6 +191,7 @@ export default function Profiles({
                   reputationScore1={sourcecred.credScore}
                 />
               ))}
+              
               <Text fontWeight="bold" color="black">Discord</Text>
               {!organisation?.discord && (
                 <>
@@ -183,7 +206,13 @@ export default function Profiles({
                   organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
                 />
               ))}
-              {showMore && organisation?.discord?.slice(5).map((discord, idx) => (
+              {organisation?.discord?.length == 0 && (
+                <Box my="20px">
+                  <Text>Connect sourcecred to see your organisations</Text>
+                  <Button as="a" href="/connectors" color="black">Connect</Button>
+                </Box>
+              )}
+              {organisation?.discord?.length > 0 && showMore && organisation?.discord?.slice(5).map((discord, idx) => (
                 <OrgBox
                   key={idx}
                   organizationName={discord.servername}
@@ -209,6 +238,12 @@ export default function Profiles({
                   <CollaboratorLoading />
                   <CollaboratorLoading />
                 </>
+              )}
+              {collaborators?.length == 0 && (
+                <Box>
+                  <Text>Connect coordinape to see collaborators</Text>
+                  <Button as="a" href="/connectors" color="black">Connect</Button>
+                </Box>
               )}
             </Section>
           </GridItem>

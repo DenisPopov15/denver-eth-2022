@@ -144,9 +144,6 @@ export default function Connectors({
             <Text color="black" textAlign={"center"}>
               Connect your accounts to enrich your profile with skills, contributions and credentials.
             </Text>
-            <Text color="black" textAlign={"center"} border="1px" borderColor="gray.200">
-              Connect your accounts to enrich your profile with skills, contributions and credentials.
-            </Text>
             <HStack spacing={10} justifyContent="center" mt="20px" alignItems="flex-start">
               <ConnectorButton
                 bg="primary"
@@ -162,7 +159,6 @@ export default function Connectors({
                 bg="primary"
                 color="white"
                 isLoading={!graph}
-                // disabled={connectedConector.poap}
                 onClick={sourceClickHandler(async () => poapConnector(true))}
                 isConnected={connectedConector.poap}
               >
@@ -170,10 +166,9 @@ export default function Connectors({
               </ConnectorButton>
 
               <ConnectorButton bg="primary" color="white" isLoading={!graph}
-                disabled={!connectedConector.github || !connectedConector.discord}
                 isConnected={connectedConector.sourcecred}
                 onClick={sourceClickHandler(async () => sourcecredConnector(false))}
-                notes={'Before use sourcred you need to connect your github and discord accounts'}
+                
               >
                 Sourcecred*
               </ConnectorButton>
