@@ -135,16 +135,20 @@ export default function Connectors({
             <Section title="Projects">
               <Heading size="md" fontWeight="bold" mb="8" color="black">Projects</Heading>
               <Box mt="-10px" ml="-10px" alignItems={"flex-start"}>
-                {!projects ? <ProjectBoxLoading /> : projects?.map((ape, idx) => (
-                  <ProjectBox
-                    key={idx}
-                    organizationName={ape.circle}
-                    tag={ape.skills}
-                    dateRange={ape.date}
-                    gives={ape.givesReceived}
-                    // organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
-                  />
-                ))}
+                {!projects ? <ProjectBoxLoading /> : projects?.map((ape, idx) => {
+                  const parsedDate = ape.date ? new Date(ape.date) : new Date()
+
+                  return (
+                    <ProjectBox
+                      key={idx}
+                      organizationName={ape.circle}
+                      tag={ape.skills}
+                      dateRange={`${parsedDate.getDate().toString().padStart(2, 0)}-${parsedDate.getMonth().toString().padStart(2, 0)}-${parsedDate.getFullYear()}`}
+                      gives={ape.givesReceived}
+                      users={ape.collaborators}
+                    />
+                  )
+                })}
               </Box>
             </Section>
           </GridItem>

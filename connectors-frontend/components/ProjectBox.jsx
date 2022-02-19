@@ -26,7 +26,6 @@ export const ProjectBox = ({
 }) => (
   <Box
     w="calc(50% - 20px)"
-    // margin="10px"
     m="10px"
     bgGradient="linear(to-b, #2E196A, #4BAEF5)"
     _hover={{
@@ -76,7 +75,7 @@ export const ProjectBox = ({
           alignItems={{ base: "center", md: "flex-start" }}
           justifyContent={{ base: "space-between", md: "center" }}
         >
-          {!!dateRange && (
+          {dateRange && (
             <Box mb={{ base: "unset", md: "10px" }} order={{ base: 2, md: 1 }}>
               <Text color="white" fontWeight="800" variant="heading.6">
                 {dateRange}
