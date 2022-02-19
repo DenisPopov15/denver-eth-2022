@@ -11,6 +11,7 @@ import { OrgBox } from "../components/OrgBox"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox, SkillBoxLoading } from "../components/SkillBox"
+import { Collaborator, CollaboratorLoading } from "../components/Collaborator"
 import { ProjectBox } from "../components/ProjectBox"
 import { listenConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
@@ -42,26 +43,36 @@ export default function Connectors({
     }
   }, [isConnected, ceramicUrl])
   const [skills, setSkills] = useState(null)
+  const [collaborators, setCollaborators] = useState(null)
   useEffect(() => {
-    // console.log(graph)
-    const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
-    const poaps = graph?.filter(x => x.type === 'poaps')
-    const github = graph?.filter(x => x.type === 'githubs')
-    const apeSkills = Array.from(new Set(apeprofiles?.flatMap(x => x.skills))).slice(0, 3)
-    const githubSkills = Array.from(new Set(github?.flatMap(x => x.languages))).slice(0, 3)
-    const poapsSkill = Array.from(new Set(poaps?.flatMap(x => ({
-      title: x.title,
-      description: x.description,
-      image: x.image
-    }))))
-    // setSkills()
-    console.log(github, githubSkills, poapsSkill, apeSkills.join(', '))
-    setSkills({
-      poaps: poapsSkill,
-      ape: apeSkills,
-      github: githubSkills
-    })
+    if (graph) {
+      const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
+      const poaps = graph?.filter(x => x.type === 'poaps')
+      const github = graph?.filter(x => x.type === 'githubs')
+      const apeSkills = Array.from(new Set(apeprofiles?.flatMap(x => x.skills))).slice(0, 3)
+      const githubSkills = Array.from(new Set(github?.flatMap(x => x.languages))).slice(0, 3)
+      const poapsSkill = Array.from(new Set(poaps?.flatMap(x => ({
+        title: x.title,
+        description: x.description,
+        image: x.image
+      }))))
+      setSkills({
+        poaps: poapsSkill,
+        ape: apeSkills,
+        github: githubSkills
+      })
+    }
   }, [graph])
+  useEffect(() => {
+    if (graph) {
+      const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
+      let profiles = Array.from(new Set(apeprofiles?.flatMap(x => x.collaborators).map(JSON.stringify))).map(JSON.parse)
+      console.log(profiles)
+      setCollaborators(profiles)
+    }
+
+  }, [graph])
+
   return (
     <>
       <Header hideConnectButton={true} />
@@ -79,7 +90,7 @@ export default function Connectors({
             <Section title="Skills">
               <Heading size="md" fontWeight="bold" mb="8" color="black">Skills</Heading>
               <Box ml="-10px" mt="-10px">
-                {!graph ? <SkillBoxLoading /> : skills?.poaps.map((skill, idx) => (
+                {!skills ? <SkillBoxLoading /> : skills?.poaps.map((skill, idx) => (
                   <SkillBox
                     key={idx}
                     skill={skill.title}
@@ -87,12 +98,8 @@ export default function Connectors({
                     source={"Poaps"}
                   />
                 ))}
-                {!graph ? <SkillBoxLoading /> : <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
-                {!graph ? <SkillBoxLoading /> : <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
-                {/* <SkillBox skill='TypeScript' credentials='2' />
-                <SkillBox skill='Solidity' credentials='1' />
-                <SkillBox skill='Solidity' credentials='1' />
-                <SkillBox skill='Solidity' credentials='1' /> */}
+                {!skills ? <SkillBoxLoading /> : <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
+                {!skills ? <SkillBoxLoading /> : <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
               </Box>
             </Section>
             <Section title="Projects">
@@ -138,7 +145,15 @@ export default function Connectors({
             </Section>
             <Section>
               <Heading size="md" fontWeight="bold" mb="8" color="black">Collaborators</Heading>
-              <OrgBox organizationName='Deep Work Studio' reputationScore1="84" />
+              {!collaborators ? <CollaboratorLoading /> : collaborators.map((collaborator, idx) => (
+                <Collaborator
+                  key={idx}
+                  profileImg={collaborator.avatar}
+                  name={collaborator.username}
+                  address={collaborator.address} />
+              ))}
+              {!collaborators && <CollaboratorLoading />}
+              {!collaborators && <CollaboratorLoading />}
             </Section>
           </GridItem>
         </Grid>
