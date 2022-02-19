@@ -18,7 +18,7 @@ import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 
-const ConnectorButton = ({ isLoading, isConnected, children, icon, bg, color = 'white', onClick, ...rest }) => {
+const ConnectorButton = ({ notes, isLoading, isConnected, children, icon, bg, color = 'white', onClick, ...rest }) => {
   const [innerState, setInnerState] = useState({
     state: 'idle',
   })
@@ -30,18 +30,15 @@ const ConnectorButton = ({ isLoading, isConnected, children, icon, bg, color = '
     })
     try {
       let res = await onClick()
-      console.warn(res)
       if (res?.error) throw new Error(res.error)
       setInnerState({
         state: 'idle',
       })
     } catch (e) {
-      console.warn('CLICK ERROR', e)
       setInnerState({
         state: 'error',
         message: e.message,
       })
-      throw new Error(e)
     }
   }
   return (
@@ -55,6 +52,7 @@ const ConnectorButton = ({ isLoading, isConnected, children, icon, bg, color = '
         {innerState.message && <Text mt="10px" color="red" fontSize="sm" h="20px" w="100%">Got error: {innerState.message}</Text>}
       </VStack>
       <Text h="14px" textAlign="center">{isConnected && '*Connected'}</Text>
+
     </Box>
   )
 }
@@ -106,17 +104,20 @@ export default function Connectors({
     }
 
   }, [graph])
-  const sourceClickHandler =  (handler) => async () => {
+  const sourceClickHandler = (handler) => async () => {
     try {
-      await handler()
-      setGraph(null)
-      setSourceConnected(Date.now())
+      const resp = await handler()
+      if (!resp?.error) {
+        setGraph(null)
+        setSourceConnected(Date.now())
+      }
+      return resp
     } catch {
       console.warn('ERRROR')
     }
-    
-    
-    
+
+
+
   }
   return (
 
@@ -143,6 +144,9 @@ export default function Connectors({
             <Text color="black" textAlign={"center"}>
               Connect your accounts to enrich your profile with skills, contributions and credentials.
             </Text>
+            <Text color="black" textAlign={"center"} border="1px" borderColor="gray.200">
+              Connect your accounts to enrich your profile with skills, contributions and credentials.
+            </Text>
             <HStack spacing={10} justifyContent="center" mt="20px" alignItems="flex-start">
               <ConnectorButton
                 bg="primary"
@@ -166,11 +170,12 @@ export default function Connectors({
               </ConnectorButton>
 
               <ConnectorButton bg="primary" color="white" isLoading={!graph}
-                // disabled={connectedConector.sourcecred}
+                disabled={!connectedConector.github || !connectedConector.discord}
                 isConnected={connectedConector.sourcecred}
                 onClick={sourceClickHandler(async () => sourcecredConnector(false))}
+                notes={'Before use sourcred you need to connect your github and discord accounts'}
               >
-                Sourcecred
+                Sourcecred*
               </ConnectorButton>
               <ConnectorButton bg="black" color="white" isLoading={!graph}
                 // disabled={connectedConector.github}
