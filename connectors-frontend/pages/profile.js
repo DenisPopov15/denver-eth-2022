@@ -129,16 +129,10 @@ export default function Profiles({
                 )}
                 {skills?.ape?.length > 0 && <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
                 {skills?.github?.length > 0 && <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
-                {skills?.github?.length == 0 && (
-                  <Box>
-                    <Text>Need to connect github to see your skills</Text>
-                    <Button as="a" href="/connectors">Connect</Button>
-                  </Box>
-                )}
-                {skills?.ape?.length == 0 && (
+                {(skills?.github?.length == 0 && skills?.ape?.length == 0 && skills?.poaps?.length == 0)(
                   <Box ml="10px">
-                    <Text>Connect coordinape to see your skills</Text>
-                    <Button as="a" href="/connectors" color="black">Connect</Button>
+                    <Text>Connect coordinape, github and poap to see all your skills</Text>
+                    <Button as="a" href="/connectors">Connect</Button>
                   </Box>
                 )}
               </Box>
@@ -180,7 +174,7 @@ export default function Profiles({
               )}
               {organisation?.sourcecred?.length == 0 && (
                 <Box my="20px">
-                  <Text>Connect sourcecred to see your organisations</Text>
+                  <Text>Connect sourcecred to see your organisations list</Text>
                   <Button as="a" href="/connectors" color="black">Connect</Button>
                 </Box>
               )}
@@ -191,7 +185,7 @@ export default function Profiles({
                   reputationScore1={sourcecred.credScore}
                 />
               ))}
-              
+
               <Text fontWeight="bold" color="black">Discord</Text>
               {!organisation?.discord && (
                 <>
@@ -208,7 +202,7 @@ export default function Profiles({
               ))}
               {organisation?.discord?.length == 0 && (
                 <Box my="20px">
-                  <Text>Connect sourcecred to see your organisations</Text>
+                  <Text>Connect discord to see your organisations list</Text>
                   <Button as="a" href="/connectors" color="black">Connect</Button>
                 </Box>
               )}
