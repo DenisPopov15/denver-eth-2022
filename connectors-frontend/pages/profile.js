@@ -12,7 +12,7 @@ import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox, SkillBoxLoading } from "../components/SkillBox"
 import { Collaborator, CollaboratorLoading } from "../components/Collaborator"
-import { ProjectBox } from "../components/ProjectBox"
+import { ProjectBox, ProjectBoxLoading } from "../components/ProjectBox"
 import { listenConnectionMetamask, connectMetamask, isMetamaskConnected } from "../services/metamask"
 import { useEffect, useState } from "react"
 import { LitProtocolService } from "../services/litProtocolService"
@@ -44,6 +44,7 @@ export default function Connectors({
   }, [isConnected, ceramicUrl])
   const [skills, setSkills] = useState(null)
   const [collaborators, setCollaborators] = useState(null)
+  const [projects, setProjects] = useState(null)
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
@@ -67,10 +68,19 @@ export default function Connectors({
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
       let profiles = Array.from(new Set(apeprofiles?.flatMap(x => x.collaborators).map(JSON.stringify))).map(JSON.parse)
-      console.log(profiles)
       setCollaborators(profiles)
     }
-
+  }, [graph])
+  useEffect(() => {
+    if (graph) {
+      const discords = graph?.filter(x => x.type === 'discords')
+      const discordProjecs = Array.from(new Set(discords?.flatMap(x => x.servers).map(JSON.stringify))).map(JSON.parse).sort((a, b) => a.servername.length - b.servername.length)
+      // let profiles = Array.from(new Set(apeprofiles?.flatMap(x => x.collaborators).map(JSON.stringify))).map(JSON.parse)
+      // setProjects(profiles)
+      setProjects({
+        discord: discordProjecs
+      })
+    }
   }, [graph])
 
   return (
@@ -104,9 +114,18 @@ export default function Connectors({
             </Section>
             <Section title="Projects">
               <Heading size="md" fontWeight="bold" mb="8" color="black">Projects</Heading>
-              <Box mt="-10px">
-                <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' />
-                <ProjectBox organizationName='test' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' />
+              <Box mt="-10px" ml="-10px" alignItems={"flex-start"}>
+                {!projects ? <ProjectBoxLoading /> : projects?.discord.map((discord, idx) => (
+                  <ProjectBox
+                    key={idx}
+                    organizationName={discord.servername}
+                    organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
+                    // projectDescription="Description, if there's any"
+                    // dateRange='10 Mar 2022 - 21 Mar 2022' 
+                    />
+                ))}
+                {/* <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' /> */}
+
               </Box>
             </Section>
             <ul>
