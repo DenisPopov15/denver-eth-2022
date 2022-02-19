@@ -5,9 +5,11 @@ export const SkillBoxLoading = () => {
     <Box
       maxW="sm"
       display="inline-flex"
-      width="30%"
-      minW="250px"
+      w="30%"
+      mW="280px"
+      minW="280px"
       m="10px"
+      
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"

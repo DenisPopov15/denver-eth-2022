@@ -7,7 +7,7 @@ import { Text, Box, Container, Grid, HStack, GridItem, Heading } from "@chakra-u
 import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import { Layout } from "../components/Layout"
 import { Header } from "../components/Header"
-import { OrgBox } from "../components/OrgBox"
+import { OrgBox, OrgBoxLoading } from "../components/OrgBox"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox, SkillBoxLoading } from "../components/SkillBox"
@@ -35,7 +35,9 @@ export default function Connectors({
         const ceramic = new CeramicClient(ceramicUrl)
         const deepSkillsService = new DeepSkillsService(ceramic, window.ethereum)
         return deepSkillsService.pullMySkills()
-      }).then(d => setGraph(d))
+      }).then(d => {
+        setGraph(d)
+      })
     }
     if (isConnected === false) {
       localStorage.removeItem('signedMessage')
@@ -45,6 +47,7 @@ export default function Connectors({
   const [skills, setSkills] = useState(null)
   const [collaborators, setCollaborators] = useState(null)
   const [projects, setProjects] = useState(null)
+  const [organisation, setOrganisation] = useState(null)
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
@@ -73,16 +76,20 @@ export default function Connectors({
   }, [graph])
   useEffect(() => {
     if (graph) {
+      console.log(graph)
       const discords = graph?.filter(x => x.type === 'discords')
-      const discordProjecs = Array.from(new Set(discords?.flatMap(x => x.servers).map(JSON.stringify))).map(JSON.parse).sort((a, b) => a.servername.length - b.servername.length)
-      // let profiles = Array.from(new Set(apeprofiles?.flatMap(x => x.collaborators).map(JSON.stringify))).map(JSON.parse)
-      // setProjects(profiles)
-      setProjects({
-        discord: discordProjecs
+      const sourcecreds = graph?.filter(x => x.type === 'sourcecreds')
+      const discordOrganisation = Array.from(new Set(discords?.flatMap(x => x.servers).map(JSON.stringify))).map(JSON.parse).sort((a, b) => a.servername.length - b.servername.length)
+      setOrganisation({
+        discord: discordOrganisation,
+        sourcecred: sourcecreds
       })
     }
   }, [graph])
-
+  const [showMore, setShowMore] = useState(false)
+  const showMoreOrganisation = () => {
+    setShowMore(prev => !prev)
+  }
   return (
     <>
       <Header hideConnectButton={true} />
@@ -95,6 +102,7 @@ export default function Connectors({
           templateRows='repeat(1, 1fr)'
           templateColumns='repeat(5, 1fr)'
           px={44}
+          w="100%"
         >
           <GridItem colSpan={4}>
             <Section title="Skills">
@@ -120,15 +128,71 @@ export default function Connectors({
                     key={idx}
                     organizationName={discord.servername}
                     organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
-                    // projectDescription="Description, if there's any"
-                    // dateRange='10 Mar 2022 - 21 Mar 2022' 
-                    />
+                  />
                 ))}
                 {/* <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' /> */}
 
               </Box>
             </Section>
-            <ul>
+          </GridItem>
+          <GridItem>
+            <Section>
+              <Heading size="md" fontWeight="bold" mb="40px" color="black">Organizations</Heading>
+              <Text fontWeight="bold" color="black" mt="-25px">Sourcecred</Text>
+              {!organisation?.sourcecred && (
+                <>
+                  <OrgBoxLoading />
+                  <OrgBoxLoading />
+                </>
+              )}
+              {!organisation?.sourcecred ? <OrgBoxLoading /> : organisation?.sourcecred?.map((sourcecred, idx) => (
+                <OrgBox
+                  key={idx}
+                  organizationName={sourcecred.instance}
+                  reputationScore1={sourcecred.credScore}
+                />
+              ))}
+              <Text fontWeight="bold" color="black">Discord</Text>
+              {!organisation?.discord && (
+                <>
+                  <OrgBoxLoading />
+                  <OrgBoxLoading />
+                </>
+              )}
+              {!organisation?.discord ? <OrgBoxLoading /> : organisation?.discord?.slice(0, 5).map((discord, idx) => (
+                <OrgBox
+                  key={idx}
+                  organizationName={discord.servername}
+                  organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
+                />
+              ))}
+              {showMore && organisation?.discord?.slice(5).map((discord, idx) => (
+                <OrgBox
+                  key={idx}
+                  organizationName={discord.servername}
+                  organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
+                />
+              ))}
+              {organisation?.discord && <Text onClick={showMoreOrganisation} color="black" textDecoration="dotted" _hover={{
+                cursor: 'pointer',
+              }}>{!showMore ? 'Show more' : 'Hide more'}</Text>
+              }
+            </Section>
+            <Section>
+              <Heading size="md" fontWeight="bold" mb="8" color="black">Collaborators</Heading>
+              {!collaborators ? <CollaboratorLoading /> : collaborators.map((collaborator, idx) => (
+                <Collaborator
+                  key={idx}
+                  profileImg={collaborator.avatar}
+                  name={collaborator.username}
+                  address={collaborator.address} />
+              ))}
+              {!collaborators && <CollaboratorLoading />}
+              {!collaborators && <CollaboratorLoading />}
+            </Section>
+          </GridItem>
+        </Grid>
+        {/* <ul>
               <li>
                 <button onClick={() => coordinapeConnector(true)}>coordinApe</button>
               </li>
@@ -154,28 +218,7 @@ export default function Connectors({
                   window.location = url
                 })}>github</button>
               </li>
-            </ul>
-          </GridItem>
-          <GridItem>
-            <Section>
-              <Heading size="md" fontWeight="bold" mb="8" color="black">Reputation</Heading>
-
-              <OrgBox organizationName='Deep Work Studio' reputationScore1="84" />
-            </Section>
-            <Section>
-              <Heading size="md" fontWeight="bold" mb="8" color="black">Collaborators</Heading>
-              {!collaborators ? <CollaboratorLoading /> : collaborators.map((collaborator, idx) => (
-                <Collaborator
-                  key={idx}
-                  profileImg={collaborator.avatar}
-                  name={collaborator.username}
-                  address={collaborator.address} />
-              ))}
-              {!collaborators && <CollaboratorLoading />}
-              {!collaborators && <CollaboratorLoading />}
-            </Section>
-          </GridItem>
-        </Grid>
+            </ul> */}
       </Box>
     </>
   )

@@ -25,7 +25,7 @@ export const ReputationScore1 = ({
             textTransform="uppercase"
             lineHeight="17.71px"
           >
-            {label} CRED
+            {Math.round(parseFloat(label) * 100) / 100} CRED
           </Text>
         </Box>
       </Box>
