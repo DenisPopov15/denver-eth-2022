@@ -15,6 +15,8 @@ This project was built during ETHDenver 2022 BUIDLathon.
 
 ## Deployed demo version lives [here](https://denver-eth-2022-one.vercel.app/)
 
+## [3 minutes demo](https://www.loom.com/share/096b248c39ee475486130f719de5a603)
+
 ## Overview
 
 Project Contains:
