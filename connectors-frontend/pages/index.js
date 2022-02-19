@@ -22,7 +22,7 @@ export default function Home({ ceramicUrl }) {
       await connectMetamask()
       const message = await takeMessageFromLocalStorageOrSign()
       localStorage.setItem('signedMessage', JSON.stringify(message))
-      window.location = '/profile'
+      window.location = '/connectors'
     } catch (e) {
       console.log(e)
     }

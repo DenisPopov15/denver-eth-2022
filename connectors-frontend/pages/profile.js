@@ -1,15 +1,8 @@
-import { coordinapeConnector } from "../services/connectors/coordinape"
-import { poapConnector } from "../services/connectors/poap"
-import { sourcecredConnector } from "../services/connectors/sourcecred"
-import { discordConnector } from "../services/connectors/discord"
-import { githubConnector } from "../services/connectors/github"
+
 import { Text, Box, Container, Grid, HStack, GridItem, Heading } from "@chakra-ui/react"
-import { Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
-import { Layout } from "../components/Layout"
 import { Header } from "../components/Header"
 import { OrgBox, OrgBoxLoading } from "../components/OrgBox"
 import { Section } from "../components/Section"
-import { Sidebar } from "../components/Sidebar"
 import { SkillBox, SkillBoxLoading } from "../components/SkillBox"
 import { Collaborator, CollaboratorLoading } from "../components/Collaborator"
 import { ProjectBox, ProjectBoxLoading } from "../components/ProjectBox"
@@ -19,15 +12,24 @@ import { LitProtocolService } from "../services/litProtocolService"
 import { DeepSkillsService } from "../services/DeepSkillsService"
 import CeramicClient from "@ceramicnetwork/http-client"
 
-export default function Connectors({
+export default function Profiles({
   ceramicUrl,
 }) {
   const [isConnected, setIsConnected] = useState(null)
+  const [graph, setGraph] = useState(null)
+  const [skills, setSkills] = useState(null)
+  const [collaborators, setCollaborators] = useState(null)
+  const [projects, setProjects] = useState(null)
+  const [organisation, setOrganisation] = useState(null)
+  const [showMore, setShowMore] = useState(false)
+  
+  const showMoreOrganisation = () => setShowMore(prev => !prev)
+
   useEffect(() => {
     listenConnectionMetamask(setIsConnected)
     isMetamaskConnected().then(setIsConnected)
   }, [])
-  const [graph, setGraph] = useState(null)
+
   useEffect(() => {
     if (isConnected) {
       LitProtocolService.initlize().then((litProtocolService) => {
@@ -44,10 +46,7 @@ export default function Connectors({
       window.location = '/'
     }
   }, [isConnected, ceramicUrl])
-  const [skills, setSkills] = useState(null)
-  const [collaborators, setCollaborators] = useState(null)
-  const [projects, setProjects] = useState(null)
-  const [organisation, setOrganisation] = useState(null)
+
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
@@ -67,6 +66,7 @@ export default function Connectors({
       })
     }
   }, [graph])
+
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
@@ -74,6 +74,7 @@ export default function Connectors({
       setCollaborators(profiles)
     }
   }, [graph])
+
   useEffect(() => {
     if (graph) {
       const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
@@ -81,6 +82,7 @@ export default function Connectors({
       setProjects(apeprofiles)
     }
   }, [graph])
+
   useEffect(() => {
     if (graph) {
       const discords = graph?.filter(x => x.type === 'discords')
@@ -92,10 +94,8 @@ export default function Connectors({
       })
     }
   }, [graph])
-  const [showMore, setShowMore] = useState(false)
-  const showMoreOrganisation = () => {
-    setShowMore(prev => !prev)
-  }
+
+  
   return (
     <>
       <Header hideConnectButton={true} />
@@ -213,33 +213,7 @@ export default function Connectors({
             </Section>
           </GridItem>
         </Grid>
-        {/* <ul>
-              <li>
-                <button onClick={() => coordinapeConnector(true)}>coordinApe</button>
-              </li>
-              <li>
-                <button onClick={() => poapConnector(true)}>poap</button>
-              </li>
-              <li>
-                <button onClick={() => sourcecredConnector(false)}>sourceCred</button>
-              </li>
-              <li>
-                <button onClick={() => discordConnector({
-                  identifiers: 'dmfilipenko, Dmytro-Filipenko',
-                  encrypt: true
-                }).then((url) => {
-                  window.location = url
-                })}>discord</button>
-              </li>
-              <li>
-                <button onClick={() => githubConnector({
-                  identifiers: 'dmfilipenko, Dmytro-Filipenko',
-                  encrypt: true
-                }).then((url) => {
-                  window.location = url
-                })}>github</button>
-              </li>
-            </ul> */}
+
       </Box>
     </>
   )
