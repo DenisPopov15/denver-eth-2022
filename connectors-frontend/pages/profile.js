@@ -3,10 +3,11 @@ import { poapConnector } from "../services/connectors/poap"
 import { sourcecredConnector } from "../services/connectors/sourcecred"
 import { discordConnector } from "../services/connectors/discord"
 import { githubConnector } from "../services/connectors/github"
+import { Text, Box, Container, Grid, HStack, GridItem, Heading } from "@chakra-ui/react"
 
 import { Layout } from "../components/Layout"
-import { Box, Container, Grid, HStack, GridItem, Heading } from "@chakra-ui/react"
 import { Header } from "../components/Header"
+import { OrgBox } from "../components/OrgBox"
 import { Section } from "../components/Section"
 import { Sidebar } from "../components/Sidebar"
 import { SkillBox } from "../components/SkillBox"
@@ -44,28 +45,35 @@ export default function Connectors({
   return (
     <>
       <Header hideConnectButton={true} />
-      <Grid templateRows='repeat(1, 1fr)'
-        templateColumns='repeat(5, 1fr)'>
-        <GridItem colSpan={4} px={44}>
-
-          <Section title={"Skills"}>
-            <Heading size="md" fontWeight="bold" mb="8">Skills</Heading>
-            <Box ml="-10px">
-              <SkillBox skill='React' credentials='3' />
-              <SkillBox skill='TypeScript' credentials='2' />
-              <SkillBox skill='Solidity' credentials='1' />
-              <SkillBox skill='Solidity' credentials='1' />
-              <SkillBox skill='Solidity' credentials='1' />
-            </Box>
-          </Section>
-          <Section title={"Projects"}>
-            <Heading size="md" fontWeight="bold" mb="8">Projects</Heading>
-            <Box>
-              <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' />
-              <ProjectBox organizationName='test' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' />
-            </Box>
-          </Section>
-          <ul>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
+        <Grid
+          templateRows='repeat(1, 1fr)'
+          templateColumns='repeat(5, 1fr)'
+          px={44}
+        >
+          <GridItem colSpan={4}>
+            <Section title="Skills">
+              <Heading size="md" fontWeight="bold" mb="8" color="black">Skills</Heading>
+              <Box ml="-10px" mt="-10px">
+                <SkillBox skill='React' credentials='3' />
+                <SkillBox skill='TypeScript' credentials='2' />
+                <SkillBox skill='Solidity' credentials='1' />
+                <SkillBox skill='Solidity' credentials='1' />
+                <SkillBox skill='Solidity' credentials='1' />
+              </Box>
+            </Section>
+            <Section title="Projects">
+              <Heading size="md" fontWeight="bold" mb="8" color="black">Projects</Heading>
+              <Box mt="-10px">
+                <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' />
+                <ProjectBox organizationName='test' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' />
+              </Box>
+            </Section>
+            {/* <ul>
             <li>
               <button onClick={() => coordinapeConnector(true)}>coordinApe</button>
             </li>
@@ -91,12 +99,17 @@ export default function Connectors({
                 window.location = url
               })}>github</button>
             </li>
-          </ul>
-        </GridItem>
-        <GridItem>
-          <Section title={"Skills"}>Some skills</Section>
-        </GridItem>
-      </Grid>
+          </ul> */}
+          </GridItem>
+          <GridItem>
+            <Section>
+              <Heading size="md" fontWeight="bold" mb="8" color="black">Projects</Heading>
+              
+              <OrgBox organizationName='Deep Work Studio' reputationScore1="84" />
+            </Section>
+          </GridItem>
+        </Grid>
+      </Box>
     </>
   )
 }
