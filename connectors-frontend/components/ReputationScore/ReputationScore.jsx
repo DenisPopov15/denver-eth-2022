@@ -1,4 +1,5 @@
 import { Image, Avatar, Box, BoxProps, Text } from "@chakra-ui/react"
+import sclogo from "./sc-logo.png"
 
 export const ReputationScore1 = ({
   logo,
@@ -13,21 +14,19 @@ export const ReputationScore1 = ({
         borderRadius="full"
         width={width}
         height={height}
-        src={logo}
+        src={sclogo.src}
         marginRight="12px"
       />
-      <Box>
-        <Box mb="2px">
-          <Text
-            color={color}
-            fontWeight={800}
-            fontSize="16px"
-            textTransform="uppercase"
-            lineHeight="17.71px"
-          >
-            {Math.round(parseFloat(label) * 100) / 100} CRED
-          </Text>
-        </Box>
+      <Box mb="2px">
+        <Text
+          color={color}
+          fontWeight={800}
+          fontSize="16px"
+          textTransform="uppercase"
+          lineHeight="17.71px"
+        >
+          {Math.round(parseFloat(label) * 100) / 100} CRED
+        </Text>
       </Box>
     </Box>
   )

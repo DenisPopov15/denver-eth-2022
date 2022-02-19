@@ -11,7 +11,7 @@ export const OrganizationButton = ({
 }) => {
   const { width, height, lineHeight } = getSize(size)
   return (
-    <Box display='flex' alignItems='flex-start' {...rest}>
+    <Box display='flex' alignItems='center' {...rest}>
       <Avatar
         data-testid='organization-button-image'
         borderRadius='full'

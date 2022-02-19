@@ -3,11 +3,8 @@ import { Box, Link, Skeleton, Text } from "@chakra-ui/react"
 export const SkillBoxLoading = () => {
   return (
     <Box
-      maxW="sm"
       display="inline-flex"
-      w="30%"
-      mW="280px"
-      minW="280px"
+      width={['100%', '100%', '100%', '100%', "calc(50% - 20px)"]}
       m="10px"
       
       borderWidth="1px"
@@ -20,10 +17,9 @@ export const SkillBoxLoading = () => {
 }
 export const SkillBox = ({ skill, credentials, description, source }) => (
   <Box
-    maxW="sm"
     display="inline-flex"
-    width="30%"
-    minW="250px"
+    width={['100%', '100%', '100%', '100%', "calc(50% - 20px)"]}
+    
     m="10px"
     p="10px"
     bgGradient="linear(to-b, #86156F, #4D43D1)"

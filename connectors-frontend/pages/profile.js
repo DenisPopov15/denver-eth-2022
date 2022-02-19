@@ -76,7 +76,13 @@ export default function Connectors({
   }, [graph])
   useEffect(() => {
     if (graph) {
-      console.log(graph)
+      const apeprofiles = graph?.filter(x => x.type === 'apeprofiles')
+      console.log(apeprofiles)
+      setProjects(apeprofiles)
+    }
+  }, [graph])
+  useEffect(() => {
+    if (graph) {
       const discords = graph?.filter(x => x.type === 'discords')
       const sourcecreds = graph?.filter(x => x.type === 'sourcecreds')
       const discordOrganisation = Array.from(new Set(discords?.flatMap(x => x.servers).map(JSON.stringify))).map(JSON.parse).sort((a, b) => a.servername.length - b.servername.length)
@@ -104,7 +110,7 @@ export default function Connectors({
           px={44}
           w="100%"
         >
-          <GridItem colSpan={4}>
+          <GridItem colSpan={4} pr="50px">
             <Section title="Skills">
               <Heading size="md" fontWeight="bold" mb="8" color="black">Skills</Heading>
               <Box ml="-10px" mt="-10px">
@@ -116,22 +122,29 @@ export default function Connectors({
                     source={"Poaps"}
                   />
                 ))}
-                {!skills ? <SkillBoxLoading /> : <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
-                {!skills ? <SkillBoxLoading /> : <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
+                {!skills && (
+                  <>
+                    <SkillBoxLoading />
+                    <SkillBoxLoading />
+                  </>
+                )}
+                {skills?.ape?.length > 0 && <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
+                {skills?.github?.length > 0 && <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
               </Box>
             </Section>
             <Section title="Projects">
               <Heading size="md" fontWeight="bold" mb="8" color="black">Projects</Heading>
               <Box mt="-10px" ml="-10px" alignItems={"flex-start"}>
-                {!projects ? <ProjectBoxLoading /> : projects?.discord.map((discord, idx) => (
+                {!projects ? <ProjectBoxLoading /> : projects?.map((ape, idx) => (
                   <ProjectBox
                     key={idx}
-                    organizationName={discord.servername}
-                    organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
+                    organizationName={ape.circle}
+                    tag={ape.skills}
+                    dateRange={ape.date}
+                    gives={ape.givesReceived}
+                    // organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
                   />
                 ))}
-                {/* <ProjectBox organizationName='Deep Work Studio' projectDescription="Description, if there's any" dateRange='10 Mar 2022 - 21 Mar 2022' tag='Full-Stack' giveStatus='200' /> */}
-
               </Box>
             </Section>
           </GridItem>
@@ -173,7 +186,7 @@ export default function Connectors({
                   organizationImage={`https://cdn.discordapp.com/icons/${discord.servericon}/${discord.serverid}.webp?size=40`}
                 />
               ))}
-              {organisation?.discord && <Text onClick={showMoreOrganisation} color="black" textDecoration="dotted" _hover={{
+              {organisation?.discord.length > 0 && <Text onClick={showMoreOrganisation} color="black" textDecoration="dotted" _hover={{
                 cursor: 'pointer',
               }}>{!showMore ? 'Show more' : 'Hide more'}</Text>
               }
@@ -187,8 +200,12 @@ export default function Connectors({
                   name={collaborator.username}
                   address={collaborator.address} />
               ))}
-              {!collaborators && <CollaboratorLoading />}
-              {!collaborators && <CollaboratorLoading />}
+              {!collaborators && (
+                <>
+                  <CollaboratorLoading />
+                  <CollaboratorLoading />
+                </>
+              )}
             </Section>
           </GridItem>
         </Grid>

@@ -1,5 +1,8 @@
 import { Box, Skeleton } from "@chakra-ui/react"
-import { ReputationScore1, ReputationScore2 } from "./ReputationScore"
+import {
+  ReputationScore1,
+  ReputationScore2,
+} from "./ReputationScore/ReputationScore"
 import { OrganizationButton } from "./OrganizationButton"
 
 export const OrgBoxLoading = () => {
@@ -34,7 +37,6 @@ export const OrgBox = ({
     borderRadius="lg"
     overflow="hidden"
     mb="10px"
-    // onClick={onCardClick}
   >
     <Box p="15px" borderColor="white">
       <OrganizationButton
@@ -45,7 +47,7 @@ export const OrgBox = ({
     </Box>
     {(reputationScore1 || reputationScore2) && (
       <Box
-        p="14px 25px 18px"
+        p="14px 20px 18px"
         display="flex"
         flexDirection="column"
         justifyContent="space-between"

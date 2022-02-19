@@ -12,7 +12,6 @@ export const AvatarList = ({
         {avatars.slice(0, max).map((user, index) => (
           <Box key={index} ml={index !== 0 ? '-10px' : 0} zIndex={100 - index}>
             <Avatar
-              data-testid={user}
               borderRadius='full'
               size={size}
               src={user}
