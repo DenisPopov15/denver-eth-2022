@@ -129,7 +129,7 @@ export default function Profiles({
                 )}
                 {skills?.ape?.length > 0 && <SkillBox skill={skills?.ape.join(', ')} source={"Coordinape"} />}
                 {skills?.github?.length > 0 && <SkillBox skill={skills?.github.join(', ')} source={"Github"} />}
-                {(skills?.github?.length == 0 && skills?.ape?.length == 0 && skills?.poaps?.length == 0)(
+                {(skills?.github?.length == 0 && skills?.ape?.length == 0 && skills?.poaps?.length == 0) && (
                   <Box ml="10px">
                     <Text>Connect coordinape, github and poap to see all your skills</Text>
                     <Button as="a" href="/connectors">Connect</Button>
@@ -193,7 +193,7 @@ export default function Profiles({
                   <OrgBoxLoading />
                 </>
               )}
-              {!organisation?.discord ? <OrgBoxLoading /> : organisation?.discord?.slice(0, 5).map((discord, idx) => (
+              {!organisation?.discord ? <OrgBoxLoading /> : organisation?.discord?.slice(0, 5)?.map((discord, idx) => (
                 <OrgBox
                   key={idx}
                   organizationName={discord.servername}
